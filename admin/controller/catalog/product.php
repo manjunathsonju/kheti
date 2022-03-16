@@ -11,7 +11,7 @@ class ControllerCatalogProduct extends Controller
 
         $this->load->model('catalog/product');
 
-        $this->getData();
+        $this->getList();
     }
 
     public function add()
@@ -526,6 +526,10 @@ class ControllerCatalogProduct extends Controller
                 $result['product_id']
             );
 
+            $product_category = $this->model_catalog_product->getProductsByCategoryIdP(
+                $result['product_id']
+            );
+
             foreach ($product_specials as $product_special) {
                 if (
                     ($product_special['date_start'] == '0000-00-00' ||
@@ -541,21 +545,13 @@ class ControllerCatalogProduct extends Controller
                     break;
                 }
             }
-            foreach ($results as $result) {
-                $categories[] = $this->model_catalog_product->getProductCategorygroup(
-                    $result['product_id']
-                );
-            }
-
-            print_r($categories);
-            die();
 
             $data['products'][] = [
                 'product_id' => $result['product_id'],
                 'image' => $image,
                 'name' => $result['name'],
                 'model' => $result['model'],
-                'categories' => $categories,
+                'categories' => $product_category,
                 'price' => $this->currency->format(
                     $result['price'],
                     $this->config->get('config_currency')
@@ -576,7 +572,8 @@ class ControllerCatalogProduct extends Controller
                 ),
             ];
         }
-
+        // print_r($data);
+        // die();
         $data['user_token'] = $this->session->data['user_token'];
 
         if (isset($this->error['warning'])) {
@@ -791,18 +788,6 @@ class ControllerCatalogProduct extends Controller
         );
     }
 
-    function getData()
-    {
-        $product_code = $this->model_catalog_product->getProductCode();
-        foreach ($product_code as $pcode) {
-            //print_r($pcode['product_id']);
-            //print_r($pcode['code']);
-            $this->model_catalog_product->updateProductCode(
-                $pcode['product_id'],
-                $pcode['code']
-            );
-        }
-    }
     protected function getForm()
     {
         $data['text_form'] = !isset($this->request->get['product_id'])
