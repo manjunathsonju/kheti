@@ -1,0 +1,629 @@
+
+{% if user_location =='pkr' and store_id ==1 %} 
+																																														
+<div class="container">
+	
+	
+		<div class="modal fade" id="myModal" role="dialog" style="display: none;">
+		  <div class="modal-dialog">
+		  
+			{# <!-- Modal content--> #}
+			<div class="modal-content">
+			   <div class="modal-header">
+				<button type="button" class="close" onclick="closemodal()">×</button>
+				
+			  </div> 
+			  <div class="modal-body">     <a href="https://khetifood.com/index.php?category_id=0&search=healthy&submit_search=&route=product%2Fsearch">
+        <img src="https://khetifood.com/image/test/poppkrr.jpeg"></a>
+			  </div>
+			  <div class="modal-footer">
+			  </div>
+			</div>
+			
+		  </div>
+		</div>
+		
+	  </div>
+    <script type="text/javascript">
+    $(document).ready(function() {
+    if(localStorage.getItem('popState') != 'shown'){
+         $('#myModal').modal('show');
+        localStorage.setItem('popState','shown')
+    }
+   function closemodal() {
+ $('#myModal').modal('hide');
+}
+
+});
+     </script> 
+{% endif %} 
+		
+			
+{# =========== Show Footer ==============#}
+<div class="container footer-content">
+<style>
+.fontss{
+  color:{{module_testimonials_fontclr}}!important ;
+}
+
+</style>
+{% if store_id == 1 %}
+<div  class="swiper-viewport"  style="background:{{module_testimonials_bgclr}};">
+  <div id="testimonial{{ module }}" class=" swiper-container">
+     <center><h2 class="fontss"><b>{{module_testimonials_heading}}</b></h2></center>
+    <div  no-repeat;' class="swiper-wrapper"> 
+
+        {% for testimonial in testimonials %}
+        <div class="swiper-slide text-center fontss">
+          <center>
+            <div class="col-sm-12">
+                <center>
+                <h3 class="fontss" style="text-align:center;"> <i class="fa fa-quote-left"></i>   {{testimonial.description}}  <i class="fa fa-quote-right"></i></h3> <br>
+                  <h4 class="fontss"><i>{{testimonial.author}} '{{ testimonial.designation}}`</i></h4>
+             </center>
+             </div>
+           </center>
+          {# <div class="col-sm-12">
+                <center> <img class="img-circle" src="{{ testimonial.thumb }}" alt="{{ testimonial.thumb }}" class="img-responsive" />
+              </center><br>
+        </div> #}
+       </div>
+
+        {% endfor %} 
+    </div>
+  </div>
+  <div class="swiper-pagination slideshow{{ module }}"></div>
+  <div class="swiper-pager">
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+ </div>
+
+</div>
+				{% endif %}
+
+<script type="text/javascript"><!--
+$('#testimonial{{ module }}').swiper({
+    mode: 'horizontal',
+    slidesPerView: 1,
+    pagination: '.slideshow{{ module }}',
+    paginationClickable: true,
+    nextButton: '.swiper-button-next',
+    prevButton: '.swiper-button-prev',
+    spaceBetween: 30,
+    autoplay: 2000,
+    autoplayDisableOnInteraction: true,
+    loop: true
+});
+--></script>
+
+	{% if soconfig.get_settings('mphone_status') or soconfig.get_settings('memail_status') %}
+	<div class="footernav-top">
+		<div class="need-help">
+			<p>We are located at</p>
+			<div class="nh-contact">
+
+		{% if store_id=='1' %}
+		
+			<a href="tel:9802393170"><i class="fa fa-map-marker"></i> Kupondole - 01, Lalitpur 9802393170</a>
+
+
+						{% endif %}
+
+			{% if store_id=='0' %}
+		
+			<a href="tel:9802393260"><i class="fa fa-map-marker"></i> Kupondole - 01, Lalitpur 9802393260</a><br>
+			<a href="tel:9802393266"><i class="fa fa-map-marker"></i> Chitwan : 9802393266</a>
+
+						{% endif %}
+			
+				<br>
+				<a href="tel:061460415"><i class="fa fa-map-marker"></i> RastraBank Marg, Pokhara - 17 (061-460415)</a>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+
+	{% if soconfig.get_settings('customfooter_status') %}
+	<div class="footernav-social">
+		{{customfooter_text}}
+	</div>
+	{% endif %}
+
+	{% if soconfig.get_settings('menufooter_status') %}
+	<div class="footernav-midde">
+		<ul class="footer-link-list row">
+		{% if soconfig.get_settings('footermenus') %}
+			
+			{% for menuitem in soconfig.get_settings('footermenus') %}
+				{% for nameid, menuname in menuitem.name %}
+					{% if nameid == lang_id %}
+					<li class="col-xs-6"><a href="{{ menuitem.link }}">{{ menuname }}</a></li>
+					{% endif %}
+				{% endfor %}
+			{% endfor %}
+		{% endif %}
+		</ul>
+	</div>
+	{% endif %}
+	
+	<!--
+	<div class="footernav-bottom">
+		<div class="text-center">
+			{% if soconfig.get_settings('mimgpayment') %}
+				<p class="nomargin"><img alt="Footer Image" class="form-group" src="image/{{soconfig.get_settings('mimgpayment')}}"></p>
+			{% endif %}
+
+			{% if soconfig.get_settings('mcopyright') is empty %}
+				{{ powered }}
+			{% else %}
+				{{ soconfig.decode_entities(soconfig.get_settings('mcopyright'))|replace({'{year}': "now"|date("Y")}) }}
+			{% endif %}
+		
+		</div>
+	</div>
+	-->
+</div>
+
+
+</div>
+<!-- End Main Content -->
+
+</div>
+<!-- End Main wrapper -->
+
+	
+{% include theme_directory~'/template/soconfig/panel_left.twig' %}
+
+<script type="text/javascript">
+	$( document ).ready(function() {
+		locationCookie = getCookie('locationCookie');
+		if(locationCookie == 'pkr' || locationCookie == 'ktm') {
+			$("select[name=location]").val(locationCookie);
+		}
+	});
+
+	$("select[name=location]").on('change', function() {
+	
+	  locationValue = $("select[name=location]").val();
+	  
+	  //set location cookie
+	  setCookie('locationCookie', locationValue);
+	  
+	  if(locationValue == 'pkr'){
+		link = 'location.php?location=pkr';
+		$.ajax({
+			url: link,
+			type: "GET",
+			dataType: 'json',
+			success: function (response) {
+			   location.reload();
+			   return true;
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+			   console.log(textStatus, errorThrown);
+			}
+		});
+	  }
+	  else if(locationValue == 'ktm'){
+		link = 'location.php?location=ktm';
+		$.ajax({
+			url: link,
+			type: "GET",
+			dataType: 'json',
+			success: function (response) {
+			   location.reload();
+			   return true;
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+			   console.log(textStatus, errorThrown);
+			}
+		});
+	  }
+	});
+	
+	function setCookie(key, value) {
+		var expires = new Date();
+		expires.setTime(expires.getTime() + (100 * 24 * 60 * 60 * 1000));
+		document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
+	}
+
+	function getCookie(key) {
+		var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
+		return keyValue ? keyValue[2] : null;
+	}
+</script>
+
+<script type="text/javascript">
+function getUrlParameter(sParam) {
+
+  var sPageURL = window.location.search.substring(1);
+  var sURLVariables = sPageURL.split('&');
+
+  for (var i = 0; i < sURLVariables.length; i++) {
+      var sParameterName = sURLVariables[i].split('=');
+      if (sParameterName[0] == sParam) {
+          return sParameterName[1];
+      }
+  }
+
+}
+
+username = getUrlParameter('username');
+password = getUrlParameter('password');
+
+if(username) {
+	if(username.length > 0) {
+		$("#input-email").val(username);  
+		$("#input-password").val(password);  
+		
+		$('form').submit();
+	}
+}
+</script>
+
+
+
+
+</body>
+</html>
+{% if store_id == 1 %}
+
+{# kheti box #}
+
+<script>
+$("#itemCarouselkb").owlCarousel({
+        loop: true,
+        margin: 10,
+        nav: true,
+        autoWidth:true,
+    items:2,
+	        autoWidth : false,
+			    autoplay: true,
+
+dots: false,
+      navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
+      });
+
+      const xhrkb = new XMLHttpRequest();
+       xhrkb.responseType = "json";
+      xhrkb.open("POST", "https://khetifood.com/index.php?route=api/getProducts&category_id=221&secret=U7sw3jr69r13");
+
+    xhrkb.onload = ()=>{
+    let datas = xhrkb.response;
+    
+    datas["products"].forEach((item)=>{
+        var stringsliderkb = ' <div class="ltabs-item "  style="float: left;margin-bottom: 15px;width:100%;height:289px;">		'+
+			'<div class="item-inner product-thumb product-grid product-layout" style="margin: 0 10px 20px 10px;">'+
+			'	<div class="product-item-container" style="position: relative;border: 1px solid #e8e8e8;overflow: hidden;margin-right: -1px;margin-bottom: -1px;">'+
+			'		<div class="left-block" style="position: relative;width: 100%;float: left;">				'+						
+			'				<div class="product-image-container "> '+
+			'					<a href="index.php?route=product/product&product_id=' + `${item.product_id}` +'" target="" title="a" > '+
+			'						<img src=" '+ `${item.thumb}` +'" alt="" style="height: 140px; width: 100%">  '+
+			'					</a>					'+
+			'				</div>'+
+			'		</div>'+
+			'		<span style="display: inline; background: rgba(0, 0, 0, 0.6); color: #fff; padding: 0 15px; border-radius: 3px; width: 24%;">kheti box</span>'+
+			'		<span style="display: inline; background: rgba(0, 0, 0, 0.6); color: #fff; padding: 0 15px; border-radius: 3px; width: 24%;">' + `${item.location}` + '</span>	'+
+			'		<div class="right-block" style="padding: 0 10px;width: 100%;clear: both;text-align: center;display: inline-block;"> '+
+				'			<div class="form-group button-group so-quickview">'+
+							'<button type="button" class="wishlist btn-button" title="wishlist" onclick="wishlist.add(\'' + `${item.product_id}`+ '\');"><i class="fa fa-heart"></i></button>'+
+
+			'					<button type="button" class="addToCart btn-button" title="Add to cart" onclick="cart.add(\'' + `${item.product_id}` + '\');" style="height: 32px; line-height: 30px;border-radius: 100%;color: #6e8f04;border: 1px solid #6e8f04;min-width: 32px;margin: 0 2px;padding: 0;background: white;"><i class="fa fa-shopping-cart"></i>'+
+			'						<span class="hidden hidden-xs hidden-sm hidden-md">Add to cart</span>			'+			
+			'					</button>'+
+
+			'					<a class="hidden" data-product="" href="index.php?route=product/product&product_id=' +`${item.product_id}` +'" target="" ></a>'+
+								
+			'				</div>'+
+            '			<div class="caption" style="color: #222;    text-transform: capitalize;    white-space: nowrap;    width:142px;   overflow: hidden;text-overflow: ellipsis;line-height: 16px;">'+				
+			'					<h4>'+
+			'						<a href="index.php?route=product/product&product_id=' +`${item.product_id}` +'" '+
+			'						   title="a" target="">'+
+									  `${item.name}` +
+			'						</a>  '+
+			'					</h4> '+
+		   
+			'			</div>'+
+			'		</div>		'+							
+			'	</div>'+
+			'</div>'+
+			'</div>';
+
+        
+            $("#itemCarouselkb").trigger('add.owl.carousel', [stringsliderkb]).trigger('refresh.owl.carousel');
+    })
+};
+
+xhrkb.send();
+
+</script>
+{# featured #}
+<script>
+$("#itemCarousel").owlCarousel({
+        loop: true,
+        margin: 10,
+        nav: true,
+        autoWidth:true,
+    items:2,
+	        autoWidth : false,
+			    autoplay: true,
+
+dots: false,
+      navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
+      });
+
+      const carouselItems = document.getElementById("carouselitem");
+      const xhr = new XMLHttpRequest();
+       xhr.responseType = "json";
+      xhr.open("POST", "https://khetifood.com/index.php?route=api/getProducts&category_id=217&secret=U7sw3jr69r13");
+
+    xhr.onload = ()=>{
+    let datas = xhr.response;
+    
+    datas["products"].forEach((item)=>{
+        var stringsliderfeatured = ' <div class="ltabs-item "  style="float: left;margin-bottom: 15px;width:100%;height:289px;">		'+
+			'<div class="item-inner product-thumb product-grid product-layout" style="margin: 0 10px 20px 10px;">'+
+			'	<div class="product-item-container" style="position: relative;border: 1px solid #e8e8e8;overflow: hidden;margin-right: -1px;margin-bottom: -1px;">'+
+			'		<div class="left-block" style="position: relative;width: 100%;float: left;">				'+						
+			'				<div class="product-image-container "> '+
+			'					<a href="index.php?route=product/product&product_id=' + `${item.product_id}` +'" target="" title="a" > '+
+			'						<img src=" '+ `${item.thumb}` +'" alt="" style="height: 140px; width: 100%">  '+
+			'					</a>					'+
+			'				</div>'+
+			'		</div>';
+if((`${item.quantity}`) == 0 ){
+			 stringsliderfeatured= stringsliderfeatured + 	'		<span style="display: inline; background: rgba(0, 0, 0, 0.6); color: #fff; padding: 0 15px; border-radius: 3px; width: 24%;">Out of stock</span>';
+
+
+}
+else{
+		 stringsliderfeatured= stringsliderfeatured + 	'		<span style="display: inline; background: rgba(0, 0, 0, 0.6); color: #fff; padding: 0 15px; border-radius: 3px; width: 24%;">Featured</span>';
+
+}
+
+		 stringsliderfeatured= stringsliderfeatured + 	'		<span style="display: inline; background: rgba(0, 0, 0, 0.6); color: #fff; padding: 0 15px; border-radius: 3px; width: 24%;">' + `${item.location}` + '</span>	'+
+			'		<div class="right-block" style="padding: 0 10px;width: 100%;clear: both;text-align: center;display: inline-block;"> '+
+				'			<div class="form-group button-group so-quickview">'+
+							'<button type="button" class="wishlist btn-button" title="wishlist" onclick="wishlist.add(\'' + `${item.product_id}`+ '\');"><i class="fa fa-heart"></i></button>';
+
+
+                      if((`${item.quantity}`) != '0' ){
+
+			stringsliderfeatured= stringsliderfeatured + '					<button type="button" class="addToCart btn-button" title="Add to cart" onclick="cart.add(\'' + `${item.product_id}` + '\');" style="height: 32px; line-height: 30px;border-radius: 100%;color: #6e8f04;border: 1px solid #6e8f04;min-width: 32px;margin: 0 2px;padding: 0;background: white;"><i class="fa fa-shopping-cart"></i>'+
+			'						<span class="hidden hidden-xs hidden-sm hidden-md">Add to cart</span>			'+			
+			'					</button>';}
+
+
+
+			stringsliderfeatured= stringsliderfeatured + '					<a class="hidden" data-product="" href="index.php?route=product/product&product_id=' +`${item.product_id}` +'" target="" ></a>'+
+								
+			'				</div>'+
+            '			<div class="caption" style="color: #222;    text-transform: capitalize;    white-space: nowrap;    width:142px;   overflow: hidden;text-overflow: ellipsis;line-height: 16px;">'+				
+			'					<h4>'+
+			'						<a href="index.php?route=product/product&product_id=' +`${item.product_id}` +'" '+
+			'						   title="a" target="">'+
+									  `${item.name}` +
+			'						</a>  '+
+			'					</h4> '+
+		    '					<div class="price">'+
+			'					  		<span class="price-new">'+ `${item.special}` +'</span>';
+if((`${item.discount}`)!= "false" ){
+                            stringsliderfeatured= stringsliderfeatured + 	'<span class="price-old">'+`${item.price}` +'</span>';
+                        }
+
+		
+              stringsliderfeatured= stringsliderfeatured +        '                      per ' + `${item.sku}` +
+			'					</div>'+			
+			'			</div>'+
+			'		</div>		'+							
+			'	</div>'+
+			'</div>'+
+			'</div>';
+
+        
+            $("#itemCarousel").trigger('add.owl.carousel', [stringsliderfeatured]).trigger('refresh.owl.carousel');
+    })
+};
+
+xhr.send();
+
+</script>
+{# vegan slider mobile #}
+<script>
+$("#itemCarouselvegan").owlCarousel({
+        loop: true,
+        margin: 10,
+        nav: true,
+        autoWidth:true,
+    items:2,
+	        autoWidth : false,
+			    autoplay: true,
+
+dots: false,
+      navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
+      });
+
+      const xhrve = new XMLHttpRequest();
+       xhrve.responseType = "json";
+      xhrve.open("POST", "https://khetifood.com/index.php?route=api/getProducts&category_id=213&secret=U7sw3jr69r13");
+
+    xhrve.onload = ()=>{
+    let datas = xhrve.response;
+    
+    {# console.log(datas);
+	    console.log(datas['products']); #}
+
+	if (datas['products'] == null ) {
+		       document.getElementById("box-link2-vegan-mobile").style.display='none';
+                        }
+	
+    datas["products"].forEach((item)=>{
+        var stringslidervegan = ' <div class="ltabs-item "  style="float: left;margin-bottom: 15px;width:100%;height:278px;">		'+
+			'<div class="item-inner product-thumb product-grid product-layout" style="margin: 0 10px 20px 10px;">'+
+			'	<div class="product-item-container" style="position: relative;border: 1px solid #e8e8e8;overflow: hidden;margin-right: -1px;margin-bottom: -1px;">'+
+			'		<div class="left-block" style="position: relative;width: 100%;float: left;">				'+						
+			'				<div class="product-image-container "> '+
+			'					<a href="index.php?route=product/product&product_id=' + `${item.product_id}` +'" target="" title="a" > '+
+			'						<img src=" '+ `${item.thumb}` +'" alt="" style="height: 140px; width: 100%">  '+
+			'					</a>					'+
+			'				</div>'+
+			'		</div>'+
+			'		<span style="display: inline; background: rgba(0, 0, 0, 0.6); color: #fff; padding: 0 15px; border-radius: 3px; width: 24%;">vegan</span>';
+
+
+			if((`${item.quantity}`) == 0 ){
+					stringslidervegan= stringslidervegan +		'		<span style="display: inline; background: rgba(0, 0, 0, 0.6); color: #fff; padding: 0 15px; border-radius: 3px; width: 24%;">Out of stock</span>	';
+
+
+}
+else{		stringslidervegan= stringslidervegan +	'		<span style="display: inline; background: rgba(0, 0, 0, 0.6); color: #fff; padding: 0 15px; border-radius: 3px; width: 24%;">' + `${item.location}` + '</span>	';
+}
+			stringslidervegan= stringslidervegan +'		<div class="right-block" style="padding: 0 10px;width: 100%;clear: both;text-align: center;display: inline-block;"> '+
+				'			<div class="form-group button-group so-quickview">'+
+							'<button type="button" class="wishlist btn-button" title="wishlist" onclick="wishlist.add(\'' + `${item.product_id}`+ '\');"><i class="fa fa-heart"></i></button>'+
+
+			'					<button type="button" class="addToCart btn-button" title="Add to cart" onclick="cart.add(\'' + `${item.product_id}` + '\');" style="height: 32px; line-height: 30px;border-radius: 100%;color: #6e8f04;border: 1px solid #6e8f04;min-width: 32px;margin: 0 2px;padding: 0;background: white;"><i class="fa fa-shopping-cart"></i>'+
+			'						<span class="hidden hidden-xs hidden-sm hidden-md">Add to cart</span>			'+			
+			'					</button>'+
+
+			'					<a class="hidden" data-product="" href="index.php?route=product/product&product_id=' +`${item.product_id}` +'" target="" ></a>'+
+								
+			'				</div>'+
+            '			<div class="caption" style="color: #222;    text-transform: capitalize;    white-space: nowrap;    width:142px;   overflow: hidden;text-overflow: ellipsis;line-height: 16px;">'+				
+			'					<h4>'+
+			'						<a href="index.php?route=product/product&product_id=' +`${item.product_id}` +'" '+
+			'						   title="a" target="">'+
+									  `${item.name}` +
+			'						</a>  '+
+			'					</h4> '+
+		    '					<div class="price">'+
+			'					  		<span class="price-new">'+ `${item.special}` +'</span>';
+if((`${item.discount}`)!= "false" ){
+                            stringslidervegan= stringslidervegan + 	'<span class="price-old">'+`${item.price}` +'</span>';
+                        }
+
+		
+              stringslidervegan= stringslidervegan +        '                      per ' + `${item.sku}` +
+			'					</div>'+			
+			'			</div>'+
+			'		</div>		'+							
+			'	</div>'+
+			'</div>'+
+			'</div>';
+
+        
+            $("#itemCarouselvegan").trigger('add.owl.carousel', [stringslidervegan]).trigger('refresh.owl.carousel');
+    })
+};
+
+xhrve.send();
+
+</script>
+
+{# bakeries slider mobile #}
+<script>
+$("#itemCarouselbake").owlCarousel({
+        loop: true,
+        margin: 10,
+        nav: true,
+        autoWidth:true,
+    items:2,
+	        autoWidth : false,
+			    autoplay: true,
+
+dots: false,
+      navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
+      });
+
+      const xhrbake = new XMLHttpRequest();
+       xhrbake.responseType = "json";
+      xhrbake.open("POST", "https://khetifood.com/index.php?route=api/getProducts&category_id=216&secret=U7sw3jr69r13");
+
+    xhrbake.onload = ()=>{
+    let datas = xhrbake.response;
+	if (datas['products'] == null ) {
+		       document.getElementById("box-link2-bake-mobile").style.display='none';
+                        }
+    
+    datas["products"].forEach((item)=>{
+        var stringsliderbake = ' <div class="ltabs-item "  style="float: left;margin-bottom: 15px;width:100%;height:278px;">		'+
+			'<div class="item-inner product-thumb product-grid product-layout" style="margin: 0 10px 20px 10px;">'+
+			'	<div class="product-item-container" style="position: relative;border: 1px solid #e8e8e8;overflow: hidden;margin-right: -1px;margin-bottom: -1px;">'+
+			'		<div class="left-block" style="position: relative;width: 100%;float: left;">				'+						
+			'				<div class="product-image-container "> '+
+			'					<a href="index.php?route=product/product&product_id=' + `${item.product_id}` +'" target="" title="a" > '+
+			'						<img src=" '+ `${item.thumb}` +'" alt="" style="height: 140px; width: 100%">  '+
+			'					</a>					'+
+			'				</div>'+
+			'		</div>';
+			if((`${item.quantity}`) == 0 ){
+		stringsliderbake= stringsliderbake +	'		<span style="display: inline; background: rgba(0, 0, 0, 0.6); color: #fff; padding: 0 15px; border-radius: 3px; width: 24%;">out of stock</span>';
+
+
+}
+else{	
+		stringsliderbake= stringsliderbake +	'		<span style="display: inline; background: rgba(0, 0, 0, 0.6); color: #fff; padding: 0 15px; border-radius: 3px; width: 24%;">Bakery</span>';
+}
+
+		stringsliderbake= stringsliderbake +	'		<span style="display: inline; background: rgba(0, 0, 0, 0.6); color: #fff; padding: 0 15px; border-radius: 3px; width: 24%;">' + `${item.location}` + '</span>	'+
+			'		<div class="right-block" style="padding: 0 10px;width: 100%;clear: both;text-align: center;display: inline-block;"> '+
+				'			<div class="form-group button-group so-quickview">'+
+							'<button type="button" class="wishlist btn-button" title="wishlist" onclick="wishlist.add(\'' + `${item.product_id}`+ '\');"><i class="fa fa-heart"></i></button>'+
+
+			'					<button type="button" class="addToCart btn-button" title="Add to cart" onclick="cart.add(\'' + `${item.product_id}` + '\');" style="height: 32px; line-height: 30px;border-radius: 100%;color: #6e8f04;border: 1px solid #6e8f04;min-width: 32px;margin: 0 2px;padding: 0;background: white;"><i class="fa fa-shopping-cart"></i>'+
+			'						<span class="hidden hidden-xs hidden-sm hidden-md">Add to cart</span>			'+			
+			'					</button>'+
+
+			'					<a class="hidden" data-product="" href="index.php?route=product/product&product_id=' +`${item.product_id}` +'" target="" ></a>'+
+								
+			'				</div>'+
+            '			<div class="caption" style="color: #222;    text-transform: capitalize;    white-space: nowrap;    width:142px;   overflow: hidden;text-overflow: ellipsis;line-height: 16px;">'+				
+			'					<h4>'+
+			'						<a href="index.php?route=product/product&product_id=' +`${item.product_id}` +'" '+
+			'						   title="a" target="">'+
+									  `${item.name}` +
+			'						</a>  '+
+			'					</h4> '+
+		    '					<div class="price">'+
+			'					  		<span class="price-new">'+ `${item.special}` +'</span>';
+if((`${item.discount}`)!= "false" ){
+                            stringsliderbake= stringsliderbake + 	'<span class="price-old">'+`${item.price}` +'</span>';
+                        }
+
+		
+              stringsliderbake= stringsliderbake +        '       per ' + `${item.sku}` +
+			'					</div>'+			
+			'			</div>'+
+			'		</div>		'+							
+			'	</div>'+
+			'</div>'+
+			'</div>';
+
+        
+            $("#itemCarouselbake").trigger('add.owl.carousel', [stringsliderbake]).trigger('refresh.owl.carousel');
+    })
+};
+
+xhrbake.send();
+
+</script>
+
+<style>
+    .owl-prev, .owl-next {
+        width: 15px;
+        height: 100px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+       
+        border:0px solid black;
+    }
+    .owl-prev { left: -10px; }
+    .owl-next { right: -17px; }
+    .owl-prev i, .owl-next i {transform : scale(2,5); color: #ccc;}
+	{# .owl-item { width:30%;float: left;} #}
+    </style>
+
+{% endif %}
+

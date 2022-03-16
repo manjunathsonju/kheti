@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="./css/style1.css">
+        <style type="text/css">
+        </style>
+    </head>
+
+    <body>
+        <header class="main_header">
+            <div class="d-flex justify-content-center align-items-center flex-column py-5">
+                <h1 class="text-uppercase main_heading">Kheti Food</h1>
+                <p class="main_heading__para">Welcome  <span class="text-capitalize bg-dark text-white py-2 px-3"> Our blog</span> </p>
+            </div>
+
+           
+        </header>
+        <!-- header ends -->
+
+        <!-- two sided blog part starts -->
+        <div class="container-fluid ">
+            <div class="row ">
+                <!-- to get the space form left and right -->
+                <div class="col-xl-10  col-lg-10 col-md-12 col-11 mx-auto my-5">
+                    <div class="row gx-5 mx-sm-auto">
+                        <!-- left side of the blog  -->
+                        <div class="col-lg-8 col-md-11 col-11 mx-auto">
+                            <div class="row gy-5 ">
+                                <div class="col-12 card p-4 shadow blog_left__div">
+                                    <div class="d-flex justify-content-center align-items-center flex-column pt-3 pb-5 ">
+                                        <h1 class="text-uppercase">Title Heading</h1>
+                                        <p class="blog_title"> <span class="font-weight-bold"> Title description, </span> Aug 12, 2020 </p>
+                                    </div>
+                                    <figure class="right_side_img mb-5">
+                                        <img src="./img/okk.jpeg" class="img-fluid shadow">
+                                    </figure>
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor libero maxime eos facere dignissimos asperiores culpa commodi, sequi voluptates sed atque illo voluptatibus eveniet, impedit unde nam laboriosam aperiam vero.</p>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus accusamus aperiam ipsam dolore, commodi eligendi tempore praesentium id accusantium nesciunt, aliquid iure in adipisci a deserunt nisi ex illo architecto!</p>                              
+									<div class="d-flex justify-content-between left_div_btns">
+                                        <div>
+                                            <button class="left_div__like" id="like_btn"><i class="fa fa-thumbs-up"></i>Like</button>
+                                        </div>
+                                        <div>
+                                            <button class="left_div__reply" onclick="reply('reply1')">Replies <badge class="bg-white text-dark p-2">1</badge></button>
+                                        </div>
+                                    </div>
+                                    <div class="replies" id="reply1">
+                                        <div class="d-flex justify-content-start flex-row align-items-center card reply_card py-3 ">
+                                            <div class=" reply_img mx-2 align-self-center ">
+                                                <img src="https://img.icons8.com/doodle/48/000000/user-male-skin-type-5.png" />
+                                            </div>
+                                            <div class="reply_text__left">
+                                                <p class="blog_title "> <span class="font-weight-bold"> lorem1 </span> Aug 12, 2020, 7:20 PM </p>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus, tempora? Recusandae iste a pariatur eum ullam natus doloremque libero optio aperiam suscipit cumque, sequi adipisci sit sunt non quis quisquam!</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 2nd topic  -->
+                                <div class="col-12 card p-4 shadow blog_left__div">
+                                    <div class="d-flex justify-content-center align-items-center flex-column pt-3 pb-5 ">
+                                        <h1 class="text-uppercase">Title Heading</h1>
+                                        <p class="blog_title"> <span class="font-weight-bold"> Title description, </span> Aug 12, 2020 </p>
+                                    </div>
+                                    <figure class="right_side_img mb-5">
+                                        <img src="./img/okk.jpeg" class="img-fluid shadow">
+                                    </figure>
+                                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quod officia veniam ea pariatur voluptatum velit adipisci sapiente ab doloribus officiis, dolorum est saepe quia provident. At incidunt exercitationem voluptas ipsum.</p>
+                                    <p>
+                                      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perferendis maiores animi optio, dolorem deserunt, debitis nihil odio eos quas dolore perspiciatis repellat, necessitatibus neque fugit doloribus. Quaerat ipsam consectetur provident.
+                                    </p>
+                                    <div class="d-flex justify-content-between left_div_btns">
+                                        <div>
+                                            <button class="left_div__like" id="like_btn"><i class="fa fa-thumbs-up"></i>Like</button>
+                                        </div>
+                                        <div>
+                                            <button class="left_div__reply" onclick="reply('reply2')">Replies <badge class="bg-white text-dark p-2">2</badge></button>
+                                        </div>
+                                    </div>
+                                    <div class="replies" id="reply2">
+                                        <div class="d-flex justify-content-start flex-row align-items-center card reply_card py-3 ">
+                                            <div class=" reply_img mx-2 align-self-center ">
+                                                <img src="https://img.icons8.com/doodle/48/000000/user-male-skin-type-5.png" />
+                                            </div>
+                                            <div class="reply_text__left">
+                                                <p class="blog_title "> <span class="font-weight-bold">lorem2 </span> Aug 11, 2020, 7:20 PM </p>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia, ut molestias dolores labore atque magnam unde quo qui aliquid perferendis corrupti itaque delectus autem doloremque, corporis quia facilis facere repudiandae.</p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-start flex-row align-items-center card reply_card py-3 ">
+                                            <div class=" reply_img mx-2 align-self-center ">
+                                                <img src="https://img.icons8.com/doodle/48/000000/user-male-skin-type-5.png" />
+                                            </div>
+                                            <div class="reply_text__left">
+                                                <p class="blog_title "> <span class="font-weight-bold"> lorem 3</span> Aug 12, 2020, 7:20 PM </p>
+                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui voluptate accusantium quibusdam id, fugiat, voluptates doloribus est perferendis sequi quae eveniet hic nihil obcaecati adipisci. Repellat dolore pariatur vitae culpa.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 3rd topic -->
+                                <div class="col-12 card p-4 shadow blog_left__div">
+                                    <div class="d-flex justify-content-center align-items-center flex-column pt-3 pb-5 ">
+                                        <h1 class="text-uppercase">Title Heading</h1>
+                                        <p class="blog_title"> <span class="font-weight-bold"> Title description, </span> Aug 12, 2020 </p>
+                                    </div>
+                                    <figure class="right_side_img mb-5">
+                                        <img src="./img/okk.jpeg" class="img-fluid shadow">
+                                    </figure>
+                                    <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam ipsam dolor ullam corrupti esse officiis facere, illo velit aperiam obcaecati inventore illum facilis reprehenderit praesentium dolorem? Consectetur eum ab voluptatibus.</p>
+                                    <p>
+                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolore hic accusantium fugiat quae odio laborum, mollitia sequi modi nisi. Eligendi cupiditate quaerat maiores obcaecati cum eveniet ipsum quisquam totam blanditiis!
+                                    </p>
+                                    <div class="d-flex justify-content-between left_div_btns">
+                                        <div>
+                                            <button class="left_div__like" id="like_btn"><i class="fa fa-thumbs-up"></i>Like</button>
+                                        </div>
+                                        <div>
+                                            <button class="left_div__reply" onclick="reply('reply3')">Replies <badge class="bg-white text-dark p-2">4</badge></button>
+                                        </div>
+                                    </div>
+                                    <div class="replies" id="reply3">
+                                        <div class="d-flex justify-content-start flex-row align-items-center card reply_card py-3 ">
+                                            <div class=" reply_img mx-2 align-self-center ">
+                                                <img src="https://img.icons8.com/doodle/48/000000/user-male-skin-type-5.png" />
+                                            </div>
+                                            <div class="reply_text__left">
+                                                <p class="blog_title "> <span class="font-weight-bold"> lorem3 </span> Aug 12, 2020, 7:20 PM </p>
+                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa ratione, dicta voluptatum dolores non, nemo iste adipisci ducimus voluptatem sint fuga expedita! Quam possimus perferendis qui magnam consectetur doloribus nihil.</p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-start flex-row align-items-center card reply_card py-3 ">
+                                            <div class=" reply_img mx-2 align-self-center ">
+                                                <img src="https://img.icons8.com/doodle/48/000000/user-male-skin-type-5.png" />
+                                            </div>
+                                            <div class="reply_text__left">
+                                                <p class="blog_title "> <span class="font-weight-bold"> lorem4 </span> Aug 12, 2020, 7:20 PM </p>
+                                                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magni at explicabo provident ratione modi voluptates ex tempora, repellat blanditiis assumenda facere ipsa ducimus, voluptas dignissimos numquam harum, ea reiciendis nulla.</p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-start flex-row align-items-center card reply_card py-3 ">
+                                            <div class=" reply_img mx-2 align-self-center ">
+                                                <img src="https://img.icons8.com/doodle/48/000000/user-male-skin-type-5.png" />
+                                            </div>
+                                            <div class="reply_text__left">
+                                                <p class="blog_title "> <span class="font-weight-bold">lorem 5 </span> Aug 12, 2020, 7:20 PM </p>
+                                                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto, impedit accusamus dolor, cumque nesciunt cupiditate provident, culpa rerum magni itaque dolorum amet explicabo sint deleniti excepturi quidem velit fuga odio.</p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-start flex-row align-items-center card reply_card py-3 ">
+                                            <div class=" reply_img mx-2 align-self-center ">
+                                                <img src="https://img.icons8.com/doodle/48/000000/user-male-skin-type-5.png" />
+                                            </div>
+                                            <div class="reply_text__left">
+                                                <p class="blog_title "> <span class="font-weight-bold"> lorem6 </span> Aug 12, 2020, 7:20 PM </p>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae dolorem pariatur quia, expedita perspiciatis eligendi, non libero dolor quam amet, autem quibusdam? Excepturi modi nostrum perferendis esse unde incidunt soluta.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+<!-- *****************************************************************************************************************.
+            right side of the div***************************************************************************************************************** -->
+                        <div class="col-lg-3 col-md-7 col-11  justify-content-end m-lg-0 m-auto ">
+                            <div class="row gy-5 left_div__blog">
+                                <!-- popular post-->
+                                
+                                    <div class="card col-12   shadow">
+                                        <div class="right_div__title py-4 pl-2 " style="background: none;">
+                                            <h2>Popular Posts</h2>
+                                        </div>
+                                        <img src="img/tk.jpg" alt="me"/>
+                                        <p style="text-justify: inter-word; font-size: 15px;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reprehenderit consequatur pariatur ratione <a href="plog-layout.html" style="color: #25a9e0;" >Read more</a></p>
+                                   </div>
+                                   
+
+                                   <div class="card col-12   shadow">
+                                    <div class="right_div__title py-4 pl-2 " style="background: none;">
+                                        <h2>Trending Now</h2>
+                                    </div>
+                                    <img src="img/tk.jpg" alt="me"/>
+                                    <p style="text-justify: inter-word; font-size: 15px;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reprehenderit consequatur pariatur ratione <a href="plog-layout.html" style="color: #25a9e0;" >Read more</a></p>
+                               </div>
+         
+                                <!-- Inspiration -->
+                                <div class="right_div_post">
+                                    <div class="right_div__title py-4 pl-2 ">
+                                        <h2>Categories</h2>
+                                    </div>
+                                    <div class="right_sub__div">
+                                        <div class="row gx-3">
+                                            <div class="col-6">
+                                                <figure>
+                                                    <img src="./img/shopping-bag-full-of-fresh-vegetables-and-fruits-royalty-free-image-1128687123-1564523576.jpg" class="img-fluid shadow">
+                                                </figure>
+                                            </div>
+                                            <div class="col-6">
+                                                <figure>
+                                                    <img src="./img/shopping-bag-full-of-fresh-vegetables-and-fruits-royalty-free-image-1128687123-1564523576.jpg" class="img-fluid shadow">
+                                                </figure>
+                                            </div>
+                                            <div class="col-6">
+                                                <figure>
+                                                    <img src="./img/shopping-bag-full-of-fresh-vegetables-and-fruits-royalty-free-image-1128687123-1564523576.jpg" class="img-fluid shadow">
+                                                </figure>
+                                            </div>
+                                            <div class="col-6">
+                                                <figure>
+                                                    <img src="./img/shopping-bag-full-of-fresh-vegetables-and-fruits-royalty-free-image-1128687123-1564523576.jpg" class="img-fluid shadow">
+                                                </figure>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Follow Me -->
+                                <div class=" right_div_post">
+                                    <div class="right_div__title py-4 pl-2 ">
+                                        <h2>Follow Us</h2>
+                                    </div>
+                                    <div class="right_sub__div d-flex justify-content-around">
+                                        <a href="plog-layout.html"> <i class="fab fa-facebook-square fa-3x"></i></a>
+                                        <a href="plog-layout.html"> <i class="fab fa-3x fa-instagram"></i></a>
+                                        <a href="plog-layout.html"> <i class="fab fa-3x fa-twitter-square"></i></a>
+                                        <a href="plog-layout.html"> <i class="fab fa-3x fa-youtube-square"></i> </a>
+                                        <a href="plog-layout.html"> <i class="fab fa-3x fa-linkedin"></i></a>
+                                    </div>
+                                </div>
+                                <!-- Subscribe -->
+                                <div class=" right_div_post">
+                                    <div class="right_div__title py-4 pl-2 ">
+                                        <h2>Subscribe</h2>
+                                    </div>
+                                    <div class="right_sub__div">
+                                        <form>
+                                            <div class="mb-3">
+                                                <label for="exampleFormControlInput1" class="form-label">Enter your e-mail below and get notified on the latest blog posts.</label>
+                                                <input type="email" class="form-control mt-2" id="exampleFormControlInput1" placeholder="name@example.com">
+                                            </div>
+                                            <div class="col-12">
+                                                <button class="subs_btn d-block" type="submit">Subscribe</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <p class="text-center py-5 bg-light">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Blanditiis iure facilis nihil officia nam iusto iste! Delectus voluptatum reprehenderit ea assumenda amet fugiat autem odit blanditiis consequatur! Consectetur, quo vel!</p>
+        </footer>
+        
+       
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+        const like = document.getElementById('like_btn');
+        const singleClick = () => {
+            like.style.fontWeight = 'bold';
+            like.style.background = '#bbe1fa';
+            like.style.color = '#1b262c';
+            like.innerHTML = "✓ Liked";
+        }
+        const doubleClick = () => {
+            like.style.fontWeight = 'normal';
+            like.style.background = '#3282b8';
+            like.style.color = '#fff';
+            like.innerHTML = "Like";
+        }
+        var clickCount = 0;
+        like.addEventListener('click', function() {
+            clickCount++;
+            if (clickCount === 1) {
+                singleClickTimer = setTimeout(function() {
+                    clickCount = 0;
+                    singleClick();
+                }, 400);
+            } else if (clickCount === 2) {
+                clearTimeout(singleClickTimer);
+                clickCount = 0;
+                doubleClick();
+            }
+        }, false);
+        // show and hide the replies
+        const reply = (rep) => {
+            console.log('hi');
+            // debugger;
+            var res = document.getElementById(rep);
+            console.log(res);
+            if (res.className == "replies") {
+                res.className = "thapa_show";
+                res.style.WebkitTransition = 'all 0.3s ease';
+                // res.style.transition = 'all 0.3s ease';
+                // console.log(thapa_show);
+            } else if (res.className == 'thapa_show') {
+                // res.className = " ";
+                console.log('thapa show');
+                res.className = "replies";
+            }
+        }
+        </script>
+    </body>
+
+</html>

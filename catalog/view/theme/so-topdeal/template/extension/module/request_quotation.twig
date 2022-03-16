@@ -1,0 +1,186 @@
+<!-- Modal -->
+<div id="age-restriction-modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Request Quotation</h4>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="https://khet.kheti.farm/requestQuotation.php" id="quotationForm">
+					<div class="row" id="row0">	  
+					
+						<div class="col-md-6">					
+							<div class="form-group">	
+								<label>Name</label>
+								<div class="input-group">
+								  <div class="input-group-addon"><i class="fa fa-user"></i></div>
+								  <input type="text" class="form-control" name="name" placeholder="Pushpa Raj Bhatta" required="required">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">					
+							<div class="form-group">	
+								<label>Phone</label>
+								<div class="input-group">
+								  <div class="input-group-addon"><i class="fa fa-phone"></i></div>
+								  <input type="text" class="form-control" minlength="10" name="phone" placeholder="9809493841" required="required" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">					
+							<div class="form-group">	
+								<label>Email</label>
+								<div class="input-group">
+								  <div class="input-group-addon"><i class="fa fa-envelope"></i></div>
+								  <input type="text" class="form-control" name="email" placeholder="pushparajbhatta@gmail.com" required="required">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">					
+							<div class="form-group">	
+								<label>Address</label>
+								<div class="input-group">
+								  <div class="input-group-addon"><i class="fa fa-map"></i></div>
+								  <input type="text" class="form-control" name="address" placeholder="Rudramati Marg, Kalopul, Kathmandu" required="required">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">			
+							<div class="form-group">	
+								<label>Vegetable</label>
+								<div class="input-group">
+								  <div class="input-group-addon"><i class="fa fa-leaf"></i></div>
+									<select class="form-control" name="vegetables[]" required="required">
+									  <option value="">Select Vegetable</option>
+									  {% if product_list %}
+									  {% for product in product_list %}
+									  
+										<option value="{{ product.product_id }}">{{ product.name }}</option>
+									  {% endfor %}
+									  {% endif %}
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">					
+							<div class="form-group">	
+								<label>Quantity (in kg)</label>
+								<div class="input-group">
+								  <div class="input-group-addon"><i class="fa fa-balance-scale"></i></div>
+								  <input type="text" class="form-control" name="quantities[]" placeholder="8 kg" required="required" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+								</div>
+							</div>
+						</div>  
+					</div>
+					<div class="row">
+						<div class="col-md-6 form-group">
+							<button class="form-control btn btn-success" type="button" id="addMoreBtn">Add More</button>
+						</div>
+						<div class="col-md-6 form-group">
+							<button class="form-control btn btn-success" type="submit" name="submitQuotation">Submit</button>
+						</div>
+					</div>
+				</form>
+
+      </div>
+	  <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	var rowCounter = 0;
+	//function to add additional form field
+	function addField() { 
+		//alert('hare krishna');
+		
+		//check if existing form row(s) are filled or not
+		var vegetables = $("select[name='vegetables[]']")
+              .map(function(){return $(this).val();}).get();
+		
+		var quantities = $("input[name='quantities[]']")
+              .map(function(){return $(this).val();}).get();
+			  
+		var numOfFormRows = $('select[name*="vegetables[]"]').length;
+
+		if(vegetables.filter(n => n).length != numOfFormRows || quantities.filter(n => n).length != numOfFormRows) {
+			alert('Please fill all the fields');
+			return false;
+		}
+		
+		rowCounter++;
+		
+		var vegetablesHTML = "";
+		{% if product_list %}
+			{% for product in product_list %}
+				vegetablesHTML += '<option value="{{ product.product_id }}">{{ product.name|replace({'\'':'\`'})|raw }}</option>';
+			{% endfor %}
+	    {% endif %}
+									  
+		var formRow = '<div class="col-md-6">'+
+		'<div class="form-group">'+
+		'<label>Vegetable</label>'+
+		'<div class="input-group">'+
+		'<div class="input-group-addon"><i class="fa fa-leaf"></i></div>'+
+		'<select class="form-control" name="vegetables[]" required="required">'+
+		'<option value="">Select Vegetable</option>'+
+		vegetablesHTML +
+		'	</select>'+
+		'</div>'+
+		'</div>'+
+		'</div>'+
+		
+		'<div class="col-md-6">'+
+		'<div class="form-group">'+
+		'<label>Quantity (in kg)</label>'+
+		'<div class="input-group">'+						
+		'<div class="input-group-addon"><i class="fa fa-balance-scale"></i></div>'+
+		'<input type="text" class="form-control" name="quantities[]" placeholder="8 kg" required="required" onkeypress="return event.charCode >= 48 && event.charCode <= 57">'+		
+		'</div>'+
+		'</div>'+
+		'</div>';
+		
+		
+		
+		var divRow = document.createElement("div");
+		divRow.setAttribute("class", "row");
+		
+		divRow.setAttribute("id", "row"+rowCounter.toString());
+		
+		//divRow.append(formRow);
+		//$("#formRow").clone().insertAfter("#formRow");
+		//$('#quotationForm').append(divRow);
+		$(divRow).insertAfter("#row"+(rowCounter-1).toString());
+		$("#row"+rowCounter.toString()).append(formRow);
+		
+		
+		//document.getElementById ("addMoreBtn" + rowCounter.toString()).addEventListener ("click", addField, false);		
+		return false;
+		
+		var a = $('#quotationForm').parentNode;
+		//a.appendChild(formRow);
+		
+		var ref = document.querySelector('div.row');
+		insertAfter(formRow, ref);
+	}
+
+	function insertAfter(el, referenceNode) {
+		referenceNode.parentNode.insertBefore(el, referenceNode.nextSibling);
+	}
+	
+	document.getElementById ("addMoreBtn").addEventListener ("click", addField, false);
+	
+	//replace vegetable-quantity json with readable value
+	var table = $("table tbody");
+	table.find('tr').each(function (i, el) {
+        var $tds = $(this).find('td'),
+            veg_quantity = $tds.eq(5).text();
+    });
+	
+});
+</script>

@@ -1,0 +1,256 @@
+{{ header }}
+               {{ nav }}
+
+               
+                         <h4>Dashboard</h4>
+             <div class="row">
+              <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2" style="border-left: .25rem solid #4e73df!important;">
+                  <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                          <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" style="font-size: 15px;">
+                                  <a href="https://khetifood.com/index.php?route=b2b/customers&id={{ id }}&tkn={{ tkn }}">Total Customers</a></div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">{{number_of_customers}}</div>
+                          </div>
+                          <div class="col-auto">
+                              <i class="fa fa-users" style="font-size: 35px;"></i>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card border-left-success shadow h-100 py-2" style="border-left: .25rem solid #36b9cc!important;">
+              <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Orders</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">{{number_of_orders}}</div>
+                      </div>
+                      <div class="col-auto">
+                          <i class="fa fa-shopping-cart" style="font-size: 35px;"></i>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="col-xl-3 col-md-6 mb-4">
+       <div class="card border-left-warning shadow h-100 py-2" style="border-left: .25rem solid #f6c23e!important;">
+           <div class="card-body">
+               <div class="row no-gutters align-items-center">
+                   <div class="col mr-2">
+                       <div class="text-xs font-weight-bold text-warning text-uppercase mb-1" style="font-size: 15px;">
+                           Pending Orders</div>
+                       <div class="h5 mb-0 font-weight-bold text-gray-800">{{number_of_pending_orders}}</div>
+                   </div>
+                   <div class="col-auto">
+                       <i class="fa fa-shopping-basket" style="font-size: 35px;"></i>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+   <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-warning shadow h-100 py-2" style="border-left: .25rem solid #28a745!important;">
+        <div class="card-body">
+            <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                Transaction sum</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">Rs.{{totalsum}}k</div>
+                </div>
+                <div class="col-auto">
+                    <i class="fa fa-money" style="font-size: 35px;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+         </div><div class="row"><div class="card shadow col-xl-8 col-md-6 mb-4">
+          <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Orders</h6>
+          </div>
+          <div class="card-body">
+              <h4 class="small font-weight-bold"><a href="https://khetifood.com/index.php?route=api/b2bDash&order_status_id=1&id={{ id }}&tkn={{ tkn }}">Pending Orders</a><span
+                      class="float-right">{{ percentage_of_pending_orders }}%</span></h4>
+              <div class="progress mb-4">
+                  <div class="progress-bar bg-danger" role="progressbar" style="width: {{percentage_of_pending_orders}}%"
+                      aria-valuenow="{{percentage_of_pending_orders}}" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <h4 class="small font-weight-bold"><a href="index.php?route=api/b2bDash&order_status_id=2&id={{ id }}&tkn={{ tkn }}">Processing Orders</a><span
+                      class="float-right">{{percentage_of_processing_orders}}%</span></h4>
+              <div class="progress mb-4">
+                  <div class="progress-bar bg-warning" role="progressbar" style="width: {{percentage_of_processing_orders}}%"
+                      aria-valuenow="{{percentage_of_processing_orders}}" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <h4 class="small font-weight-bold"><a href="index.php?route=api/b2bDash&order_status_id=3&id={{ id }}&tkn={{ tkn }}">Completed Orders</a><span
+                      class="float-right">{{percentage_of_complete_orders}}%</span></h4>
+              <div class="progress mb-4">
+                  <div class="progress-bar" role="progressbar" style="width: {{percentage_of_complete_orders}}%"
+                      aria-valuenow="'{{percentage_of_complete_orders}}" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              
+          </div>
+      </div>
+      <div class="card shadow col-xl-3 col-md-5 mb-3" style="margin-left: 25px;">
+          <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Sum paid
+                      </div>
+                      <div class="row no-gutters align-items-center">
+                          <div class="col-auto">
+                              <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ paidper }}%</div>
+                          </div>
+                          <div class="col">
+                              <div class="progress progress-sm mr-2">
+                                  <div class="progress-bar bg-info" role="progressbar"
+                                      style="width: {{ paidper }}%" aria-valuenow="{{ paidper }}" aria-valuemin="0"
+                                      aria-valuemax="100"></div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-auto">
+                      <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                  </div>
+              </div>
+              <hr>
+
+              <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                  <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Sum Unpaid
+                  </div>
+                  <div class="row no-gutters align-items-center">
+                      <div class="col-auto">
+                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ unpaidper }}%</div>
+                      </div>
+                      <div class="col">
+                          <div class="progress progress-sm mr-2">
+                              <div class="progress-bar bg-danger" role="progressbar"
+                                  style="width: {{ unpaidper }}%" aria-valuenow="{{ unpaidper }}" aria-valuemin="0"
+                                  aria-valuemax="100"></div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-auto">
+                  <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+              </div>
+          </div>
+          <hr>
+          <h4 class="small font-weight-bold">
+          Paid: Rs. {{paidsum}}
+          <br><br>
+          Unpaid: Rs. {{unpaidsum}}
+          </h4>
+          <span> Unpaid order since {{ date1 }}</span>
+           </div>  </div>
+ 
+     </div>
+      {# <div class="card shadow mb-4">
+      <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Orders Payment Report</h6>
+      </div>
+      <div class="card-body">
+      <div class="row">
+      <div class="col mr-2">
+      <div class="input-group">
+      <h4 class="small font-weight-bold">Date From</h4>
+      <input type="text" style="width: 75%;padding: 3px;" id="datetimepicker4" aria-describedby="basic-addon3" >
+      </div></div>
+
+    <div class="col mr-2">
+    <div class="input-group">
+    <h4 class="small font-weight-bold">Date To</h4>
+    <input type="text" style="width: 75%;padding: 3px;" id="datetimepicker3" aria-describedby="basic-addon3" >
+      </div>
+    </div>
+    <button type="button" class="btn btn-success" id="weekpay"><i class="fa fa-level-down"></i></button>
+    </div>
+
+      </div>  #}
+    
+{# 
+      <div class="input-group-prepend" style="display: block;width: 100%;margin: 5px 0;">
+      <span class="input-group-text" id="basic-addon3"><h6 class="m-0 font-weight-bold text-primary" style="float:right;">Total Paid Amount: </h6>Rs. <span id="paid_txt"> </span>
+    </div>
+    <div class="input-group-prepend" style="display: block;width: 100%;margin: 5px 0;">
+      <span class="input-group-text" id="basic-addon3"><h6 class="m-0 font-weight-bold text-primary" style="float:right;">Paid Order Ids:</h6><span id="paid_orders"> </span>
+    </div>     
+      
+
+      <div class="input-group-prepend" style="display: block;width: 100%;margin: 5px 0;">
+      <span class="input-group-text" id="basic-addon3"><h6 class="m-0 font-weight-bold text-primary">Total Unpaid Amount: </h6>Rs. <span id="unpaid_txt"> </span>
+    </div>
+    <div class="input-group-prepend" style="display: block;width: 100%;margin: 5px 0;">
+      <span class="input-group-text" id="basic-addon3"><h6 class="m-0 font-weight-bold text-primary">UnPaid Order Ids:</h6><span id="unpaid_orders"> </span>
+    </div> #}
+
+
+  </div><style>
+          .border-left-primary {
+            border-left: .25rem solid #4e73df!important;
+        }</style>
+        <script type="text/javascript">
+          $('#datetimepicker4').datepicker({
+        pickTime: false,
+        dateFormat: 'yy-mm-dd'
+    });
+    </script>
+    <script type="text/javascript">
+    $('#datetimepicker3').datepicker({
+  pickTime: false,
+  dateFormat: 'yy-mm-dd'
+});
+</script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+                  integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+              </script>
+              <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+                  integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+              </script>
+          <script>
+            $(document).ready(function () {
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar').toggleClass('active');
+                });
+            });
+          </script>
+     <script> 
+    let update_text_paid= document.getElementById("paid_txt");
+    let update_text_unpaid= document.getElementById("unpaid_txt");
+    let paidpaid= document.getElementById("paid_orders");
+    let unpaidunpaid= document.getElementById("unpaid_orders");
+
+
+    document.querySelector('#weekpay').addEventListener('click', function () {
+    fetch("https://khetifood.com/index.php?route=api/b2bDashHome/weeklyPaymentStatus&date_start="+document.getElementById("datetimepicker4").value+"&date_end="+document.getElementById("datetimepicker3").value+'&id='.$this->request->get['id'].'&tkn='.$this->request->get['tkn']);
+
+     .then((response) => {
+       console.log(response);
+       return response.json();
+     })
+     .then((data) => { 
+        update_text_paid.innerHTML =data["paid_total"];
+        update_text_unpaid.innerHTML =data["unpaid_total"];
+        let text="<textarea style="height: 30px;width: 900px;">";
+        let text1="<textarea style="height: 30px;width: 900px;">";
+        for (i = 0; i < data["array_paid"].length; i++) {
+            text =text+data['array_paid'][i]['order_id']+",";
+          }
+          text =text+"</textarea>";
+
+          paidpaid.innerHTML =text;
+          for (i = 0; i < data["array_unpaid"].length; i++) {
+            text1 =text1+data['array_unpaid'][i]['order_id']+",";
+          }
+          text1 =text1+"</textarea>";
+          unpaidunpaid.innerHTML =text1;
+     })
+     .catch(function(error)  {
+         console.log(error);
+     });
+   });
+   </script>

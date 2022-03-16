@@ -1,0 +1,2 @@
+This process used 2 ms for its computations
+It spent 2 ms in system calls

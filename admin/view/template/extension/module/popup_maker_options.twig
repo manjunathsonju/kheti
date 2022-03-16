@@ -1,0 +1,58 @@
+<input type="hidden" class="popup-title-input" value="{{ popup_title }}">
+<input type="hidden" class="popup-hash-id-input" value="{{ popup_hash_id }}">
+<div class="row options-container">
+	<div class="col-md-3">
+		<select class="form-control main-target" onchange="sgpm_loader.initTargets(this)">
+			{% for group, types in option_types %}
+				<optgroup label="{{ group }}">
+					{% for value, name in types %}
+						<option value="{{ value }}"
+							{% if option_selected == value %}
+								{{ 'selected' }}
+							{% endif %}
+						>{{ name }}</option>
+					{% endfor %}
+				</optgroup>
+			{% endfor %}
+		</select>
+	</div>
+	<div class="col-md-2">
+		<select class="form-control selected-operator">
+			{% for value, name in operator_types %}
+				<option value="{{ value }}"
+					{% for selected in target_selected %}
+						{% if selected.operator == value %}
+							{{ 'selected' }}
+						{% endif %}
+					{% endfor %}
+				>{{ name }}</option>
+			{% endfor %}
+		</select>
+	</div>
+	<div class="col-md-5">
+		<div class="page-select-options">
+			<select class="targets-list" multiple="multiple">
+				{% for target in targets_list %}
+					<option value="
+					{% if target.path == 0 %}
+						{{ target.data_value }}
+					{% else %}
+						{{ target.path ~ '_' ~ target.data_value }}
+					{% endif %}
+						"{% for selected in target_selected %}
+							{% if selected.route == target.data_value or selected.route == target.path ~ '_' ~ target.data_value %}
+								{{ 'selected' }}
+							{% endif %}
+						{% endfor %}
+					>{{ target.name }}</option>
+				{% endfor %}
+			</select>
+		</div>
+	</div>
+	<div class="col-md-2">
+		<div class="row buttons-container">
+			<button type="button" class="btn btn-light action-button remove" onclick="sgpm_loader.removePopupOptionElement(this)"><i class="fa fa-minus" aria-hidden="true"></i></button>
+			<button type="button" class="btn btn-light action-button add display-none" onclick="sgpm_loader.getPopupOptionsByName()"><i class="fa fa-plus" aria-hidden="true"></i></button>
+		</div>
+	</div>
+</div>

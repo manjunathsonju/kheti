@@ -1,0 +1,122 @@
+{#=====Get variable : Config Select Block on header=====#}
+{% set hidden_headertop = soconfig.get_settings('toppanel_type') =='1' or soconfig.get_settings('toppanel_type') =='2'? 'hidden-compact' : '' %}
+{% set hidden_headercenter = soconfig.get_settings('toppanel_type') =='2'? 'hidden-compact' : '' %}
+{% set hidden_headerbottom = soconfig.get_settings('toppanel_type') =='1'? 'hidden-compact' : '' %}
+
+<header id="header" class=" variant typeheader-{{ typeheader ? typeheader : '1'}}">
+	{#======	HEADER promotion	=======#}  
+	{% if soconfig.get_settings('promotion_status') and soconfig.get_settings('promotion') %}
+	<div class="header-bonus {{hidden_headertop}}" >
+		<div class="module no-margin">
+		    <div class="socustom_html">
+		    	<div class="coupon-code" style="display: block;">
+		    		<div class="container">
+					
+						{{ soconfig.decode_entities( soconfig.get_settings('promotion') ) }}
+					</div>
+					<div class="topbar-close"></div></div>
+				</div>
+			</div>
+		
+	</div>
+	{% endif %}
+	{#======	HEADER TOP	=======#}  
+
+	<div class="header-top {{hidden_headertop}}">
+		<div class="container">
+			<div class="row">
+				<div class="header-top-left  col-lg-6  col-sm-4 col-md-6 hidden-xs">
+					<div class="list-contact">
+						{% if soconfig.get_settings('welcome_message_status') and soconfig.get_settings('welcome_message') is not empty %}
+							{{ soconfig.decode_entities( soconfig.get_settings('welcome_message') ) }}
+						{% endif %} 
+					</div> 
+				</div>
+				<div class="header-top-right collapsed-block col-lg-6 col-sm-8 col-md-6 col-xs-12 ">
+					
+					<div  class="tabBlock" id="TabBlock-1">
+						<ul class="top-link list-inline">
+							<li class="login" >
+								{% if logged %} 
+									<a class="link-lg" href="{{ logout}} ">{{ text_logout }} </a>
+								{% else %}   
+									<a class="link-lg" href="{{ login }} ">{{ text_login }} </a>
+								 {% endif %}
+							</li>
+							<li class="account " id="my_account"><a href="{{ account }}" title="{{ text_account }}" class="btn-xs dropdown-toggle" data-toggle="dropdown"> <span>{{ text_account }}</span> <span class="fa fa-angle-down"></span></a>
+								<ul class="dropdown-menu ">
+									<li><a href="{{ account }}">{{ text_account }}</a></li>
+									<li><a href="{{ order }}">{{ text_order }}</a></li>
+									<li><a href="{{ transaction }}">{{ text_transaction }}</a></li>
+									<li><a href="{{ download }}">{{ text_download }}</a></li>
+									{% if soconfig.get_settings('checkout_status') %}
+									<li class="checkout"><a href="{{ checkout }} " class="btn-link" title="{{ text_checkout }} "><span >{{ text_checkout }} </span></a></li>
+									{% endif %} 
+								</ul>
+							</li>
+							<!-- LANGUAGE CURENTY -->
+							{% if soconfig.get_settings('lang_status') %}
+								<li >{{ language }} </li>
+								<li class="currency" > {{ currency }}  </li>
+							{% endif %} 
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{#======	HEADER CENTER	=======#} 
+	<div class="header-center {{hidden_headercenter}}">
+		<div class="container">
+			<div class="row">
+				<!-- LOGO -->
+				<div class="navbar-logo col-lg-3 col-md-12 col-xs-12">
+				    {{soconfig.get_logo()}}
+				</div>
+				<div class="header-center-right col-lg-6 col-md-7 col-sm-7 col-xs-9">
+					<!-- BOX CONTENT MENU -->
+					<div class="header_search">
+						{{ search_block }} 
+					</div>
+				</div>
+				<div class="header-cart-phone col-lg-3 col-md-5 col-sm-5 col-xs-3">
+					<div class="bt-head header-cart">
+					 	{{ cart }}
+					</div>
+					<div class="header_custom_link hidden-xs">
+						<ul>
+							<li class="compare"><a href="{{ compare }}"  class="top-link-compare" title="{{ text_compare }} "></a></li>
+							<li class="wishlist"><a href="{{ wishlist }}" class="top-link-wishlist" title="{{ text_wishlist }} "></a></li>
+						</ul>	
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	{#======	HEADER BOTTOM	=======#} 
+	<div class="header-bottom {{hidden_headerbottom}}">
+		<div class="container">
+			<div class="header-bottom-inner">
+				<div class="row">
+					<div class="header-bottom-left menu-vertical col-md-3 col-sm-6 col-xs-7">
+						<div class="megamenu-style-dev">
+							{{ content_menu2 }}
+						</div>
+					</div>
+					<div class="header-bottom-right col-md-9 col-sm-6 col-xs-5">
+						<div class="header-menu">
+							<div class="megamenu-style-dev megamenu-dev">
+								{{ content_menu }}
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div> 
+	</div>
+	
+</header>

@@ -1,0 +1,202 @@
+<section id="box-link{{ category_id }}" class="section-style ">
+            <div class="container page-builder-ltr">
+                <div class="row row_qfpp  row-style ">
+                    <div class="col-lg-12 col-md-4 col-sm-6 col-xs-12 col_hytt  col-style">
+                        <div class="module so-listing-tabs-ltr home-ltr default-nav claerfix img-float label-1">
+                            <div class="head-title font-ct">
+                                <h2 class="modtitle" style="background: #FF5C33;width: 390px;">
+                                   <img src="image/ful.png"> <a href="index.php?route=product/category&amp;path={{ category_id }}" style="color: #ffffff">{{ module_name }}</a>
+                                </h2>
+                            </div>
+                            <div class="modcontent">
+                                
+                                    <div class="ltabs-wrap">
+                                        <div class="wap-listing-tabs products-list grid">
+                                            <div class="ltabs-items-container">
+                                                <div class="ltabs-items  ltabs-items-selected ltabs-items-loaded items-category-172" data-total="6">
+                                                    <div id="products_container_{{ category_id }}_mobile" class="ltabs-items-inner ltabs00-4 ltabs01-3 ltabs02-3 ltabs03-2 ltabs04-2 none">
+
+                                                        <!--oneproduct display-->
+
+                                                        <!--oneproductdisplaydesign-->
+
+
+                                                    </div>
+
+                           <button id="mobile_{{ category_id }}_loadmdore" type="button" class="btn btn-outline-success" style="    margin-left: 150px;margin-top: 10px;visibility:visible;
+">View more</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div></section> 
+												 
+<script type="text/javascript">
+let mobilecount{{ category_id }}=4;
+     $(document).ready(function() {
+         $.ajax({
+             type :"POST",
+             url : "index.php?route=api/getProducts&category_id="+{{ category_id }}+"&secret=U7sw3jr69r13",
+            dataType: "json",
+                    success: function (data) {
+                        var response = JSON.parse(JSON.stringify(data));
+
+if (response["products"] == null ) {
+                         
+                            document.getElementById("box-link{{ category_id }}").style.display='none';
+                        }
+						if ( response["products"].length < 4 ){
+                                 document.getElementById('mobile_{{ category_id }}_loadmdore').style.visibility = 'hidden';
+                             }
+
+
+
+                        for (var i = 0; i < 4; i++) {
+                 var productHtml{{ category_id }} =' <div class="ltabs-item "  style="float: left;margin-bottom: 15px;width:50%;height:278px;">		'+
+			'<div class="item-inner product-thumb product-grid product-layout" style="margin: 0 10px 20px 10px;">'+
+			'	<div class="product-item-container" style="position: relative;border: 1px solid #e8e8e8;overflow: hidden;margin-right: -1px;margin-bottom: -1px;">'+
+			'		<div class="left-block" style="position: relative;width: 100%;float: left;">				'+						
+			'				<div class="product-image-container "> '+
+			'					<a href="index.php?route=product/product&product_id=' + response["products"][i].product_id +'" target="" title="a" > '+
+			'						<img src=" '+ response["products"][i].thumb +'" alt="" style="height: 140px; width: 100%">  '+
+			'					</a>					'+
+			'				</div>'+
+			'		</div>';
+			if(response["products"][i].quantity == 0 ){
+				 productHtml{{ category_id }}= productHtml{{ category_id }} + '	<span style="display: inline; background: rgba(0, 0, 0, 0.6); color: #fff; padding: 0 15px; border-radius: 3px; width: 24%;">Out of stock</span>';
+
+				
+			}
+
+
+			 productHtml{{ category_id }}= productHtml{{ category_id }} + '		<span style="display: inline; background: rgba(0, 0, 0, 0.6); color: #fff; padding: 0 15px; border-radius: 3px; width: 24%;">{{ category_name }}</span>'+
+			'		<span style="display: inline; background: rgba(0, 0, 0, 0.6); color: #fff; padding: 0 15px; border-radius: 3px; width: 24%;">' + response["products"][i].location + '</span>	'+
+			'		<div class="right-block" style="padding: 0 10px;width: 100%;clear: both;text-align: center;display: inline-block;"> '+
+				'			<div class="form-group button-group so-quickview">'+
+							'<button type="button" class="wishlist btn-button" title="wishlist" onclick="wishlist.add(\'' + response["products"][i].product_id + '\');"><i class="fa fa-heart"></i></button>';
+
+ 			if(response["products"][i].quantity != 0 ){
+ 				productHtml{{ category_id }}= productHtml{{ category_id }} +
+			'					<button type="button" class="addToCart btn-button" title="Add to cart" onclick="cart.add(\'' + response["products"][i].product_id + '\');" style="height: 32px; line-height: 30px;border-radius: 100%;color: #6e8f04;border: 1px solid #6e8f04;min-width: 32px;margin: 0 2px;padding: 0;background: white;"><i class="fa fa-shopping-cart"></i>'+
+			'						<span class="hidden hidden-xs hidden-sm hidden-md">Add to cart</span>			'+			
+			'					</button>';}
+
+
+
+
+				productHtml{{ category_id }}= productHtml{{ category_id }} +'					<a class="hidden" data-product="" href="index.php?route=product/product&product_id=' + response["products"][i].product_id +'" target="" ></a>'+
+								
+			'				</div>'+
+            '			<div class="caption" style="color: #222;    text-transform: capitalize;    white-space: nowrap;    width:142px;   overflow: hidden;text-overflow: ellipsis;line-height: 16px;">'+				
+			'					<h4>'+
+			'						<a href="index.php?route=product/product&product_id=' + response["products"][i].product_id +'" '+
+			'						   title="a" target="">'+
+									  response["products"][i].name +
+			'						</a>  '+
+			'					</h4> '+
+		    '					<div class="price">'+
+			'					  		<span class="price-new">'+ response["products"][i].special +'</span>';
+
+if(response["products"][i] .discount!= false ){
+                            productHtml{{ category_id }}= productHtml{{ category_id }} + 	'<span class="price-old">'+response["products"][i].price +'</span>';
+                        }
+
+		
+              productHtml{{ category_id }}= productHtml{{ category_id }} +        '                      per ' + response["products"][i] .sku +
+			'					</div>'+			
+			'			</div>'+
+			'		</div>		'+							
+			'	</div>'+
+			'</div>'+
+			'</div>';
+
+                       
+                $('#products_container_{{ category_id }}_mobile').append(productHtml{{ category_id }});
+                        } 
+						document.querySelector('#mobile_{{ category_id }}_loadmdore').addEventListener('click',function () {
+							let abf = response["products"].length - mobilecount{{ category_id }} ;
+
+                            if( (abf / 4 )>= 1 ){
+                                var countmoref= 4;
+
+                            } else{
+                                var countmoref = (abf);
+
+                            }
+                     
+                               for (var i = mobilecount{{ category_id }}; i < (mobilecount{{ category_id }}+countmoref); i++) {
+                                 var productHtml{{ category_id }} =' <div class="ltabs-item "  style="float: left;margin-bottom: 15px;width:50%;height:278px;">		'+
+			'<div class="item-inner product-thumb product-grid product-layout" style="margin: 0 10px 20px 10px;">'+
+			'	<div class="product-item-container" style="position: relative;border: 1px solid #e8e8e8;overflow: hidden;margin-right: -1px;margin-bottom: -1px;">'+
+			'		<div class="left-block" style="position: relative;width: 100%;float: left;">				'+						
+			'				<div class="product-image-container "> '+
+			'					<a href="index.php?route=product/product&product_id=' + response["products"][i].product_id +'" target="" title="a" > '+
+			'						<img src=" '+ response["products"][i].thumb +'" alt="" style="height: 140px; width: 100%">  '+
+			'					</a>					'+
+			'				</div>'+
+			'		</div>';
+			if(response["products"][i].quantity == 0 ){
+				 productHtml{{ category_id }}= productHtml{{ category_id }} +'<span style="display: inline; background: rgba(0, 0, 0, 0.6); color: #fff; padding: 0 15px; border-radius: 3px; width: 24%;">Out of stock</span>';
+
+				
+			}
+
+			 productHtml{{ category_id }}= productHtml{{ category_id }} + '		<span style="display: inline; background: rgba(0, 0, 0, 0.6); color: #fff; padding: 0 15px; border-radius: 3px; width: 24%;">{{ category_name }}</span>'+
+			'		<span style="display: inline; background: rgba(0, 0, 0, 0.6); color: #fff; padding: 0 15px; border-radius: 3px; width: 24%;">' + response["products"][i].location + '</span>	'+
+			'		<div class="right-block" style="padding: 0 10px;width: 100%;clear: both;text-align: center;display: inline-block;"> '+
+				'			<div class="form-group button-group so-quickview">'+
+							'<button type="button" class="wishlist btn-button" title="wishlist" onclick="wishlist.add(\'' + response["products"][i].product_id + '\');"><i class="fa fa-heart"></i></button>'+
+
+			'					<button type="button" class="addToCart btn-button" title="Add to cart" onclick="cart.add(\'' + response["products"][i].product_id + '\');" style="height: 32px; line-height: 30px;border-radius: 100%;color: #6e8f04;border: 1px solid #6e8f04;min-width: 32px;margin: 0 2px;padding: 0;background: white;"><i class="fa fa-shopping-cart"></i>'+
+			'						<span class="hidden hidden-xs hidden-sm hidden-md">Add to cart</span>			'+			
+			'					</button>'+
+
+			'					<a class="hidden" data-product="" href="index.php?route=product/product&product_id=' + response["products"][i].product_id +'" target="" ></a>'+
+								
+			'				</div>'+
+            '			<div class="caption" style="color: #222;    text-transform: capitalize;    white-space: nowrap;    width:142px;   overflow: hidden;text-overflow: ellipsis;line-height: 16px;">'+				
+			'					<h4>'+
+			'						<a href="index.php?route=product/product&product_id=' + response["products"][i].product_id +'" '+
+			'						   title="a" target="">'+
+									  response["products"][i].name +
+			'						</a>  '+
+			'					</h4> '+
+		    '					<div class="price">'+
+			'					  		<span class="price-new">'+ response["products"][i].special +'</span>';
+
+if(response["products"][i] .discount!= false ){
+                            productHtml{{ category_id }}= productHtml{{ category_id }} + 	'<span class="price-old">'+response["products"][i].price +'</span>';
+                        }
+
+		
+              productHtml{{ category_id }}= productHtml{{ category_id }} +        '                      per ' + response["products"][i] .sku +
+			'					</div>'+			
+			'			</div>'+
+			'		</div>		'+							
+			'	</div>'+
+			'</div>'+
+			'</div>';
+                       
+                            $('#products_container_{{ category_id }}_mobile').append(productHtml{{ category_id }});
+                        } 
+                             mobilecount{{ category_id }} = mobilecount{{ category_id }}+countmoref;
+                          
+                                
+
+                             if ( mobilecount{{ category_id }} == (response["products"].length ) ){
+                                 document.getElementById('mobile_{{ category_id }}_loadmdore').style.visibility = 'hidden';
+
+                             }     
+        });
+
+                    }
+         })
+
+     });
+</script>

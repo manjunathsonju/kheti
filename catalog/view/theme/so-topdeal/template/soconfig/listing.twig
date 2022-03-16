@@ -1,0 +1,308 @@
+{#
+****************************************************** 
+ * @package	SO Framework for Opencart 3.x
+ * @author	http://www.opencartworks.com
+ * @license	GNU General Public License
+ * @copyright(C) 2008-2017 opencartworks.com. All rights reserved.
+ ******************************************************
+#}
+{#====  Variables Device_res ==== #}
+
+{% set devices = { 'lg' : 'Desktops','md' : 'Tablet Landscape','sm' : 'Tablet Portrait','xs' : 'Phones'} %}
+{% set devices2 = { 'lg' : 'Desktops' } %}
+{% set device_res = '' %}
+{% set device_res = '' %}
+{% set device_lg = '' %}
+
+{% for  key,subfix in devices2 %}
+	{% set device_lg = device_lg ~ soconfig.get_settings('product_catalog_column_'~key) %}
+{% endfor %}
+
+{% if soconfig.get_route()=='product/category' or  soconfig.get_route()=='extension/module/so_filter_shop_by/filter_data' %}
+	{% for  key, subfix in devices %}
+		{% if soconfig.get_settings('product_catalog_column_'~key) == 5 %}
+			{% set device_res = device_res ~ ' col-'~key~'-15' %}
+		{% else %}
+			{% set device_res = device_res ~ ' col-'~key~'-'~(12 / soconfig.get_settings('product_catalog_column_'~key) ) %}
+		{% endif %}
+		
+	{% endfor %}
+{% else %}
+	{% for  key, subfix in devices %}
+		{% if soconfig.get_settings('other_catalog_column_'~key) == 5 %}
+			{% set device_res = device_res ~ ' col-'~key~'-15' %}
+		{% else %}
+			{% set device_res = device_res ~ ' col-'~key~'-'~(12 / soconfig.get_settings('other_catalog_column_'~key) ) %}
+		{% endif %}
+	{% endfor %}
+{% endif %}
+
+{#==== filters panel Top==== #}
+<div class="product-filter filters-panel">
+  <div class="row">
+		<div class="col-sm-2 view-mode hidden-sm hidden-xs">
+			<div class="list-view">
+				<button type="button" id="grid-view" class="btn btn-default grid {{ listingType=='grid' ? 'active' : ''}}" data-toggle="tooltip" title="{{ button_grid }}"><i class="fa fa-th-large"></i></button>
+				<button type="button" id="list-view" class="btn btn-default list {{ listingType=='list' ? 'active' : ''}}" data-toggle="tooltip" title="{{ button_list }}"><i class="fa fa-bars"></i></button>
+			</div>
+		</div>
+	
+		<div class="short-by-show form-inline text-right col-md-10 col-sm-12">
+			<div class="form-group short-by">
+				<label class="control-label" for="input-sort">{{ text_sort }}</label>
+				<select id="input-sort" class="form-control" onchange="location = this.value;">
+					
+					{% for sorts in sorts %}
+					{% if sorts.value == '%s-%s'|format(sort, order) %}
+					<option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
+					{% else %}
+					
+					<option value="{{ sorts.href }}">{{ sorts.text }}</option>
+					
+					{% endif %}
+					{% endfor %}
+				
+				</select>
+			</div>
+			<div class="form-group">
+				<label class="control-label" for="input-limit">{{ text_limit }}</label>
+				<select id="input-limit" class="form-control" onchange="location = this.value;">
+					{% for limits in limits %}
+					{% if limits.value == limit %}
+					<option value="{{ limits.href }}" selected="selected">{{ limits.text }}</option>
+					{% else %}
+					<option value="{{ limits.href }}">{{ limits.text }}</option>
+					{% endif %}
+					{% endfor %}
+				</select>
+			</div>
+			<div class="form-group product-compare"><a href="{{ compare }}" id="compare-total" class="btn btn-default">{{ text_compare }}</a></div>
+		</div>
+	
+  </div>
+</div>
+{#==== Product List|Grid ==== #}
+<div class="products-list row {{ listingType }} number-col-{{ device_lg }}">
+	{% for idproduct, product in products %}
+	
+	{% if listingType=='grid' %}
+
+		<div class="product-layout {{ device_res }}">
+			<div class="product-item-container">
+				<div class="left-block">
+					<div class="product-image-container {% if soconfig.get_settings('secondimg') =='2'  and  product.thumb2 %} second_img{% endif %}  ">
+						<a href="{{ product.href }} " title="{{ product.name }} ">
+							<div class="text-location"><span>{{ product.location }}</span></div>
+							<div style="position: absolute;background: rgba(0, 0, 0, 0.6);color: #fff;padding: 0 15px;border-radius: 3px;bottom: 20px;right: 20px;"><span>{{ product.category_name }}</span></div>
+							<img  src="{{ product.thumb }} " alt="{{ product.name }} " title="{{ product.name }} " class="img-1 img-responsive" />
+							{% if soconfig.get_settings('secondimg') =='2'  and  product.thumb2  %}
+								<img src="{{ product.thumb2 }}"  alt="{{ product.name }} " title="{{ product.name }} " class="img-2 img-responsive" />
+							{% endif %}
+						</a>
+					</div>
+					
+					{#===== Show CountDown Product =======#}
+					{% if soconfig.get_settings('countdown_status') and product.special_end_date %}
+						{% include theme_directory~'/template/soconfig/countdown.twig' with {product: product,special_end_date:product.special_end_date} %}
+					{% endif %}
+					
+					
+				</div>
+				<div class="box-label">
+					{#===== New Label=======#}
+					{% if soconfig.get_settings('new_status') and product.date_available %} 
+						<span class="label-product label-new">{{ objlang.get('text_new')}} </span>
+					{% endif %} 
+					
+					{#=======Discount Label======= #}
+					{% if soconfig.get_settings('discount_status')  %} 
+					{% if product.price  and  product.special  %} 
+						<span class="label-product label-sale">
+							{{ text_sale }}
+						</span>
+					{% endif %} 
+					{% endif %} 
+				</div> 
+				<div class="right-block">
+					<div class="caption">
+						<h4><a href="{{ product.href }} ">{{ product.name }} </a></h4>
+						{% if soconfig.get_settings('rating_status') %} 
+						<div class="ratings hidden">
+							<div class="rating-box">
+							{% for i in 1..5 %}
+							{% if product.rating < i %} 
+								<span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+							{% else %}   
+								<span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+							{% endif %} 
+							{% endfor %}
+
+							</div>
+						</div>
+						{% endif %} 
+						
+						{% if product.price %} 
+						
+                     {% if category_id != 221 %} 
+						<div class="total-price">
+						{# {% if product.special != 0.00 %} #}
+							<div class="price price-left">
+								{% if not product.special %} 
+									<span class="price-new">{{ product.price }} per {{ product.sku }}</span>
+								{% else %}   
+									<span class="price-new">{{ product.special }} per {{ product.sku }}</span> <span class="price-old">{{ product.price }} </span>
+								{% endif %} 
+							</div>								
+							{# {% endif %}  #}
+
+							<div class="price-sale price-right">
+								{# Discount Label #}
+								{% if soconfig.get_settings('discount_status')  %} 
+								{% if product.price  and  product.special  %} 
+									<span class="discount">{{ product.discount }} 
+										<strong>{{ objlang.get('text_off') }}</strong>
+									</span>
+								{% endif %} 
+								{% endif %} 
+							</div>
+						</div>						{% endif %} 
+
+						{% endif %} 
+						<div class="description hidden">
+							<p>{{ product.description }} </p>
+						</div>
+					</div>
+					<div class="button-group">
+						{% if soconfig.get_settings('quick_status') %}
+							<a class="quickview iframe-link visible-lg btn-button"  data-fancybox-type="iframe"  href="{{ product.href_quickview }}"> <i class="fa fa-search"></i> </a>
+						{% endif %} 
+						<button class="wishlist btn-button" type="button" data-toggle="tooltip" title="{{ button_wishlist}}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart-o"></i></button>
+						<button class="compare btn-button" type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-retweet"></i></button>
+						<button class="addToCart btn-button" type="button" data-toggle="tooltip" title="{{ button_cart}}" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><span class="hidden">{{ button_cart }} </span></button>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		
+		{# =========Clearfix fluid grid layout============== #}
+		{% set subfix_id = idproduct + 1 %}
+		{% if soconfig.get_route()=='product/category' or  soconfig.get_route()=='extension/module/so_filter_shop_by/filter_data' %}
+			{% for  key, subfix in devices %}
+				{% if soconfig.get_settings('product_catalog_column_'~key) %}
+					{% if subfix_id % soconfig.get_settings('product_catalog_column_'~key) == 0 %}
+						{% set subfix_id = 1 %}
+						<div class="clearfix visible-{{key}}-block"></div>
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+		{% else %}
+			{% for  key, subfix in devices %}
+				{% if soconfig.get_settings('other_catalog_column_'~key) %}
+					{% if subfix_id % soconfig.get_settings('other_catalog_column_'~key) == 0 %}
+						{% set subfix_id = 1 %}
+						<div class="clearfix visible-{{key}}-block"></div>
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+		{# ====End Clearfix fluid grid layout =======#}
+		
+	{% else %}
+		<div class="product-layout col-xs-12">
+			<div class="product-item-container">
+				<div class="left-block col-md-4">
+					<div class="product-image-container {% if soconfig.get_settings('secondimg') =='2'  and  product.thumb2 %} second_img{% endif %}  ">
+						<a href="{{ product.href }} " title="{{ product.name }} ">
+							<img  src="{{ product.thumb }} " alt="{{ product.name }} " title="{{ product.name }} " class="img-1 img-responsive" />
+							{% if soconfig.get_settings('secondimg') =='2'  and  product.thumb2  %}
+								<img src="{{ product.thumb2 }}"  alt="{{ product.name }} " title="{{ product.name }} " class="img-2 img-responsive" />
+							{% endif %}
+						</a>
+						<div class="box-label">
+							{# New Label  #}
+							{% if soconfig.get_settings('new_status') and product.date_available %} 
+								<span class="label-product label-new">{{ objlang.get('text_new')}} </span>
+							{% endif %} 
+							
+							{# Discount Label #}
+							{% if soconfig.get_settings('discount_status')  %} 
+							{% if product.price  and  product.special  %} 
+								<span class="label-product label-sale">
+									 {{ product.discount }}
+								</span>
+							{% endif %} 
+							{% endif %} 
+						</div> 
+					</div>
+					
+					{% if soconfig.get_settings('quick_status')  %}
+						<a class="quickview iframe-link visible-lg btn-button"  data-fancybox-type="iframe"  href="{{ product.href_quickview }}"> <i class="fa fa-search"></i> </a>
+					{% endif %} 
+					
+					{#===== Show CountDown Product =======#}
+					{% if soconfig.get_settings('countdown_status') and product.special_end_date %}
+						{% include theme_directory~'/template/soconfig/countdown.twig' with {product: product,special_end_date:product.special_end_date} %}
+					{% endif %}
+				</div>
+				
+				<div class="right-block col-md-8">
+					<div class="caption">
+						<h4><a href="{{ product.href }} ">{{ product.name }} </a></h4>
+						{% if soconfig.get_settings('rating_status') %} 
+						<div class="ratings">
+							<div class="rating-box">
+							{% for i in 1..5 %}
+							{% if product.rating < i %} 
+								<span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+							{% else %}   
+								<span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+							{% endif %} 
+							{% endfor %}
+
+							</div>
+						</div>
+						{% endif %} 
+						
+						{% if product.price %} 
+						<div class="price">
+							{% if not product.special %} 
+								<span class="price-new">{{ product.price }} </span>
+							{% else %}   
+								<span class="price-new">{{ product.special }} </span> <span class="price-old">{{ product.price }} </span>
+							{% endif %} 
+						</div>
+						{% endif %} 
+
+						<div class="description ">
+							<p>{{ product.description }} </p>
+						</div>
+					</div>
+					<div class="button-group">
+						<button class="addToCart" type="button" data-toggle="tooltip" title="{{ button_cart }} " onclick="cart.add('{{ product.product_id }} ', '{{ product.minimum }} ');"><span>{{ button_cart }} </span></button>
+						<button class="wishlist btn-button" type="button" data-toggle="tooltip" title="{{ button_wishlist }} " onclick="wishlist.add('{{ product.product_id }} ');"><i class="fa fa-heart-o"></i></button>
+
+						<button class="compare btn-button" type="button" data-toggle="tooltip" title="{{ button_compare }} " onclick="compare.add('{{ product.product_id }} ');"><i class="fa fa-retweet"></i></button>
+						
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	
+	{% endif %}
+	{% endfor %}
+</div>
+
+{#==== filters panel Bottom==== #}
+<div class="product-filter product-filter-bottom filters-panel">
+	<div class="col-sm-6 text-left">{{ pagination }}</div>
+	<div class="col-sm-6 text-right">{{ results }}</div>
+</div>
+<script type="text/javascript"><!--
+ $('.view-mode .list-view button').bind("click", function() {
+	if ($(this).is(".active")) {return false;}
+	$.cookie('listingType', $(this).is(".grid") ? 'grid' : 'list', { path: '/' });
+	location.reload();
+});
+//--></script> 

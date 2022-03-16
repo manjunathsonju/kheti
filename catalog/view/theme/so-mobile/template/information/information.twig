@@ -1,0 +1,32 @@
+{{ header }}
+
+<div class="container">
+  
+  <div class="row">{{ column_left }}
+    {% if column_left and column_right %}
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
+    {% else %}
+    {% set class = 'col-sm-12' %}
+    {% endif %}
+    <div id="content" class="{{ class }}">{{ content_top }}
+      <h1 class="hidden">{{ heading_title }}</h1>
+      
+	{% if information_id == 7 %}
+		{% if store_id == 0 %}
+		<center>
+			<a href="index.php?route=account/register" class="btn btn-revo" title="Register ">Register as a Farmer </a>
+			<a href="index.php?route=extension/account/purpletree_multivendor/sellerregister" class="btn btn-revo" title="Continue ">Register as a Supplier </a>
+		</center>
+		{% else %}
+			{{ description }}
+		{% endif %}	
+	{% else %}
+		{{ description }}	
+	{% endif %}
+	  
+	  {{ content_bottom }}</div>
+    {{ column_right }}</div>
+</div>
+{{ footer }}

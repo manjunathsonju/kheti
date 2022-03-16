@@ -1,0 +1,175 @@
+{#
+****************************************************** 
+ * @package	SO Framework for Opencart 3.x
+ * @author	http://www.opencartworks.com
+ * @license	GNU General Public License
+ * @copyright(C) 2008-2017 opencartworks.com. All rights reserved.
+ ******************************************************
+#}
+<div id="panel-menu" class="side-menu panel panel-left">
+	<div class="content">
+		<div class="panel-left__top clearfix text-center">
+			<div class="panel-logo">
+				{{soconfig.get_logo()}}
+			</div>
+			{% if soconfig.get_settings('barsearch_status') %}
+				<div class="panel-search">
+					{{ search }}
+				</div>
+			{% endif %}
+			
+			{% if logged %}
+			<div>						
+				<div class="dropdown">
+				  <button class="btn btn-block dropdown-toggle" type="button" data-toggle="dropdown" style="color: #FFF; background: #2f8630;">{{ customer_first_name }}
+				  <span class="caret"></span></button>
+				  <ul class="dropdown-menu btn-block">
+					<li><a href="index.php?route=account/account">My Account</a></li>
+					<li><a href="index.php?route=account/logout">Logout</a></li>
+				  </ul>
+				</div>
+			</div>
+			{% endif %}
+		</div>
+		{% if store_id == 1 %}
+		<div class="panel panel-default">
+			<div class="panel-heading" role="tab" style="background: brown;color: #fff;">
+				<span><a href="index.php?route=product/category&path=221&platform=mobile" style="color: #fff;">Kheti Box</a></span>													
+			</div>					
+		</div>
+		
+<div class="panel panel-default">
+			<div class="panel-heading" role="tab" >
+				<span><a href="index.php?route=blog/blog">Blog</a></span>													
+			</div>					
+		</div>
+
+<div class="panel panel-default">
+			<div class="panel-heading" role="tab" style="background: brown;color: #fff;">
+				<span><a href="index.php?route=information/information&information_id=13" style="color: #fff;">GUARANTEED QUALITY</a></span>													
+			</div>					
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading" role="tab" style="background: brown;color: #fff;">
+				<span><a href="index.php?route=product/category&path=220" style="color: #fff;">Kaushi Kheti</a></span>													
+			</div>					
+		</div>
+		
+<div class="panel panel-default">
+			<div class="panel-heading" role="tab" >
+				<span><a href="index.php?route=information/tracker&information_id=10&platform=mobile">Food/Health Tips</a></span>													
+			</div>					
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading" role="tab" >
+				<span><a href="https://khetifood.com/index.php?route=information/tracker&information_id=12&platform=mobile" >FAQ & How Tos</a></span>													
+			</div>					
+		</div>
+		{% endif %}
+		<div class="panel panel-default">
+			<div class="panel-heading" role="tab" style="background: #2f8630;color: #fff;">
+				<span>Categories</span>													
+			</div>					
+		</div>
+				
+		{% if categories %}
+		<div class="panel-left__midde">
+	 		<div class="panel-group" id="panel-category" role="tablist" aria-multiselectable="true">
+	 			{% for i,category in categories %}
+	 			<div class="panel panel-default">
+					<div class="panel-heading" role="tab" >
+						<a href="{{category.href}}"> {{category.name}}</a>
+						{% if category.children %}
+							<span class="head"><a  class="pull-right accordion-toggle" data-toggle="collapse" data-parent="#panel-category" href="#panel-category{{i}}" aria-expanded="true"></a></span>
+						 {% endif %}
+						
+					</div>
+					
+					{% if category.children %}
+					<div id="panel-category{{i}}" class="panel-collapse collapse " role="tabpanel">
+						<ul>
+						   {% for child in category.children %}
+							<li>
+							 	{% if child.category_id == child_id %}
+				                  	<a href="{{ child.href }}" class=" active"> {{ child.name }}</a> 
+				                {% else %} 
+				                  	<a href="{{ child.href }}" >{{ child.name }}</a>
+				                {% endif %}
+							</li>
+						   {% endfor %}
+						</ul>
+					</div>
+					{% endif %}
+				</div>
+	 			{% endfor %}
+	 		</div>
+	 	</div>
+		{% endif %}
+		
+		{# {% if store_id == 1 %}
+			<div class="panel panel-default">
+				<div class="panel-heading" role="tab" style="background: #2f8630;color: #fff;">
+					<span>Farmer's Markets</span>					
+				</div>					
+			</div>
+					
+			<div class="panel-left__midde">
+				<div class="panel-group" id="panel-category" role="tablist" aria-multiselectable="true">
+					{% for manufacturer in manufacturers %}						
+						<div class="panel panel-default">
+						<div class="panel-heading" role="tab">
+							<a href="https://b2boutputdemo.kheti.farm/index.php?route=extension/account/purpletree_multivendor/sellers&farmer_market={{manufacturer.name}}">
+								{{manufacturer.name}}
+							</a>													
+						</div>					
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		{% endif %} #}
+		
+		<div style="margin: 10px;">
+			<p style="margin: 10px;">Store Location</p>
+			<select name="location" class="form-control" style="background-color:#0db04b;border:2px solid #1d8244;color:white;width:150px;font-weight:bold;">
+				<option value="ktm">Kathmandu</option>
+				<option value="pkr">Pokhara</option>
+			</select>
+		</div>
+			
+		<div class="panel-left__bottom clearfix text-center">
+			{% if soconfig.get_settings('barcompare_status') %}
+			<div class="col-xs-6">
+				<i class="fa fa-check-square-o" aria-hidden="true"></i>
+				<div class="bot-inner">
+					<a href="{{compare}}">{{text_compare}}</a>
+				</div>
+			</div>
+			{% endif %}
+
+			{% if soconfig.get_settings('barwistlist_status') %}
+			<div class="col-xs-6">
+				<i class="fa fa-heart" aria-hidden="true"></i>
+				<div class="bot-inner">
+					<a href="{{wishlist}}">{{text_wishlist}}</a>
+				</div>
+			</div>
+			{% endif %}
+
+			{% if soconfig.get_settings('barlanguage_status')  %}
+			<div class="col-xs-6 panel-left__language">
+				{{ language }}
+				<h4>{{text_language}}</h4>
+			</div>
+			{% endif %}
+
+			{% if soconfig.get_settings('barcurenty_status')  %}
+			<div class="col-xs-6 panel-left__language">
+				{{ currency }}
+				<h4>{{text_currency}}</h4>
+			</div>
+			{% endif %}			
+		</div>
+	</div>
+</div>
+

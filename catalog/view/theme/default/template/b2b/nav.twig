@@ -1,0 +1,61 @@
+    
+    <a href="index.php?route=b2b/home&id={{ id }}&tkn={{ tkn }}"><i class="fa fa-dashboard fw" aria-hidden="true" style="padding:5px;"></i>Dashboard</a>
+              </li>
+              <li class="active">
+                  <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle"><i class="fa fa-shopping-cart" aria-hidden="true" style="padding:5px;"></i>Orders</a>
+                  <ul class="collapse list-unstyled active" id="homeSubmenu">
+                      <li>
+                          <a href="index.php?route=b2b/orders&order_status_id=1&id={{ id }}&tkn={{ tkn }}"><i class="fa fa-hourglass-1" aria-hidden="true" style="padding:5px;"></i>Pending Orders</a>
+                      </li>
+                      <li>
+                          <a href="index.php?route=b2b/orders&order_status_id=2&id={{ id }}&tkn={{ tkn }}"><i class="fa fa-spinner" aria-hidden="true" style="padding:5px;"></i>Processing Orders</a>
+                      </li>
+                      <li>
+                          <a href="index.php?route=b2b/orders&order_status_id=3&id={{ id }}&tkn={{ tkn }}"><i class="fa fa-handshake-o" aria-hidden="true" style="padding:5px;"></i>Completed Orders</a>
+                      </li>
+                      <li>
+                        <a href="index.php?route=b2b/orders&order_status_id=7&id={{ id }}&tkn={{ tkn }}"><i class="fa fa-stop-circle-o" aria-hidden="true" style="padding:5px;"></i>Canceled Orders</a>
+                    </li>
+                  </ul>
+              </li>
+              <li>
+              <a href="index.php?route=b2b/compileorders&id={{ id }}&tkn={{ tkn }}"><i class="fa fa-bar-chart" aria-hidden="true" style="padding:5px;"></i>Orders Accumulation</a>
+              </li>
+
+               <li>
+              <a href="index.php?route=b2b/salesreport&id={{ id }}&tkn={{ tkn }}"><i class="fa fa-bar-chart" aria-hidden="true" style="padding:5px;"></i>Sales Report</a>
+              </li>
+          
+              <li>
+              <a href="index.php?route=b2b/customers&id={{ id }}&tkn={{ tkn }}"><i class="fa fa-users" aria-hidden="true" style="padding:5px;"></i>Customers</a>
+              </li>
+
+              <li>
+              <a href="index.php?route=b2b/coupons&id={{ id }}&tkn={{ tkn }}"><i class="fa fa-users" aria-hidden="true" style="padding:5px;"></i>Coupons</a>
+              </li>
+                 
+</ul>
+</nav>
+<div class="content" style="width: 100%;">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button type="button" id="sidebarCollapse" class="btn btn-info" style="background: linear-gradient(to right, #25a9c0, #0db04b);">
+        <i class="fa fa-align-justify"></i> 
+        <span>Menu</span>
+    </button>&nbsp;&nbsp;
+        <div style="position: absolute;background: linear-gradient(to right, #25a9c0, #0db04b);right: 0px;width: 200px;padding: 3px;">
+
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white;">
+          {{fname}} {{lname}}
+        </a>
+
+        <i class="bi bi-caret-down-fill"></i>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="index.php?route=b2b/profile&id={{id}}&tkn={{tkn}}">Profile</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="index.php?route=b2b/logout&id={{id}}">Logout</a>
+        </div>
+
+        </div>
+
+
+</nav> 

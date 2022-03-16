@@ -1,0 +1,777 @@
+{{ header }}
+               {{ nav }}
+
+<div class="row">
+                <div class="col">
+                                    <table class="table  table-striped  table-bordered border-primary" style="width: 400px; margin: 10px auto;">
+                                        <thead class="table-light ">
+                                            <tr>                                      
+                                                <td style="background: #0db04b; color: #ffffff; font-weight: 700; text-transform: capitalize;"><i class="fa fa-shopping-basket" aria-hidden="true" style="padding: 5px;"></i>Order details</td>
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>                                  
+                                            <tr>                                       
+                                                    <td> <i class="fa fa-shopping-cart" aria-hidden="true" style="padding:5px;"></i> kheti.food
+                                                    <span style="border-left: 1px solid #ddd;line-height: 10px;padding: 13px;
+                                                    margin-left: 15px;"><i class="fa fa-calendar" aria-hidden="true" style="padding: 5px;"></i>{{order.date_added}}</span>
+
+                                            </tr>
+                                            
+                                            <tr>
+                                            <td>
+                                            Payment Status:
+                                            <span class="par">
+                                            {% if order.payment_status == '1' %}
+                                              Paid with {{order.payment_method}}
+                                            {% else  %}
+                                                  UnPaid
+                                            {% endif  %}
+                                            </span>
+
+                                            {% if order.payment_status == '1' %}
+                                                    <div id="unpaybtn" style="display:block;">
+                                            <div class="input-group mb-3" id="receipt_div">
+
+
+                                            <div class="input-group-prepend" style="display: block;width: 100%;margin: 5px 0;">
+                                              <span class="input-group-text" id="basic-addon3">Recipt no:<span id="update_text">{{order.receipt_no}}</span>
+                                              &nbsp;&nbsp;&nbsp;&nbsp;
+                                             <button type="button" class="btn btn-info" id="updatebtnreceipt" style="position: absolute;right: 0;">Update</button>
+                                            </div>
+
+                                            <form id="myForm" style="width: 100%;display:none;"> 
+                                            <input type="text" style="width: 76%;padding: 3px;" id="receipt_text" aria-describedby="basic-addon3"> <button type="button" class="btn btn-success" id="receipt_update"><i class="fa fa-save"></i></button>
+                                            </form>
+
+
+                                            <div class="input-group-prepend" style="display: block;width: 100%;margin: 5px 0;">
+                                              <span class="input-group-text" id="basic-addon3">Actual payment:<span id="update_text_actual">{{order.actual_pay}}</span>
+                                              &nbsp;&nbsp;&nbsp;&nbsp;
+                                              <button type="button" class="btn btn-info" id="updatebtnactualpay" style="position: absolute;right: 0;">Update</button>
+                                              </div>
+                                            <form id="myForm1" style="width: 100%;display:none;"> 
+                                            <input type="text" style="width: 76%;padding: 3px;" id="receipt_text1" aria-describedby="basic-addon3"> <button type="button" class="btn btn-success" id="actual_update" ><i class="fa fa-save"></i></button>
+                                            </form>
+
+                                            <div class="input-group-prepend" style="display: block;width: 100%;margin: 5px 0;">
+                                              <span class="input-group-text" id="basic-addon3">Description:<span id="update_text_desc">{{order.pay_description}}</span>
+                                              &nbsp;&nbsp;&nbsp;&nbsp;
+                                              <button type="button" class="btn btn-info" id="updatebtndescription" style="position: absolute;right: 0;">Update</button>
+                                              </div>
+                                            <form id="myForm2" style="width: 100%;display:none;"> 
+                                            <input type="text" style="width: 76%;padding: 3px;" id="receipt_text2" aria-describedby="basic-addon3"> <button type="button" class="btn btn-success" id="desc_update" ><i class="fa fa-save"></i></button>
+                                            </form>
+
+
+                                            <div class="input-group-prepend" style="display: block;width: 100%;margin: 5px 0;">
+                                              <span class="input-group-text" id="basic-addon3">Payment Date:<span id="update_text_pay">{{order.pay_date}}</span>
+                                              &nbsp;&nbsp;&nbsp;&nbsp;
+                                              <button type="button" class="btn btn-info" id="updatebtnpaymentdate" style="position: absolute;right: 0;">Update</button>
+                                              </div>
+
+                                            <form id="myForm3" style="width: 100%;display:none;"> 
+                                            <input type="text" style="width: 76%;padding: 3px;" id="datetimepicker4" aria-describedby="basic-addon3" >
+                                           
+
+                                            <button type="button" class="btn btn-success" id="paydate_update" ><i class="fa fa-save"></i></button>
+                                            </form>
+
+
+                                            <button class="btnunpay" id="btnunpay" style="background-color:#dc3545;width: 24%;margin: 5px 0;
+                                            float: left;"><i class="fa fa-money" aria-hidden="true"></i>Unpay</button>
+
+                                            </div>
+                                            </div>
+                                             {% else  %}
+
+                                             <div id="paybtns"
+                                              style="display:block;">
+                                             <button class="btnpay" id="btnpay"><img src="https://khetifood.com/image/catalog/cod.png" style="width: 55px;"></button>
+                                             <button class="btnpay1" id="btnpay1"><img src="image/catalog/cod1.png" style="width: 55px;"></button>
+                                             <button class="btnpay2" id="btnpay2"><img src="image/catalog/payza.png" style="width: 55px;"></button>
+                                             <button class="btnpay3" id="btnpay3"><img src="image/catalog/cod2.png" style="width: 55px;"></button>
+                                             <button class="btnpay4" id="btnpay4"><img src="image/catalog/cellpay.png" style="width: 55px;"></button>
+                                             </div>
+                                            {% endif  %}
+
+                                            </td>
+                                            </tr>
+
+                            <tr>                                            
+                                            <td>Order Status: <span id="orderstatus">
+ {% if order.order_status_id == '1' %}
+                                               Pending 
+ {% elseif order.order_status_id == '2' %}                                            
+Processing
+
+ {% elseif order.order_status_id == '3' %}
+                                               Complete
+    {% endif %}
+                                        
+
+                                        </span><br><button type="button" class="btn btn-info" id="processingbtn"><i class="fa fa-spinner" aria-hidden="true"></i>Processing</button> 
+                                        <button type="button" class="btn btn-success" id="completebtn"><i class="fa fa-handshake-o" aria-hidden="true"></i>Complete</button>
+                                        <button type="button" class="btn btn-success" id="cancelbtn"><i class="fa fa-stop-circle-o" aria-hidden="true"></i>Cancel</button>
+
+        
+
+</td>                                            
+                                            </tr>
+
+                                        </tbody>
+                                      </table>
+                                </div>
+                                <div class="col">
+                                    <table class="table  table-striped  table-bordered border-primary" style="width: 280px; margin: 10px auto;">
+                                        <thead class="table-light ">
+                                            <tr>
+                                              
+                                                    <td style="background: #0db04b; color: #ffffff; font-weight: 700; text-transform: capitalize;"><i class="fa fa-user" aria-hidden="true" style="padding: 5px;"></i>Customer details</td>
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>                                  
+                                            <tr>
+                                                
+                                                    <td> <i class="fa fa-user-circle" aria-hidden="true" style="padding:5px;"></i>{{order.name}}</td>
+                                                
+                                            </tr>
+                                            <tr>
+                                                
+                                                    <td><i class="fa fa-users" aria-hidden="true" style="padding: 5px;"></i>B2B</td>
+                                                
+                                            </tr>
+                                            <tr>
+                                                
+                                                    <td><i class="fa fa-envelope" aria-hidden="true" style="padding: 5px;"></i>{{order.email}}</td>
+                                                
+                                            </tr>
+                                            <tr>
+                                          <td><i class="fa fa-mobile" aria-hidden="true" style="padding: 5px;"></i>{{order.telephone}}</td>
+                                        </tr>
+                                        <tr>    
+                                        <td>PAN no: {{order.pan_no}}</td>
+                                    
+                                </tr>
+                                        </tbody>
+                                      </table>
+                                </div>
+                                <div class="col" style="margin-top:10px;">
+                    <a href="https://khetifood.com/index.php?route=b2b/invoice&id={{id}}&tkn={{tkn}}&order_id={{order.order_id}}" type="button" class="btn btn-warning" target="_blank"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Invoice</a> </div><table class="table table-striped table-bordered" style="width: 100%; margin: 30px 10px;">
+                                <thead>
+                                  <tr>
+                                  <th scope="col">Product id</th>
+                                  <th scope="col">Product Name</th>
+                                  <th scope="col">Model</th>
+                                  <th scope="col">Sku</th>
+                                  <th scope="col">Quantity</th>
+                                  <th scope="col">Unit price</th>
+                                  <th scope="col">Total</th>
+                                  <th scope="col">Remove</th>                                    
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                {% for product in products %}
+
+                                 <tr>
+                                    <td>{{product.product_id}}</td>
+                                    <td>{{product.name}}</td>
+                                    <td>{{product.model}}</td>
+                                    <td>{{product.sku}}</td>
+                                   
+                                    <td><input type="text" style="width: 76%;padding: 3px;" id="{{product.order_product_id}}" value="{{product.quantity}}" aria-describedby="basic-addon3" >
+                                    <button type="button" class="btn btn-success" onclick="updatepro(document.getElementById('{{product.order_product_id}}').value,{{product.order_product_id}})" ><i class="fa fa-refresh"></i></button></td>
+                                    
+                                    <td>{{product.price}}</td>
+                                    <td>{{product.total}}</td>
+                                    <td><button type="button" class="btn btn-danger" onclick="removepro({{product.order_product_id}})">x</button></td>
+
+                                </tr>
+
+                                {% endfor %} 
+
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td> </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Sub Total</td>
+                                    <td>Rs. {{order.total}}</td>  
+                                    <td></td> 
+                                  </tr>
+
+                                  {% if coupon %}
+
+                                   <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td> </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Coupons Discount</td>
+                                    <td>Rs. {{coupon_discount}}</td>  
+                                    <td></td> 
+                                  </tr>
+
+                                  <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td> </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Total</td>
+                                    <td>Rs. {{totalafterdiscount}}</td>  
+                                    <td></td> 
+                                  </tr>
+                                {% endif %} 
+                                  
+
+
+                                </tbody>
+                              </table>
+                              <div class="item_wrap" style="width:100%;">
+                                <div class="item">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong1">
+                                        Add Product
+                                      </button>
+                              <!-- start -->
+                                      <div class="modal fade" id="exampleModalLong1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                          <div class="modal-content">
+                                          <div class="modal-header">
+                                    
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                            
+                                  <!-- dropdown -->
+                            
+                                  <div class="btn-group" style="width: 100%;">
+                                    <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      Category
+                                   </button>
+                                   <div class="dropdown-menu" style="width: 100%;">
+                                   <h6 class="dropdown-header">Choose Category:</h6>
+                                   <button class="dropdown-item" onclick="myFunction(240)">Vegetables</button>
+                                   <button class="dropdown-item" onclick="myFunction(239)">Fruits</button>
+                                   <button class="dropdown-item"Totalonclick="myFunction(241)">Groceries</button>
+                                   <button class="dropdown-item" onclick="myFunction(248)">Dairy</button>
+                            
+                                   </div> 
+                                   </div>
+                            
+                                   <!-- products -->
+                                   <div class="table-responsive">
+                                    <table class="table">
+                                      <thead>
+                                        <tr>
+                                          <th>Productname</th>
+                                          <th>image</th>
+                                          <th>price</th>
+                                          <th>Sku</th>
+                                          <th>Add</th>
+                            
+                                       
+                                        </tr>
+                                      </thead>
+                                      <tbody id="table1">
+                            
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                   <!-- products end -->
+                            
+                                  <!-- dropdown end -->
+                            
+                                          </div></div></div> 
+                                          <!-- end -->
+                                </div>
+                            </div><form>
+                                    <div class="mb-3 row" style="margin: 5px;">
+                                        <label for="exampleFormControlTextarea1" class="form-label">Customer Comment</label>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">{{order.comment}}</textarea>
+                                      </div>
+                                  </form>
+    </div><a href="https://khetifood.com/index.php?route=api/b2bDashOrder/delete1&id={{id}}&tkn={{tkn}}&order_id={{order.order_id}}" type="button" class="btn btn-danger" id="dltbtn"><i class="fa fa-trash" aria-hidden="true"></i>Delete This Order</a>
+  </div>
+              </div>
+          </body>
+          </html><script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+                  integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+              </script>
+              <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+                  integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+              </script>
+          <script>
+            $(document).ready(function () {
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar').toggleClass('active');
+                });
+            });
+          </script><script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script><script>document.querySelector('#cpnbtnapply').addEventListener('click', function () {
+            let code=document.getElementById("cpnname").value;
+            window.location.href = "https://khetifood.com/index.php?route=api/b2bCoupons/applyCoupon&id=6&tkn=9reG2yCuK&order_id=6171"+"&code="+code;
+
+
+          });
+            </script><script>
+            function removepro(order_pro_id) {
+              var formData = new FormData();
+          formData.append("key","21211919");
+      formData.append("order_product_id", order_pro_id);
+     
+  
+              $.ajax({
+                  url: 'https://khetifood.com/index.php?route=api/b2bDashOrder/removeproduct',
+                  type: 'POST',
+                  data: formData,
+                  async: false,
+                  dataType: "json",
+                  crossDomain: true, 
+                  
+  
+                  success: function (data) {
+                    location.reload();
+                  },
+                  error:function(data){
+                      alert(data);
+                  },
+                  cache: false,
+                  contentType: false,
+                  processData: false
+              });
+  
+              return false;
+
+            }
+
+            function updatepro(quantity,order_pro_id) {
+              
+              var formData = new FormData();
+              formData.append("key","up21211919");
+          formData.append("order_product_id", order_pro_id);
+          formData.append("quantity", quantity);
+      
+                  $.ajax({
+                      url: 'https://khetifood.com/index.php?route=api/b2bDashOrder/updateproduct',
+                      type: 'POST',
+                      data: formData,
+                      async: false,
+                      dataType: "json",
+                      crossDomain: true, 
+              
+                      success: function (data) {
+                        location.reload();
+                      },
+                      error:function(data){
+                          alert(data);
+                      },
+                      cache: false,
+                      contentType: false,
+                      processData: false
+                  });
+      
+                  return false;
+
+            }
+            </script><script>
+            document.querySelector('#updatebtnreceipt').addEventListener('click', function () {
+            let myForm3= document.getElementById("myForm");
+            let updatebtnreceipt= document.getElementById("updatebtnreceipt");
+            updatebtnreceipt.style.display="none";
+            myForm.style.display="block";
+
+          });
+            </script>
+            <script>
+      let orderstatus= document.getElementById("orderstatus");
+      let processingbtn= document.getElementById("processingbtn");
+      let completebtn= document.getElementById("completebtn");
+      let cancelbtn= document.getElementById("cancelbtn");
+
+      document.querySelector('#cancelbtn').addEventListener('click', function () {
+        fetch('https://khetifood.com/index.php?route=api/b2bDashOrder/cancel&id={{id}}&tkn={{tkn}}&order_id={{order.order_id}}')
+          .then((response) => {
+            console.log(response);
+            return response.json();
+          })
+          .then((data) => {    
+        if(data["success"]== 1){
+          orderstatus.innerHTML = "Canceled";
+          cancelbtn.style.display="none";
+          completebtn.style.display="block";
+
+      }
+          })
+          .catch(function(error)  {
+              console.log(error);
+          });
+        });
+
+
+      document.querySelector('#processingbtn').addEventListener('click', function () {
+        fetch('https://khetifood.com/index.php?route=api/b2bDashOrder/processing&id={{id}}&tkn={{tkn}}&order_id={{order.order_id}}')
+          .then((response) => {
+            console.log(response);
+            return response.json();
+          })
+          .then((data) => {    
+        if(data["success"]== 1){
+          orderstatus.innerHTML = "Processing";
+          processingbtn.style.display="none";
+          completebtn.style.display="block";
+
+      }
+          })
+          .catch(function(error)  {
+              console.log(error);
+          });
+        });
+
+        document.querySelector('#completebtn').addEventListener('click', function () {
+          fetch('https://khetifood.com/index.php?route=api/b2bDashOrder/complete&id={{id}}&tkn={{tkn}}&order_id={{order.order_id}}')
+            .then((response) => {
+              console.log(response);
+              return response.json();
+            })
+            .then((data) => {    
+          if(data["success"]== 1){
+            orderstatus.innerHTML = "Complete";
+            completebtn.style.display="none";
+            processingbtn.style.display="block";
+
+        }
+            })
+            .catch(function(error)  {
+                console.log(error);
+            });
+          });
+        </script><script>document.querySelector('#updatebtndescription').addEventListener('click', function () {
+  let myForm2 = document.getElementById("myForm2");
+  let updatebtndescription= document.getElementById("updatebtndescription");
+  updatebtndescription.style.display="none";
+  myForm2.style.display="block";
+
+});
+  </script><script>      
+ let update_text2= document.getElementById("update_text_desc");
+ let myForm2= document.getElementById("myForm2");
+ let updatebtndescription= document.getElementById("updatebtndescription");
+
+ 
+ document.querySelector('#desc_update').addEventListener('click', function () {
+    var recrt=document.getElementById("receipt_text2").value;
+    var recrt1=('https://khetifood.com/index.php?route=api/b2bDashOrder/submit_pay_description&pay_description='+recrt+'&id={{ id }}&tkn={{tkn}}&order_id={{order.order_id}}');
+
+   fetch(recrt1)
+     .then((response) => {
+       console.log(response);
+       return response.json();
+     })
+     .then((data) => {    
+   if(data["success"]== 1){
+   
+     update_text2.innerHTML =document.getElementById("receipt_text2").value;
+     document.getElementById("myForm2").reset();
+     updatebtndescription.style.display="block";
+     myForm2.style.display="none";
+ }
+     })
+     .catch(function(error){
+         console.log(error);
+     });
+   });
+   </script><script>
+  document.querySelector('#updatebtnpaymentdate').addEventListener('click', function () {
+  let myForm3= document.getElementById("myForm3");
+  let updatebtnpaymentdate= document.getElementById("updatebtnpaymentdate");
+  updatebtnpaymentdate.style.display="none";
+  myForm3.style.display="block";
+
+});
+  </script><script>      
+ let update_text_pay= document.getElementById("update_text_pay"); 
+ let myForm3= document.getElementById("myForm3");
+  let updatebtnpaymentdate= document.getElementById("updatebtnpaymentdate");
+ document.querySelector('#paydate_update').addEventListener('click', function () {
+
+   var red4=document.getElementById("datetimepicker4").value;
+    var red41=('https://khetifood.com/index.php?route=api/b2bDashOrder/submit_pay_date&pay_date='+red4+'&id={{ id }}&tkn={{tkn}}&order_id={{order.order_id}}');
+
+   fetch(red41)
+
+     .then((response) => {
+       console.log(response);
+       return response.json();
+     })
+     .then((data) => {    
+   if(data["success"]== 1){
+   
+    update_text_pay.innerHTML =document.getElementById("datetimepicker4").value;
+     document.getElementById("myForm3").reset();
+     updatebtnpaymentdate.style.display="block";
+      myForm3.style.display="none";
+ }
+     })
+     .catch(function(error)  {
+         console.log(error);
+     });
+   });
+   </script><script>
+   document.querySelector('#updatebtnactualpay').addEventListener('click', function () {
+  let myForm1= document.getElementById("myForm1");
+  let updatebtnactualpay= document.getElementById("updatebtnactualpay");
+  updatebtnactualpay.style.display="none";
+  myForm1.style.display="block";
+
+});
+  </script><script>      
+ let update_text1= document.getElementById("update_text_actual");
+ let myForm1= document.getElementById("myForm1");
+ let updatebtnactualpay= document.getElementById("updatebtnactualpay");
+ 
+ document.querySelector('#actual_update').addEventListener('click', function () {
+
+    var ret1=document.getElementById("receipt_text1").value;
+    var ret11=('https://khetifood.com/index.php?route=api/b2bDashOrder/submit_actual_pay&actual_pay='+ret1+'&id={{ id }}&tkn={{tkn}}&order_id={{order.order_id}}');
+
+   fetch(ret11)
+     .then((response) => {
+       console.log(response);
+       return response.json();
+     })
+     .then((data) => {    
+   if(data["success"]== 1){
+   
+     update_text1.innerHTML =document.getElementById("receipt_text1").value;
+     document.getElementById("myForm1").reset();
+     updatebtnactualpay.style.display="block";
+     myForm1.style.display="none";
+
+
+ }
+     })
+     .catch(function(error)  {
+         console.log(error);
+     });
+   });
+   </script><script>      
+      let update_text= document.getElementById("update_text");
+      let myForm= document.getElementById("myForm");
+      let updatebtnreceipt= document.getElementById("updatebtnreceipt");
+
+      
+      document.querySelector('#receipt_update').addEventListener('click', function () {
+        var rec=document.getElementById("receipt_text").value;
+        var rec1=('https://khetifood.com/index.php?route=api/b2bDashOrder/submitrecipt&receipt_no='+rec+'&id={{ id }}&tkn={{tkn}}&order_id={{order.order_id}}');
+
+        fetch(rec1)
+          .then((response) => {
+            console.log(response);
+            return response.json();
+          })
+          .then((data) => {    
+        if(data["success"]== 1){
+        
+          update_text.innerHTML =document.getElementById("receipt_text").value;
+          document.getElementById("myForm").reset();
+          myForm.style.display="none";
+          updatebtnreceipt.style.display="block";
+
+      }
+          })
+          .catch(function(error)  {
+              console.log(error);
+          });
+        });
+        </script>
+
+        <script type="text/javascript">
+           {# let buttonunpay= document.getElementById("btnunpay");           #}
+          let text=document.querySelector('.par');          
+          let unpaybtn= document.getElementById("unpaybtn");
+          let paybtns= document.getElementById("paybtns");
+
+                    
+
+          {# let unpaybtnsdiv=document.getElementById("unpaybtn");
+          let paybtnsdiv=document.getElementById("paybtns"); #}
+
+              document.querySelector('#btnunpay').addEventListener('click', function () {
+                fetch('https://khetifood.com/index.php?route=api/b2bDashOrder/unpay&id={{ id }}&tkn={{tkn}}&order_id={{order.order_id}}')
+                  .then((response) => {
+                    console.log(response);
+                    return response.json();
+                  })
+                  .then((data) => {    
+                if(data["success"]== 1){
+                  text.innerHTML = "Unpaid";
+                  unpaybtn.style.display="none";
+                   paybtns.style.display="block";                
+  
+              }
+                  })
+                  .catch(function(error)  {
+                      console.log(error);
+                  });
+                });
+
+             </script>
+
+
+        <script type="text/javascript">
+             document.querySelector('#btnpay').addEventListener('click', function () {
+
+fetch('https://khetifood.com/index.php?route=api/b2bDashOrder/pay&method=Cash_on_delivery&id={{ id }}&tkn={{tkn}}&order_id={{order.order_id}}')
+                .then((response) => {
+                  console.log(response);
+                  return response.json();
+                })
+                .then((data) => {    
+              if(data["success"]== 1){
+                text.innerHTML = "Paid(Cash_on_delivery)";
+                paybtns.style.display="none";
+                unpaybtn.style.display="block";
+               }
+                })
+                .catch(function(error)  {
+                    console.log(error);
+                });
+                    });
+
+      </script>
+        <script type="text/javascript">
+document.querySelector('.btnpay1').addEventListener('click', function () {
+            fetch('https://khetifood.com/index.php?route=api/b2bDashOrder/pay&method=Fonepay&id={{ id }}&tkn={{tkn}}&order_id={{order.order_id}}')
+              .then((response) => {
+                console.log(response);
+                return response.json();
+              })
+              .then((data) => {    
+            if(data["success"]== 1){
+              text.innerHTML = "Paid(Fonepay)";
+              paybtns.style.display="none";
+              unpaybtn.style.display="block";
+
+          }
+              })
+              .catch(function(error)  {
+                  console.log(error);
+              });
+            });
+      </script>
+
+              <script type="text/javascript">
+              document.querySelector('.btnpay2').addEventListener('click', function () {
+            fetch('https://khetifood.com/index.php?route=api/b2bDashOrder/pay&method=Connectips&id={{ id }}&tkn={{tkn}}&order_id={{order.order_id}}')
+              .then((response) => {
+                console.log(response);
+                return response.json();
+              })
+              .then((data) => {    
+            if(data["success"]== 1){
+              text.innerHTML = "Paid(Connectips)";
+              paybtns.style.display="none";
+              unpaybtn.style.display="block";
+
+          }
+              })
+              .catch(function(error)  {
+                  console.log(error);
+              });
+            });
+      </script>
+              <script type="text/javascript">
+     document.querySelector('.btnpay3').addEventListener('click', function () {
+            fetch('https://khetifood.com/index.php?route=api/b2bDashOrder/pay&method=esewa&id={{ id }}&tkn={{tkn}}&order_id={{order.order_id}}')
+              .then((response) => {
+                console.log(response);
+                return response.json();
+              })
+              .then((data) => {    
+            if(data["success"]== 1){
+              text.innerHTML = "Paid(esewa)";
+              paybtns.style.display="none";
+              unpaybtn.style.display="block";
+
+          }
+              })
+              .catch(function(error)  {
+                  console.log(error);
+              });
+            });
+      </script>
+      <script type="text/javascript">
+  document.querySelector('.btnpay4').addEventListener('click', function () {
+            fetch('https://khetifood.com/index.php?route=api/b2bDashOrder/pay&method=cellpay&id={{ id }}&tkn={{tkn}}&order_id={{order.order_id}}')
+              .then((response) => {
+                console.log(response);
+                return response.json();
+              })
+              .then((data) => {    
+            if(data["success"]== 1){
+              text.innerHTML = "Paid(cellpay)";
+              paybtns.style.display="none";
+              unpaybtn.style.display="block";
+
+          }
+              })
+              .catch(function(error)  {
+                  console.log(error);
+              });
+            });
+
+     
+      </script>
+
+
+      <script type="text/javascript">
+      function myFunction(Category_id) {
+      
+       $.ajax({
+                     url: 'https://khetifood.com/index.php?route=api/getproductsb2b&secret=U7sw3jr69r13&category_id='+Category_id+'&language_id=1&location=1',
+                     type: 'GET',
+                     async: false,
+                     dataType: "json",
+                     crossDomain: true, 
+                     success: function (data) {
+                       var response = JSON.parse(JSON.stringify(data));
+                       console.log(response); 
+                       $('#table1').empty();
+     
+              for (let i = 0; i < response['products'].length; i++) {
+let link= "https://khetifood.com/index.php?route=api/b2bDashOrder/addproducttoexistingorder1&key=12389077&customer_id=3059&product_id="+response['products'][i].product_id+"&quantity=1&id={{ id }}&tkn={{tkn}}&order_id={{order.order_id}}";
+              let string = '<tr>'+
+                '<td>'+response['products'][i].name +'</td>'+
+                 '<td>'+'<img src="'+response['products'][i].thumb+'" style="width: 60px;">'+'</td>'+
+                 '<td>'+response['products'][i].special +'</td>'+
+                 '<td>'+response['products'][i].sku +'</td>'+
+                 '<td>'+'<a type="button" class="btn btn-primary" href="'+link+'">ADD</a>' +'</td>'+
+                 '</tr>';
+                 $('#table1').append(string);
+               }
+     },
+                     error:function(data){
+                         alert(data);
+                     },
+                     cache: false,
+                     contentType: false,
+                     processData: false
+                 });
+       
+     }
+     </script><script type="text/javascript"><!--
+      $('#datetimepicker4').datepicker({
+	pickTime: false,
+  dateFormat: 'yy-mm-dd'
+});
+</script>
+              
+
+</body>
+</head>

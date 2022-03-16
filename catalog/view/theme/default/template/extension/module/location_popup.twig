@@ -1,0 +1,98 @@
+{# <!-- Modal -->
+<div id="age-restriction-modal" class="modal fade" role="dialog" style="overflow-y: auto;">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{modal_title}}</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{message}}</p>
+      </div>
+      <div class="modal-footer">
+        <button id="age-positive" type="button" class="btn btn-default" data-dismiss="modal">{{modal_agree}}</button>
+        <button id="age-negative"  type="button" class="btn btn-default" data-dismiss="modal">{{modal_disagree}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    var AGE_RESTRICTION_SESSION_KEY = '{{session_redirect}}';
+
+    window.addEventListener('load', function(){
+        $(document.getElementById('age-restriction-modal')).modal({backdrop: false});
+
+
+        document.getElementById('age-negative').addEventListener('click', function(){
+            //window.location = "{{redirect_url}}";
+			$.post(AGE_RESTRICTION_SESSION_KEY, { age: {{age}} }, function(response){
+                if (JSON.parse(response).success != 1) {
+                  console.log('Session Error. Check your cookie!');
+                }
+            });
+			
+			//set location cookie
+			setCookie('locationCookie', 'ktm');
+			
+			link = 'location.php?location=ktm';
+			$.ajax({
+				url: link,
+				type: "GET",
+				dataType: 'json',
+				success: function (response) {
+				   location.reload();
+				   return true;
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+				   console.log(textStatus, errorThrown);
+				}
+			});
+        });
+
+        document.getElementById('age-positive').addEventListener('click', function(){
+            $.post(AGE_RESTRICTION_SESSION_KEY, { age: {{age}} }, function(response){
+                if (JSON.parse(response).success != 1) {
+                  console.log('Session Error. Check your cookie!');
+                }
+            });
+			
+			//set location cookie
+			setCookie('locationCookie', 'pkr');
+			
+			link = 'location.php?location=pkr';
+			$.ajax({
+				url: link,
+				type: "GET",
+				dataType: 'json',
+				success: function (response) {
+				   location.reload();
+				   return true;
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+				   console.log(textStatus, errorThrown);
+				}
+			});
+        });
+    });
+</script> #}
+
+
+<script type="text/javascript">
+
+//set location cookie
+			setCookie('locationCookie', {{userlocation}});
+			
+			link = 'location.php?location='.{{userlocation}};
+			$.ajax({
+				url: link,
+				type: "GET",
+				dataType: 'json',
+				success: function (response) {
+				   location.reload();
+				   return true;
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+				   console.log(textStatus, errorThrown);
+				}
+			});</script>

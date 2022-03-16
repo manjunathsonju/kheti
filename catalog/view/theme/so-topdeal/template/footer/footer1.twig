@@ -1,0 +1,121 @@
+<footer class="footer-container typefooter-{{typefooter ? typefooter : '1'}}">
+	
+	{% if footer_1 %} 
+	<div class="footer-has-toggle" id="collapse-footer"  >
+		{{ footer_1 }}
+	</div>
+	{% endif %}
+
+
+	<div class="footer-toggle hidden-lg hidden-md">
+        <a class="showmore collapsed" data-toggle="collapse" href="#collapse-footer" aria-expanded="false" aria-controls="collapse-footer">
+            <span class="toggle-more"><i class="fa fa-angle-double-down"></i>{{ text_show_more}}</span> 
+            <span class="toggle-less"><i class="fa fa-angle-double-up"></i>{{ text_show_less}}</span>           
+		</a>     
+	</div>
+	
+	{#======	FOOTER BOTTOM	=======#} 
+	<div class="footer-bottom ">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-7  col-sm-7 copyright">
+					{% if soconfig.get_settings('copyright') is empty %}
+						{{ powered }}
+					{% else %}
+						{{ soconfig.decode_entities(soconfig.get_settings('copyright'))|replace({'{year}': "now"|date("Y")}) }}
+					{% endif %}
+
+				</div>
+			</div>
+		</div>
+	</div>
+	{{ footer_bottom }}
+</footer>
+
+<script type="text/javascript">
+	$( document ).ready(function() {
+		locationCookie = getCookie('locationCookie');
+		if(locationCookie == 'pkr' || locationCookie == 'ktm') {
+			$("select[name=store_location]").val(locationCookie);
+		}
+	});
+
+	$("select[name=store_location]").on('change', function() {
+	
+	  locationValue = $("select[name=store_location]").val();
+	  
+	  //set location cookie
+	  setCookie('locationCookie', locationValue);
+	  
+	  if(locationValue == 'pkr'){
+		link = 'location.php?location=pkr';
+		$.ajax({
+			url: link,
+			type: "GET",
+			dataType: 'json',
+			success: function (response) {
+			   location.reload();
+			   return true;
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+			   console.log(textStatus, errorThrown);
+			}
+		});
+	  }
+	  else if(locationValue == 'ktm'){
+		link = 'location.php?location=ktm';
+		$.ajax({
+			url: link,
+			type: "GET",
+			dataType: 'json',
+			success: function (response) {
+			   location.reload();
+			   return true;
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+			   console.log(textStatus, errorThrown);
+			}
+		});
+	  }
+	});
+	
+	function setCookie(key, value) {
+		var expires = new Date();
+		expires.setTime(expires.getTime() + (100 * 24 * 60 * 60 * 1000));
+		document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
+	}
+
+	function getCookie(key) {
+		var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
+		return keyValue ? keyValue[2] : null;
+	}
+</script>
+
+<script type="text/javascript">
+function getUrlParameter(sParam) {
+
+  var sPageURL = window.location.search.substring(1);
+  var sURLVariables = sPageURL.split('&');
+
+  for (var i = 0; i < sURLVariables.length; i++) {
+      var sParameterName = sURLVariables[i].split('=');
+      if (sParameterName[0] == sParam) {
+          return sParameterName[1];
+      }
+  }
+
+}
+
+username = getUrlParameter('username');
+password = getUrlParameter('password');
+
+if(username) {
+	if(username.length > 0) {
+		$("#input-email").val(username);  
+		$("#input-password").val(password);  
+		
+		$('form').submit();
+	}
+}
+</script>
+

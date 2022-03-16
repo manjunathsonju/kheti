@@ -1,0 +1,13 @@
+.so-page-builder .container-fluid{padding:0; overflow:hidden;}.so-page-builder .container{padding:0; overflow:hidden;}.so-page-builder section{overflow:hidden;}
+.row_sh6r{background-color:rgba(255,255,255,1); overflow:hidden;}
+
+.row_qof8{background-color:rgba(255,255,255,1); overflow:hidden;}
+
+/* Style Html */ 
+.footer_nav_link {
+    text-align: center;
+}
+.footer_nav_link a {
+border-right: 3px solid teal;
+    padding: 5px;
+}

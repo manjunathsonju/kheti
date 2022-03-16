@@ -1,0 +1,227 @@
+{% set count_item = list|length %}
+
+<div class="module sohomepage-slider {{ class_suffix}}">
+    {% if disp_title_module %}
+      <h3 class="modtitle">{{ head_name}}</h3>
+    {% endif %}
+
+{% if pre_text %}
+  <div class="form-group">
+    {{ pre_text }}
+  </div>
+{% endif %}
+
+
+<div class="modcontent">
+    {% if list %} 
+    <div id="sohomepage-slider{{ module}}">
+        <div class="so-homeslider sohomeslider-inner-{{ module}}">
+        {% for item in list %}        
+            <div class="item">
+                <a href="{{ item.url}}" title="{{ item.title}}" target="{{ item_link_target}}">
+                    <img class="responsive" src="{{ item.thumb}}"  alt="{{ item.title}}" />
+                </a>
+                <div class="sohomeslider-description">
+                    <h2>{{ item.caption}}</h2>
+                    {{ item.description}}              
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+
+    <script type="text/javascript">
+      var total_item = {{ count_item }} ;
+      $(".sohomeslider-inner-{{ module}}").owlCarousel2({
+          animateOut: '{{ animateOut}}',
+          animateIn: '{{ animateIn}}',
+          autoplay: {{ autoplay}},
+          autoplayTimeout: {{ autoplayTimeout}},
+          autoplaySpeed:  {{ autoplaySpeed}},
+          smartSpeed: 500,
+          autoplayHoverPause: {{ autoplayHoverPause}},
+          startPosition: {{ startPosition}},
+          mouseDrag:  {{ mouseDrag}},
+          touchDrag: {{ touchDrag}},
+          dots: {{ dots}},
+          rtl: {{direction}},
+          autoWidth: false,
+          dotClass: "owl2-dot",
+          dotsClass: "owl2-dots",
+          loop: {{ loop}},
+          navText: ["Next", "Prev"],
+          navClass: ["owl2-prev", "owl2-next"],
+          responsive: {
+          0:{ items: {{ nb_column4}},
+            nav: total_item <= {{ nb_column4 }} ? false : (({{ nav  }} ) ? true: false),
+          },
+          480:{ items: {{ nb_column3 }},
+            nav: total_item <= {{ nb_column3 }} ? false : (({{ nav  }} ) ? true: false),
+          },
+          768:{ items: {{ nb_column2 }},
+            nav: total_item <= {{ nb_column2 }} ? false : (({{ nav  }} ) ? true: false),
+          },
+          992:{ items: {{ nb_column1 }},
+            nav: total_item <= {{ nb_column1 }} ? false : (({{ nav  }} ) ? true: false),
+          },
+          1200:{ items: {{ nb_column0 }},
+            nav: total_item <= {{ nb_column0 }} ? false : (({{ nav  }} ) ? true: false),
+          }
+        },
+      });
+    </script>
+    </div>
+    {% else %}  
+        {{ objlang.get('text_noitem') }}
+    {% endif %}
+</div> <!--/.modcontent-->
+
+{% if post_text %}
+  <div class="form-group">
+    {{ post_text }}
+  </div>
+{% endif %}
+
+
+</div> 
+
+					{% if store_id==1 %}																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																											<div class="block-categories">
+	<h4 class="modtitle1" style="color: #222;background-color: #ffffff;margin-left:10px;"><span>Categories</span></h4>
+	<div class="cate-content contentslider" data-rtl="yes" data-autoplay="yes" data-autowidth="yes" data-delay="4" data-speed="0.9" data-margin="10" data-items_column1="1" data-items_column2="1" data-items_column3="2" data-items_column4="2" data-arrows="yes" data-pagination="no" data-lazyload="no" data-loop="yes" data-hoverpause="yes" style="transition: width 2s;">
+		<div class="cate cate3" style="height: 120px;
+    width: 120px;">
+		<div class="inner" style="height: 120px;
+    width: 120px;box-shadow: 0px 0px 0px 0px;"><a href="index.php?route=product/category&amp;path=139&amp;platform=mobile"><img src="image/localveg.jpg" alt="Static Image" style="border-radius: 50%;height: 102px;
+    width: 105px;">Vegetables-Local</a></div>
+		</div>
+<div class="cate cate4" style="height: 120px;
+    width: 120px;">
+		<div class="inner" style="height: 120px;
+    width: 120px;box-shadow: 0px 0px 0px 0px;"><a href="index.php?route=product/category&amp;path=171&amp;platform=mobile"><img src="image/regularveg1.jpg" alt="Static Image" style="border-radius: 50%;height: 102px;
+    width: 105px;">Vegetables-Regular</a></div>
+		</div>
+<div class="cate cate1" style="height: 120px;
+    width: 120px;">
+			<div class="inner" style="height: 120px;
+    width: 120px; box-shadow: 0px 0px 0px 0px;"><a href="index.php?route=product/category&amp;path=172&amp;platform=mobile"><img src="image/fruits1.jpg" alt="Static Image" style="border-radius: 50%;height: 102px;
+    width: 105px;">Fruits</a></div>
+		</div>
+		<div class="cate cate2" style="height: 120px;
+    width: 120px;">
+		<div class="inner" style="height: 120px;
+    width: 120px;box-shadow: 0px 0px 0px 0px;"><a href="index.php?route=product/category&amp;path=137&amp;platform=mobile"><img src="image/organicveg1.jpg" alt="Static Image" style="border-radius: 50%;height: 102px;
+    width: 105px;">Vegetables-Organic</a></div>
+		</div>
+
+    <div class="cate cate9" style="height: 120px;
+    width: 120px;">
+		<div class="inner" style="height: 120px;
+    width: 120px;box-shadow: 0px 0px 0px 0px;"><a href="index.php?route=product/category&amp;path=212&amp;platform=mobile"><img src="image/IMg-pickle.jpg" alt="Static Image" style="border-radius: 50%;height: 102px;
+    width: 105px;">Pickles</a></div>
+		</div>
+     <div class="cate cate12" style="height: 120px;
+    width: 120px;">
+		<div class="inner" style="height: 120px;
+    width: 120px;box-shadow: 0px 0px 0px 0px;"><a href="index.php?route=product/category&amp;path=215"><img src="image/catalog/groceries.jpg" alt="Static Image" style="border-radius: 50%;height: 102px;
+    width: 105px;">Groceries</a></div>
+		</div>
+
+    {% if user_location == 'ktm' %}
+   
+
+
+
+{# 
+<div class="cate cate11" style="height: 120px;
+    width: 120px;">
+		<div class="inner" style="height: 120px;
+    width: 120px;box-shadow: 0px 0px 0px 0px;"><a href="index.php?route=product/category&amp;path=232"><img src="image/Strawberry_2000x.jpg" alt="Static Image" style="border-radius: 50%;height: 102px;
+    width: 105px;">Hime Berry</a></div>
+		</div> #}
+
+
+<div class="cate cate10" style="height: 120px;
+    width: 120px;">
+		<div class="inner" style="height: 120px;
+    width: 120px;box-shadow: 0px 0px 0px 0px;"><a href="index.php?route=product/category&amp;path=213&amp;platform=mobile"><img src="image/vegasn.jpg" alt="Static Image" style="border-radius: 50%;height: 102px;
+    width: 105px;">Vegan Dairy Nepal</a></div>
+		</div>
+<div class="cat cate11" style="height: 120px;
+    width: 120px;">
+		<div class="inner" style="height: 120px;
+    width: 120px;box-shadow: 0px 0px 0px 0px;"><a href="index.php?route=product/category&amp;path=218&amp;platform=mobile"><img src="image/tittofritto.jpg" alt="Static Image" style="border-radius: 50%;height: 102px;
+    width: 105px;">Tittofritto Foods</a></div>
+		</div>
+<div class="cate cate12" style="height: 120px;
+    width: 120px;">
+		<div class="inner" style="height: 120px;
+    width: 120px;box-shadow: 0px 0px 0px 0px;"><a href="index.php?route=product/category&amp;path=219"><img src="image/kathmandu coffe.jpg" alt="Static Image" style="border-radius: 50%;height: 102px;
+    width: 105px;">Katman'Du Coffee</a></div>
+		</div>
+
+<div class="cat cate13" style="height: 120px;
+    width: 120px;">
+		<div class="inner" style="height: 120px;
+    width: 120px;box-shadow: 0px 0px 0px 0px;"><a href="index.php?route=product/category&amp;path=222&amp;platform=mobile"><img src="image/rsz_redcherry.png" alt="Static Image" style="border-radius: 50%;height: 102px;
+    width: 105px;">Red Cherry Coffee</a></div>
+		</div>
+
+<div class="cate cate12" style="height: 120px;
+    width: 120px;">
+		<div class="inner" style="height: 120px;
+    width: 120px;box-shadow: 0px 0px 0px 0px;"><a href="index.php?route=product/category&amp;path=228"><img src="image/dryfruit.jpg" alt="Static Image" style="border-radius: 50%;height: 102px;
+    width: 105px;">Dry Fruits</a></div>
+		</div>
+
+<div class="cate cate12" style="height: 120px;
+    width: 120px;">
+		<div class="inner" style="height: 120px;
+    width: 120px;box-shadow: 0px 0px 0px 0px;"><a href="index.php?route=product/category&amp;path=227"><img src="image/healthfood.webp" alt="Static Image" style="border-radius: 50%;height: 102px;
+    width: 105px;">Health and Wellness</a></div>
+		</div>
+
+<div class="cate cate12" style="height: 120px;
+    width: 120px;">
+		<div class="inner" style="height: 120px;
+    width: 120px;box-shadow: 0px 0px 0px 0px;"><a href="index.php?route=product/category&amp;path=230"><img src="image/ajima.jpg" alt="Static Image" style="border-radius: 50%;height: 102px;
+    width: 105px;">Ajima Foods</a></div>
+		</div>
+
+
+    <div class="cate cate12" style="height: 120px;
+    width: 120px;">
+		<div class="inner" style="height: 120px;
+    width: 120px;box-shadow: 0px 0px 0px 0px;"><a href="index.php?route=product/category&amp;path=214"><img src="image/honey.jpg" alt="Static Image" style="border-radius: 50%;height: 102px;
+    width: 105px;">Honey</a></div>
+		</div>
+
+    <div class="cate cate12" style="height: 120px;
+    width: 120px;">
+		<div class="inner" style="height: 120px;
+    width: 120px;box-shadow: 0px 0px 0px 0px;"><a href="index.php?route=product/category&amp;path=238"><img src="image/catalog/jojo.jpeg" alt="Static Image" style="border-radius: 50%;height: 102px;
+    width: 105px;">Jojolapa Mari Pasa:</a></div>
+		</div>
+
+   
+
+    {% endif %}
+    <div class="cate cate11" style="height: 120px;
+    width: 120px;">
+		<div class="inner" style="height: 120px;
+    width: 120px;box-shadow: 0px 0px 0px 0px;"><a href="index.php?route=product/category&amp;path=216&amp;platform=mobile"><img src="image/cupcake.png" alt="Static Image" style="border-radius: 50%;height: 102px;
+    width: 105px;">Bakeries</a></div>
+		</div>
+
+
+
+<div class="cate cate12" style="height: 120px;
+    width: 120px;">
+		<div class="inner" style="height: 120px;
+    width: 120px;box-shadow: 0px 0px 0px 0px;"><a href="index.php?route=product/category&amp;path=220"><img src="image/kaushik.jpg" alt="Static Image" style="border-radius: 50%;height: 102px;
+    width: 105px;">Kaushi Kheti</a></div>
+		</div>
+
+	</div>
+</div> 
+
+                    {% endif %}
+			 

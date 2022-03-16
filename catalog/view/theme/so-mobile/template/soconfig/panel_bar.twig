@@ -1,0 +1,91 @@
+{#
+****************************************************** 
+ * @package	SO Framework for Opencart 3.x
+ * @author	http://www.opencartworks.com
+ * @license	GNU General Public License
+ * @copyright(C) 2008-2017 opencartworks.com. All rights reserved.
+ ******************************************************
+#}
+
+<nav class="bar bar-tab">
+	<a class="tab-item" href="{{ home }}" data-transition="slide-in">
+		<span class="fa fa-2x fa-home"></span>
+	</a>
+	<a class="tab-item" href="index.php?category_id=0&search=&submit_search=&route=product%2Fsearch" data-transition="slide-in">
+		<span class="fa fa-2x fa-search"></span>
+	</a>
+	<a class="tab-item item-cart" href="{{ shopping_cart }}" data-transition="slide-in">
+		<span class="fa fa-2x fa-shopping-cart"></span>
+		<div id="cart" class="btn-shopping-cart">
+			<span class="total-shopping-cart cart-total-full">
+				{{ text_items }} 
+			</span>
+		</div>
+	</a>
+	<a class="tab-item" href="{{ login }}" data-transition="slide-in">
+		<span class="fa fa-2x fa-user"></span>
+	</a>
+	<a class="tab-item" href="javascript:void(Tawk_API.toggle())" data-transition="slide-in">
+		<span class="fa fa-2x fa-comments"></span>
+	</a>
+		{% if store_id == 1 %}
+
+	<a class="tab-item" href="https://khetifood.com/box" data-transition="slide-in">
+		<span class="fa fa-2x fa-shopping-basket"></span>
+		<div id="cart" class="btn-shopping-cart">
+			<span style="background: #bc1515;
+			width: 38px;
+			height: 15px;
+			display: inline-block;
+			text-align: center;
+			font-size: 10px;
+			line-height: 15px;
+			color: #fff;">
+				New
+			</span>
+		</div>
+	</a>
+	{% endif %}
+	<!--
+	<a class="tab-item" href="/kheti-games" data-transition="slide-in">
+		<span class="fa fa-2x fa-gamepad"></span>
+		<div id="cart" class="btn-shopping-cart">
+			<span style="background: #bc1515;
+			width: 38px;
+			height: 15px;
+			display: inline-block;
+			text-align: center;
+			font-size: 10px;
+			line-height: 15px;
+			color: #fff;">
+				New
+			</span>
+		</div>
+	</a>
+	-->
+	
+	{% if soconfig.get_settings('barmore_status')  %}
+	<a class="tab-item tab-item--more tooltip-popovers"  href="{{ actual_link }}#popover">
+		<span class="icon icon-more"></span>
+		<span class="tab-label">{{ objlang.get('text_more') }} </span>
+	</a>
+	{% endif %}
+</nav>
+
+{% if soconfig.get_settings('barmore_status') %}
+<div id="popover" class="popover fade bottom in right">
+	<ul class="table-view">
+		{% for menuitem in soconfig.get_settings('listmenus') %} 
+			
+			{% for nameid, menuname in menuitem.namemore %}
+				{% if nameid == lang_id %}
+				<li class="table-view-cell"><a href="{{ menuitem.link }}">{{ menuname }}</a></li>
+				{% endif %}
+			{% endfor %}
+		{% endfor %}
+	</ul>
+</div>
+{% endif %}
+	
+
+

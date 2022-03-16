@@ -1,0 +1,694 @@
+{#=====Get variable : Config Select Block on header=====#}
+{% set hidden_headertop = soconfig.get_settings('toppanel_type') =='1' or soconfig.get_settings('toppanel_type') =='2'? 'hidden-compact' : '' %}
+{% set hidden_headercenter = soconfig.get_settings('toppanel_type') =='2'? 'hidden-compact' : '' %}
+{% set hidden_headerbottom = soconfig.get_settings('toppanel_type') =='1'? 'hidden-compact' : '' %}
+<link href="catalog/view/javascript/so_searchpro/css/so_searchpro.css" type="text/css" rel="stylesheet" media="screen" />
+
+<style>
+#livechat-compact-container {
+  height: 153px;
+  position: fixed;
+  right: 0;
+  top: 200px;
+  top: 44vh;
+  z-index: 10000;
+}
+.btn-chat a {
+  font-family: arial;
+  color: #fff;
+  text-decoration: none;
+  background: #0db04b;
+  padding: 24px 20px 8px;
+  display: block;
+  font-weight: bold;
+  font-size: 14px;
+  box-shadow: 0 0 0 1px #0ea50cd6 inset;
+  border: 1px solid #144866;
+  border-radius: 2px;
+  -ms-transform: rotate(90deg) translate(0, -20px);
+  -webkit-transform: rotate(90deg) translate(0, -20px);
+  transform: rotate(90deg) translate(0, -20px);
+  position: relative;
+  right: -53px;
+  transition: background 0.2s, right 0.2s;
+}
+.btn-chat a:hover {
+  background: #0e9943;
+  right: -46px;
+  transition: background 0.2s, right 0.2s;
+}
+
+#tawk_chat {
+	position: fixed;
+	bottom: 0px;
+	cursor: pointer;
+	color: #ddd;
+	display: inline-block;
+	line-height: 44px;
+	text-align: center;
+	width: 94px;
+	height: 94px;
+	z-index: 30;
+	border-radius: 50%;
+	-webkit-border-radius: 50%;
+	opacity: 1;
+	right: 60px;
+}
+
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  -webkit-animation-iteration-count: infinite;
+}
+@-webkit-keyframes bounce {
+  0%, 100% {
+    -webkit-transform: translateY(0);
+  }
+  50% {
+    -webkit-transform: translateY(-5px);
+  }
+}
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+.bounce {
+  -webkit-animation-name: bounce;
+  animation-name: bounce;
+}
+
+/*top bar */
+.top-bar {
+	height: 48px;
+	background-color: #fff;
+	border-bottom: 1px solid teal;
+}
+
+/*fix language dropdown hover open close issue*/
+.dropdown-menu {
+	margin-top: -10px;
+}
+{# .dropdown-menu :hover {
+
+  display: block;
+} #}
+#header {
+	position: sticky;
+    top: 0px;
+	z-index: 800;
+}
+</style>
+
+<script type="text/javascript">
+if (window.location.hostname.indexOf("www") == 0) {
+    window.location = window.location.href.replace("www.","");
+}
+</script>
+
+<div class="top-bar  typeheader-1">
+	<div class="col-lg-8 header-sevices" style="margin-top: 10px;height: 34px;">
+	{# {{store_id}} #}
+		{# {% if header_block %}
+			{{ header_block }}
+		{% endif %} #}
+
+																																																																																																																																																																																																																																																																																																																																																					<div class="clearfix sevices-menu">	
+	<ul>
+		<li class="col-md-12 item mail">
+			<div class="text">
+                         <p><a href="mailto:info@dvexcellus.com"><i class="fa fa-envelope"></i> info@dvexcellus.com</a> 	
+							 {% if store_id==0 %}
+                             &nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-phone"></i> Kathmandu: 9802393260 		
+				{% else %}
+
+		                             &nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-phone"></i> Kathmandu: 9802393170 		
+ 					{% endif %}
+
+
+
+                             &nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-phone"></i> Pokhara: 061-460415
+		 {% if store_id==0 %}
+&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-phone"></i> Chitwan : 9802393266
+		{% endif %} 
+
+
+                         </p>
+                         </div></li></ul></div>	
+	</div>
+
+
+
+	<div class="col-lg-4" style="margin-top: 10px;height: 34px;">
+		{% if soconfig.get_settings('barlanguage_status')  %}
+			<div class="langauge_form" style="float: right;">
+				{{ language }}
+			</div>
+		{% endif %}
+		<div style="padding:0;cursor:pointer;float:right;display:inline-block;margin:0;">
+			<select name="store_location" class="form-control" style="width:150px;height: 30px;">
+				<option value="">Store Location</option>
+				<option value="ktm">Kathmandu</option>
+				<option value="pkr">Pokhara</option>
+			</select>
+		</div>
+		{% if logged %}
+		<div style="padding:0;cursor:pointer;float:right;display:inline-block;margin:0;">
+			<div class="dropdown" style=" position: relative;
+    display: inline-block;">
+				<button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" style="padding: 6px 10px;
+    margin-right: 5px;"> {{ customer_first_name }}
+					</button>
+				<ul class="dropdown-menu" style="margin-top: 3px;">
+					<li><a href="index.php?route=account/account">My Account</a></li>
+					<li><a href="index.php?route=account/logout">Logout</a></li>
+				</ul>
+			</div>
+		</div>
+
+		{% endif %}
+
+	</div>
+</div>
+<header id="header" class=" variant typeheader-{{ typeheader ? typeheader : '1'}}">
+	{#======	HEADER promotion	=======#}  
+	{% if soconfig.get_settings('promotion_status') and soconfig.get_settings('promotion') %}
+	<div class="header-promotion {{hidden_headertop}}" >
+		{{ soconfig.decode_entities( soconfig.get_settings('promotion') ) }}
+	</div>
+	{% endif %}
+	{#======	HEADER TOP	=======#}  
+	<div class="header-top {{hidden_headertop}}">
+		<div class="container">
+			<div class="row">
+				
+				<div class="col-lg-3 col-xs-6 header-logo ">
+					<div class="navbar-logo">
+					    {{soconfig.get_logo()}}
+					</div>
+				</div>
+				<div class="col-lg-7 header-sevices">
+					{# {% if store_id == 1 %}
+						<a href="https://play.google.com/store/apps/details?id=com.dve.khetidotfood" target="_blank">
+							<img src="catalog/view/theme/so-topdeal/image/modified-final.gif" style="max-width: 85%">
+						</a>	
+					{% endif %} #}
+					
+{#					{% if logged %}#}
+{#					<div style="padding:0;cursor:pointer;float:right;display:inline-block;margin-right: 38px;">#}
+{#						<div class="dropdown">#}
+{#						  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{ customer_first_name }}#}
+{#						  <span class="caret"></span></button>#}
+{#						  <ul class="dropdown-menu">#}
+{#							<li><a href="index.php?route=account/account">My Account</a></li>#}
+{#							<li><a href="index.php?route=account/logout">Logout</a></li>#}
+{#						  </ul>#}
+{#						</div>#}
+{#					</div>#}
+{#					{% endif %}#}
+				</div>
+				<div class="col-lg-2 col-xs-6 header-cart">
+					<div class="shopping_cart">
+					 	{{ cart }} 
+					</div>					
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- HEADER CENTER -->
+	<div class="header-center {{hidden_headercenter}}">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-5 col-md-5 col-sm-1 col-xs-3 header-menu " style="width: 59.666667%;">
+					<div class="megamenu-style-dev megamenu-dev">
+						<div class="responsive">
+
+    <nav class="navbar-default">
+        <div class=" container-megamenu   horizontal ">
+            <div class="navbar-header">
+                <button type="button" id="show-megamenu" data-toggle="collapse" class="navbar-toggle">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <div class="megamenu-wrapper">
+
+                <span id="remove-megamenu" class="fa fa-times"></span>
+
+                <div class="megamenu-pattern">
+                    <div class="container">
+                        <ul class="megamenu" data-transition="slide" data-animationtime="500" style="width: 101%;">
+
+                            <li class="full-width menu-home">
+                                <p class="close-menu"></p>
+                                <a href="index.php" class="clearfix">
+                                    <strong>
+												Home
+											</strong>
+
+                                </a>
+
+                            </li>
+							{# {% if not logged %}
+                            <li class="style-page">
+                                <p class="close-menu"></p>
+                                <a href="index.php?route=account/login" class="clearfix">
+                                    <strong>
+												Login
+											</strong>
+
+                                </a>
+
+                            </li>
+
+                            <li class="style-page">
+                                <p class="close-menu"></p>
+                                <a href="index.php?route=information/information&amp;information_id=7" class="clearfix">
+                                    <strong>
+												Register
+											</strong>
+
+                                </a>
+
+                            </li>
+							{% else %}
+							<li class="style-page">
+                                <p class="close-menu"></p>
+                                <a href="index.php?route=account/account" class="clearfix">
+                                    <strong>
+												My Account
+											</strong>
+
+                                </a>
+
+                            </li>
+							{% endif %}  #}
+
+                            {# <li class=" item-style2 content-full feafute">
+                                <p class="close-menu"></p>
+                                <a href="javascript:void(Tawk_API.toggle())" class="clearfix">
+                                    <strong>
+												Contact Us
+											</strong>
+
+                                </a>
+
+                            </li> #}
+							{% if store_id == 1 %}
+{# 
+
+<li class=" item-style2 content-full feafute">
+                                <p class="close-menu"></p>
+                                <a href="index.php?route=product/category&path=220" class="clearfix">
+                                    <strong>
+												Kaushi Kheti
+											</strong>
+
+                                </a>
+
+							<li class=" item-style2 content-full feafute">
+                                <p class="close-menu"></p>
+                                <a href="index.php?route=information/tracker&information_id=10&platform=web" class="clearfix">
+                                    <strong>
+												Food/Health Tips
+											</strong>
+
+                                </a>
+
+                            </li> #}
+							 <li class=" item-style2 content-full feafute" style="background: brown;">
+                                <p class="close-menu"></p>
+                                <a href="index.php?route=product/category&path=235" class="clearfix">
+                                    <strong>
+												Clearance
+												<img src="image/flash.png" alt="Flash sale" style="width:30px;"> 
+											</strong>
+
+                                </a>
+
+                            </li> 
+							<li class=" item-style2 content-full feafute" >
+                                <p class="close-menu"></p>
+                                <a href="https://khetifood.com/index.php?route=information/tracker&information_id=12&platform=web" class="clearfix">
+                                    <strong>
+												FAQ & How Tos
+											</strong>
+
+                                </a>
+
+                            </li>
+
+							<li class=" item-style2 content-full feafute" >
+                                <p class="close-menu"></p>
+                                <a href="https://khetifood.com/index.php?route=information/information&information_id=13" class="clearfix">
+                                    <strong>
+												GUARANTEED QUALITY
+											</strong>
+
+                                </a>
+
+                            </li>
+							<li class=" item-style2 content-full feafute" >
+                                <p class="close-menu"></p>
+                                <a href="https://khetifood.com/index.php?route=information/information&information_id=14" class="clearfix">
+                                    <strong>
+												BULK ORDER
+											</strong>
+
+                                </a>
+
+                            </li>
+							<li class=" item-style2 content-full feafute" >
+                                <p class="close-menu"></p>
+                                <a href="index.php?route=blog/blog" class="clearfix">
+                                    <strong>
+												BLOG
+											</strong>
+
+                                </a>
+
+                            </li>
+							{% endif %}
+
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+					</div>					
+				</div>
+				{# <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding: 7px;width: 8.666667%;">
+				<!-- Explore farmers market -->
+				<!--
+					{% if store_id == 1 %}	
+					<div class="btn-group">
+					  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: #0db04b;font-weight: bold;border: 1px solid;">
+						Explore Farmer Markets
+					  </button>
+					  <div class="dropdown-menu">
+						{% for manufacturer in manufacturers %}
+							<a class="dropdown-item" href="https://b2boutputdemo.kheti.farm/index.php?route=extension/account/purpletree_multivendor/sellers&farmer_market={{manufacturer.name}}" style="display: block;width: 100%;padding: .25rem 1.5rem;clear: both;font-weight: 400;color: #212529;text-align: inherit;white-space:nowrap;background-color: transparent;border: 0;">{{manufacturer.name}}</a>
+						{% endfor %}
+					  </div>
+					</div>
+					{% endif %}
+				-->
+				</div> #}
+				<div class="col-lg-3 col-md-3 col-sm-7 col-xs-4 header-search" style="
+    margin-left: -14px;">				
+				
+					<div id="sosearchpro" class="sosearchpro-wrapper so-search ">
+	 
+	
+	<form method="GET" action="index.php">
+		<div id="search0" class="search input-group form-group">
+			 
+{# <div class="select_category filter_type  icon-select"> #}
+				{# <select class="no-border" name="category_id" style="background-color:#0db04b;border:2px solid #1d8244;color:white;width:200px;font-weight: bold;">
+					<option value="0">All Categories </option>
+					{% if store_id == 0 %}
+					<option value="151">Crop Protection </option>
+						<option value="101">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Insecticides </option>
+					    <option value="153">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Organic Protection </option>
+						<option value="152">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pesticides </option>
+						<option value="154">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Weedicides </option>
+					<option value="100">Dhan(Rice)(Paddy) </option>
+					<option value="121">Farmer Protection </option>
+					<option value="210">Feed Supplement </option>
+					<option value="177">Flowers </option>
+					<option value="124">Growth Promoter and Micro-nutrients</option>
+						<option value="124">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Growth Promoter </option>
+					<option value="148">Machinery/Tools </option>
+						<option value="96">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Agri Tools </option>
+					    <option value="99">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Irrigation Tools(sichai samagri)</option>
+						<option value="149">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nursery Tools </option>
+						<option value="59">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Agri Machinery </option>
+						<option value="94">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tiller </option>
+						<option value="207">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tiller Attachments </option>
+
+										<option value="92">Nursary Products</option>
+															<option value="156">Seedling</option>
+																				<option value="60">Seeds </option>
+																									<option value="150">Services</option>
+																														<option value="61">Seed Treatment</option>
+																																			<option value="62">Fertilizer</option>
+																																			<option value="220">Khausi Kheti</option>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					{% endif %}
+					 
+						{% if store_id == 1 %}
+						   
+							<option value="216">Bakeries </option>
+						 
+							
+						   
+							<option value="172 ">Fruits </option>
+							<option value="197 ">JUAS </option>
+							
+													 
+							
+							   
+								
+								<option value="204">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Coffee </option>							
+							   
+								
+								<option value="264">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Honey </option>
+								
+								<option value="198">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; oil </option>
+								
+								<option value="200">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Salt </option>
+								
+								<option value="203">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Seed Kernels </option>
+						   
+							<option value="209 ">Kheti's special </option>
+						 
+						
+											 
+						
+						   
+							<option value="137 ">Vegetables-Organic </option>
+							<option value="139 ">Vegetables-Local </option>
+							<option value="171 ">Vegetables-Regular </option>
+						   							<option value="257">Ozonated Vegetable</option>
+
+							<option value="161 ">Grocery </option>
+						 
+							   
+								
+								<option value="123">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bakery &amp; Chocolates </option>
+							 
+								<option value="162">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Beans, Pulses &amp; Legumes </option>
+							
+								
+								<option value="163">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cereals &amp; Grains </option>
+							 
+							
+													 
+							
+							   
+								
+								<option value="164">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dairy Products </option>
+							 
+							
+							   
+								
+								<option value="165">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dry Fruits </option>
+							 
+							
+													 
+							
+							   
+								
+								<option value="166">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dry Fruits </option>
+							 
+							
+													 
+							
+							   
+								
+								<option value="127">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Flour and Flour Items </option>
+							 
+							
+													 
+							
+							   
+								
+								<option value="129">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Oil </option>
+							 
+							
+													 
+							
+							   
+								
+								<option value="167">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Processed &amp; Pre-Packed </option>
+							 
+							
+							 
+								   
+									<option value="168 ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gundruk </option>
+								 
+							 
+								   
+									<option value="134 ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Honey </option>
+								 
+							 
+								   
+									<option value="169 ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jam </option>
+								 
+							 
+								   
+									<option value="132 ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pickles </option>
+								 
+							 
+								   
+									<option value="135 ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Salt </option>
+								 
+													 
+							
+							   
+								
+								<option value="141">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tea &amp; Coffee </option>
+							 
+							
+							 
+								   
+									<option value="133 ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Green Tea </option>
+								 
+																		 
+						
+						   
+							<option value="125 ">Cereals </option>
+		
+								<option value="126">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Rice </option>			 
+							
+																		 
+						
+						   
+							<option value="158 ">Herbs &amp; Spices </option>			 
+						
+								
+								<option value="160">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dry Herbs &amp; Spices </option>
+							 
+								<option value="159">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fresh Herbs &amp; Spices </option>
+							
+						   
+							<option value="128 ">Legumes </option>	
+						 
+						{% endif %} 
+							</select> #}
+			{# </div> #}
+			  
+			<input class="autosearch-input form-control" type="text" value="" size="50" autocomplete="off" placeholder="Search" name="search" style="width: 230px;font-size: 13px;font-weight: bold;color: #0db04b;"><ul class="dropdown-menu"></ul>
+			<span class="input-group-btn">
+				<button type="submit" class="button-search btn btn-default btn-lg" name="submit_search"><i class="fa fa-search"></i><span class="hidden">Search</span></button>
+			</span>
+		</div>
+
+		
+		<input type="hidden" name="route" value="product/search">
+	</form>
+</div>
+				</div>				
+			</div>
+		</div>
+	<div class="header-form {{hidden_headerbottom}}">
+		<div class="button-header current">
+			<i class="fa fa-bars"></i>
+		</div>
+		<div class="dropdown-form toogle_content">
+			{% if soconfig.get_settings('lang_status') %}
+				{{ language }} 
+				{{ currency }} 
+			{% endif %} 
+
+			
+			<span class="text">{{ text_more }}</span>
+			<ul class="dropdown-menu">
+	            <li class="wishlist"><a href="{{ wishlist }}" id="wishlist-total" class="top-link-wishlist" title="{{ text_wishlist }} "><span>{{ text_wishlist }} </span></a></li>
+	            <li class="checkout"><a href="{{ checkout }}" class="top-link-checkout" title="{{ text_checkout }}"><span >{{ text_checkout }}</span></a></li>
+	         </ul>
+		</div>
+		<div class="button-user">
+			<div class="user-info asd">
+				{% if logged %}
+					<a class="link-lg" href="{{ account }}">{{ text_login }}</a>
+				{% else %}
+					<a class="link-lg" href="{{ login }}">{{ text_login }}</a>
+				{% endif %}
+			</div>
+		</div>
+	</div>	
+</header>
+
+<!--
+<div class="btn-chat" id="livechat-compact-container" style="visibility: visible; opacity: 1;">
+	<div class="btn-holder">
+		<a onclick="$(document.getElementById('age-restriction-modal')).modal({backdrop: 'static'});" href="#" class="link">Request Quotation</a>
+	</div>
+</div>
+-->
+
+{% if store_id == 1 %}	
+	<!--Start of Tawk.to Script-->
+	<script type="text/javascript">
+	var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+	(function(){
+	var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+	s1.async=true;
+	s1.src='https://embed.tawk.to/5d305283bfcb827ab0cc734e/default';
+	s1.charset='UTF-8';
+	s1.setAttribute('crossorigin','*');
+	s0.parentNode.insertBefore(s1,s0);
+	})();
+	</script>
+	<!--End of Tawk.to Script-->
+{% else %}
+	<!--Start of Tawk.to Script-->
+	<script type="text/javascript">
+	var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+	(function(){
+	var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+	s1.async=true;
+	s1.src='https://embed.tawk.to/5d14648453d10a56bd7c1334/default';
+	s1.charset='UTF-8';
+	s1.setAttribute('crossorigin','*');
+	s0.parentNode.insertBefore(s1,s0);
+	})();
+	</script>
+	<!--End of Tawk.to Script-->
+{% endif %}
+<!-- TAWK.TO CHAT-->
+<div id="tawk_chat" class="animated bounce">
+	<img src="image/livechat.png" alt="chat_icon" onclick="javascript:void(Tawk_API.toggle())" />
+</div>

@@ -1,0 +1,57 @@
+{{ header }}
+               {{ nav }}
+
+ <label>  Firstname</label>
+<div class="input-group mb-3" style="padding: 0px 10px 0px 10px;">
+  <input type="text" class="form-control" id="fname" aria-describedby="basic-addon3" value="{{fname}}">
+</div> 
+
+<label>  Lastname</label>
+<div class="input-group mb-3" style="padding: 0px 10px 0px 10px;">
+  <input type="text" class="form-control" id="lname" aria-describedby="basic-addon3" value="{{lname}}">
+</div> 
+
+<label>  Password</label>
+<div class="input-group mb-3" style="padding: 0px 10px 0px 10px;">
+  <input type="password" class="form-control" id="pass" aria-describedby="basic-addon3" >
+</div> 
+
+<label>  Confirm Password</label>
+<div class="input-group mb-3" style="padding: 0px 10px 0px 10px;">
+  <input type="password" class="form-control" id="passre" aria-describedby="basic-addon3">
+</div> 
+
+
+<button type="button" class="btn btn-primary" id="savebtn" style="width:100%;">Save</button>
+
+
+ <script type="text/javascript">
+        $('#savebtn').on('click', function() {
+            var passw = document.getElementById('pass').value;
+            var passwre = document.getElementById('passre').value;
+             var fname = document.getElementById('fname').value;
+            var lname = document.getElementById('lname').value;
+
+            if(passw== ''||passwre== ''||fname==''||lname==''){
+            alert("Password or names cannot be Empty");
+
+            }else{
+                if(passw==passwre){
+                        location = 'index.php?route=b2b/profile/reset&id={{ id }}&tkn={{ tkn }}&fname='+fname+'&lname='+lname+'&pass='+passw;       
+
+                }else{
+                alert("Password and Confirm Password are not same");
+
+                }
+
+            }
+
+        });
+</script>
+{% if reset %}
+ <script type="text/javascript">
+ alert('Changes Done Sucessfully');
+
+</script>
+
+{% endif %}

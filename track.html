@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Clicks</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Clicks tracker</h2>
+  
+  <!-- <button type="button" class="btn btn-primary">Primary</button> -->
+   <div id="buttons">  
+    </div>
+<br> <hr>
+    <!-- <table class="table table-striped" id="clicktable">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Platform</th>
+            <th scope="col">Module name</th>
+            <th scope="col">Clicks/Visits</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Web</td>
+            <td><div id="moduleweb"></div></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>mobile</td>
+            <td></td>
+            <td></td>
+          </tr>
+          
+        </tbody>
+      </table> -->
+
+</body>
+</html>
+<script type="text/javascript">
+         $.ajax({
+             type :"POST",
+             url : "https://khetifood.com/index.php?route=api/viewClickTracks/getbtns",
+            //  crossDomain: true, 
+            dataType: "json",
+                    success: function (data) {
+                        var response = JSON.parse(JSON.stringify(data));
+                        //  console.log(response);
+                        for (var i = 0; i < response["tracksbtns1"].length; i++) {
+                            var btnshtml ='      <a href="https://khetifood.com/index.php?route=api/viewClickTracks&secret=U7sw3jr69r13&track_type='+response["tracksbtns1"][i].track_type +'"><button type="button" class="btn btn-primary" id="'+ response["tracksbtns1"][i].track_type +'">'+response["tracksbtns1"][i].track_type+'</button></a>';
+                            $('#buttons').append(btnshtml);
+                        } 
+
+                    }
+         })
+</script>
+<!-- <script type="text/javascript">
+  document.querySelector('#kheti-box').addEventListener('click',function () {
+    console.log("hello");
+
+      })
+
+
+
+    //      $(document).ready(function() {
+
+    // $('#kheti-box').on('click', function() {
+    //                         console.log("hello");
+
+        // $.ajax({
+        //      type :"POST",
+        //      url : "https://khetifood.com/index.php?route=api/viewClickTracks&secret=U7sw3jr69r13&track_type=food health tips",
+        //     //  crossDomain: true, 
+        //     dataType: "json",
+        //             success: function (data) {
+        //                 var response = JSON.parse(JSON.stringify(data));
+        //                 //  console.log(response);
+        //                 // var oTable = $('#clicktable tbody tr').map(function() {
+        //                 // var $row =$(this);
+        //                 // $row.find(':nth-child(1)').textContent='food health tips';
+        //                 // document.querySelector('#moduleweb').textContent= 'food health tips';
+        //                 console.log(response);
+
+        //                 }
+
+        //             // })
+        //  })
+    // });
+
+    // });
+</script> -->
+

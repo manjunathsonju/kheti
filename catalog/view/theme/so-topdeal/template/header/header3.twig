@@ -1,0 +1,76 @@
+{#=====Get variable : Config Select Block on header=====#}
+{% set hidden_headertop = soconfig.get_settings('toppanel_type') =='1' or soconfig.get_settings('toppanel_type') =='2'? 'hidden-compact' : '' %}
+{% set hidden_headercenter = soconfig.get_settings('toppanel_type') =='2'? 'hidden-compact' : '' %}
+{% set hidden_headerbottom = soconfig.get_settings('toppanel_type') =='1'? 'hidden-compact' : '' %}
+
+<header id="header" class=" variant typeheader-{{ typeheader ? typeheader : '1'}}">
+	{#======	HEADER promotion	=======#}  
+	{% if soconfig.get_settings('promotion_status') and soconfig.get_settings('promotion') %}
+	<div class="header-promotion {{hidden_headertop}}" >
+		{{ soconfig.decode_entities( soconfig.get_settings('promotion') ) }}
+	</div>
+	{% endif %}
+	{#======	HEADER TOP	=======#}  
+
+		<!-- HEADER TOP -->
+	<div class="header-top {{hidden_headertop}}">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 col-md-9 col-xs-4">
+					<div class="responsive megamenu-style-dev megamenu-dev">
+						{{ content_menu }}
+					</div>
+				</div>
+				<div class="text-text col-lg-4 hidden-md-down">
+					<div class="hidden-xs" >
+						
+						{% if soconfig.get_settings('welcome_message_status') and soconfig.get_settings('welcome_message') is not empty %}
+							<div class="text-html"><p>
+							{{ soconfig.decode_entities( soconfig.get_settings('welcome_message') ) }}
+							</p></div>
+						{% endif %} 
+
+					</div>
+				</div>
+				<div class="nav-layout-3 col-lg-2 col-md-3 col-xs-8">
+					<!-- LANGUAGE CURENTY -->
+					{% if soconfig.get_settings('lang_status') %}
+						<div class="link language" >{{ language }} </div>
+						<div class="link currency" > {{ currency }}</div> 
+					{% endif %} 
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- HEADER CENTER -->
+	<div class="header-center {{hidden_headercenter}}">
+		<div class="container">
+			<div class="row">
+				<div class="header-logo col-lg-2 col-md-2 col-sm-3 col-xs-12">
+				    {{soconfig.get_logo()}}
+				</div>
+				<div class="header-search col-lg-6 col-md-6 col-sm-5 col-xs-7">
+					{{ search_block }} 
+				</div>
+				<div class="header-cart col-lg-2 col-md-2 col-sm-1  col-xs-1">
+					<div class="shopping_cart">
+					 	{{cart}}
+					</div>
+				</div>
+				<div class="user-info-layout-3 col-lg-2 col-md-2 col-sm-3 col-xs-4">
+					<div class="userinfo-block">
+						<div class="user-info">
+							{% if logged %} 
+								<a class="link-lg" href="{{ logout}} ">{{ text_logout }} </a>
+							{% else %}   
+								<a class="link-lg" href="{{ register }} ">{{ text_register }} </a> /
+								<a class="link-lg" href="{{ login }} ">{{ text_login }} </a>
+							 {% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>

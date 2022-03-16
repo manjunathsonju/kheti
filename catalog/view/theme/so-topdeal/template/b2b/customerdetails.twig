@@ -1,0 +1,141 @@
+{{ header }}
+               {{ nav }}
+               <table class="table table-bordered" style="width:100%; margin:20px auto;">
+              <thead>
+                <tr>
+                 <th>Customer Details</th>
+                 <td><i class="fa fa-address-card" aria-hidden="true" style="padding: 5px;"></i>Customer Id: {{customer_id}}</td>                  
+                 
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  
+                  <td> <i class="fa fa-user" aria-hidden="true" style="padding:5px;"></i>{{name}}</td>
+                  <td>Total number of orders: {{totalnoofsales}}</td>
+
+                </tr>
+                <tr>
+                <td><i class="fa fa-mobile" aria-hidden="true" style="padding: 5px;"></i>{{telephone}}</td>   
+                <td>Total Paid Transaction Amount: Rs. {{totalall}}</td>
+
+                </tr>
+                <tr>
+                  <td scope="row"><i class="fa fa-envelope-o" aria-hidden="true" style="padding: 5px;"></i>{{email}}</td>
+                  <td>Total UnPaid Transaction Amount: Rs. {{totalallunpaid}}</td>
+
+                  
+                </tr><tr><td><div class="input-group-prepend" style="display: block;width: 100%;margin: 5px 0;">
+                <span class="input-group-text" id="basic-addon3">PAN no:<span id="update_text_pan">{{pan_no}}</span>
+
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="button" class="btn btn-info" id="updatebtnpan" >Update</button>
+
+              </div>
+              <form id="myForm3" style="width: 100%;display:none;"> 
+              <input type="text" style="width: 76%;padding: 3px;" id="pan_text" aria-describedby="basic-addon3" >
+              <button type="button" class="btn btn-success" id="pan_save" ><i class="fa fa-save"></i></button>
+              </form></td></tr>        
+              </tbody>
+            </table>
+          
+            <!-- customer details -->
+            <!-- tables --><table id="example" style=" max-width: 100%;">
+
+              
+                      <thead>
+                      <tr>
+                      <th scope="col">Order Id</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Total</th>
+                      <th scope="col">Payment status</th>
+                      <th scope="col">Date Added</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                      </thead>
+                      <tbody>
+                          {% for order in orders %}
+                            <tr>
+                          <td><a href="https://khetifood.com/index.php?route=b2b/orderdetails&id={{id}}&tkn={{tkn}}&order_id={{order.order_id}}">{{order.order_id}}</a></td>
+                          {% if order.order_status_id == '3' %}
+                          <td>Completed</td>
+
+                          {% elseif order.order_status_id == '2' %}
+                          <td>Processing</td>
+
+                          {% elseif order.order_status_id == '1' %}
+                          
+                           <td>Pending</td>
+
+                            {% else %}
+                           <td>{{order.order_status_id}}</td>
+
+                            {% endif  %}
+                         
+                          <td>Rs. {{order.total}}</td><td>
+                          {% if order.payment_status == '1' %}
+                          <span class="input-group-text" style="background-color: #33ff70;"> Paid </span>
+                            {% else  %}
+                          <span class="input-group-text" style="background-color: #ff3352;"> UnPaid </span>
+
+                            {% endif  %}
+
+                          </td><td>{{order.date_added}}</td><td><a href="https://khetifood.com/index.php?route=b2b/orderdetails&id={{id}}&tkn={{tkn}}&order_id={{order.order_id}}"><button type="button" class="btn btn-primary">View</button></a></td></tr>
+                                        {% endfor  %}
+                        </tbody>
+                    </table>
+                  </div>
+              </div>
+          </body>
+          
+          </html><script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+                  integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+              </script>
+              <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+                  integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+              </script>
+          <script>
+            $(document).ready(function () {
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar').toggleClass('active');
+                });
+            });
+
+            $(document).ready(function() {
+            $('#example').DataTable();
+             } );
+
+            document.querySelector('#updatebtnpan').addEventListener('click', function () {
+            let myForm3= document.getElementById("myForm3");
+            let updatebtnpan= document.getElementById("updatebtnpan");
+            updatebtnpan.style.display="none";
+            myForm3.style.display="block";
+          });
+
+          </script>
+          <script> 
+ let update_text_pan= document.getElementById("update_text_pan");
+ let myForm3= document.getElementById("myForm3");
+ let updatebtnpan= document.getElementById("updatebtnpan");
+
+ document.querySelector('#pan_save').addEventListener('click', function () {
+  fetch('https://khetifood.com/index.php?route=b2b/customerdetails/setpanno&no='+document.getElementById("pan_text").value+'&customer_id={{ customer_id }}&pass=7823av')
+
+     .then((response) => {
+       console.log(response);
+       return response.json();
+     })
+     .then((data) => {    
+   if(data["success"]== 1){
+    update_text_pan.innerHTML =document.getElementById("pan_text").value;
+     document.getElementById("myForm3").reset();
+     myForm3.style.display="none";
+     updatebtnpan.style.display="block";
+
+    }
+     }) 
+     .catch(function(error)  {
+         console.log(error);
+     });
+   });
+   </script>

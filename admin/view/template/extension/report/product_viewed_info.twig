@@ -1,0 +1,103 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="pull-right">
+                                  <button type="button" id="button-export" class="btn btn-default"><i class="fa fa-filter"></i> Export </button>
+
+      <a href="{{ reset }}" class="btn btn-danger btn-xs"><i class="fa fa-refresh"></i> {{ button_reset }}</a>
+    </div>
+    <h3 class="panel-title"><i class="fa fa-filter"></i> {{ heading_title }}</h3>
+  </div>
+  <div class="panel-body">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <td class="text-left">{{ column_name }}</td>
+            <td class="text-left">{{ column_model }}</td>
+            <td class="text-right">{{ column_viewed }}</td>
+            <td class="text-right">{{ column_percent }}</td>
+          </tr>
+        </thead>
+        <tbody>
+        
+        {% if products %}
+        {% for product in products %}
+        <tr>
+          <td class="text-left">{{ product.name }}</td>
+          <td class="text-left">{{ product.model }}</td>
+          <td class="text-right">{{ product.viewed }}</td>
+          <td class="text-right">{{ product.percent }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+          <td class="text-center" colspan="4">{{ text_no_results }}</td>
+        </tr>
+        {% endif %}
+        </tbody>
+        
+      </table>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 text-left">{{ pagination }}</div>
+      <div class="col-sm-6 text-right">{{ results }}</div>
+    </div>
+  </div>
+</div>
+<!--for export in excel-->
+ <script lang="javascript" src="./xlsx.full.min.js"></script>
+<script lang="javascript" src="./FileSaver.min.js"></script>
+    <script type="text/javascript">
+            $('#button-export').on('click', function() {
+
+        
+ 
+         $.ajax({
+             type :"POST",
+             url : 'https://store.kheti.farm/admin/index.php?route=extension/report/product_viewed/reportall&user_token={{ user_token }}&code=product_viewed',
+             crossDomain: true, 
+            dataType: "json",
+                    success: function (data) {
+                       console.log(data["customers"]); 
+              //console.log(data["customers"][0].customer);
+              var arraytotalreport=[['name','model','viewed','percent']];
+            for(let i=0; i<data["customers"].length;i++){
+              var arraypush=[data["customers"][i].name,data["customers"][i].model,data["customers"][i].viewed,data["customers"][i].percent];
+                arraytotalreport.push(arraypush);
+
+            }   
+             
+              var wb = XLSX.utils.book_new();
+         wb.Props = {
+                Title: "report",
+                Subject: "Test",
+                Author: "Red Stapler",
+                CreatedDate: new Date(2020,12,19)
+        };
+        
+        wb.SheetNames.push("Test Sheet");
+        var ws = XLSX.utils.aoa_to_sheet(arraytotalreport);
+        wb.Sheets["Test Sheet"] = ws;
+        var wbout = XLSX.write(wb, {bookType:'xlsx',  type: 'binary'});
+        function s2ab(s) {
+  
+                var buf = new ArrayBuffer(s.length);
+                var view = new Uint8Array(buf);
+                for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+                return buf;
+                
+        }
+      
+     saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'Product_viewed_info.xlsx');
+     
+
+         }
+
+     });
+    
+
+  
+
+
+        });
+    </script>

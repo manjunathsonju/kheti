@@ -1,0 +1,28 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script >
+$( document ).ready(function() {
+	//set location cookie
+	  setCookie('locationCookie', 'pkr');
+	  
+		link = 'location.php?location=pkr';
+		$.ajax({
+			url: link,
+			type:"GET" ,
+			dataType: 'json',
+			success: function (response) {
+                window.location.href = "https://store.kheti.farm/index.php?route=product/category&path=220";
+			   return true;
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+			   console.log(textStatus, errorThrown);
+			}
+		});
+});
+
+function setCookie(key, value) {
+	var expires = new Date();
+	expires.setTime(expires.getTime() + (100 * 24 * 60 * 60 * 1000));
+	document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
+}
+</script>
+

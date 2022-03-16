@@ -1,0 +1,503 @@
+
+{% if user_location =='pkr' and store_id ==1 %} 
+																																														
+<div class="container">
+	
+	
+		<div class="modal fade" id="myModal" role="dialog" style="display: none;">
+		  <div class="modal-dialog">
+		  
+			{# <!-- Modal content--> #}
+			<div class="modal-content">
+			   <div class="modal-header">
+				<button type="button" class="close" onclick="closemodal()">×</button>
+				
+			  </div> 
+			  <div class="modal-body">     <a href="https://khetifood.com/index.php?category_id=0&search=healthy&submit_search=&route=product%2Fsearch">
+        <img src="https://khetifood.com/image/test/poppkrr.jpeg"></a>
+			  </div>
+			  <div class="modal-footer">
+			  </div>
+			</div>
+			
+		  </div>
+		</div>
+		
+	  </div>
+    <script type="text/javascript">
+    $(document).ready(function() {
+    if(localStorage.getItem('popState') != 'shown'){
+         $('#myModal').modal('show');
+        localStorage.setItem('popState','shown')
+    }
+   function closemodal() {
+ $('#myModal').modal('hide');
+}
+
+});
+     </script>
+{% endif %} 
+<style>
+.fontss{
+  color:{{module_testimonials_fontclr}}!important ;
+}
+
+</style>
+{% if store_id == 1 %}
+<div  class="swiper-viewport"  style="background:{{module_testimonials_bgclr}};">
+  <div id="testimonial{{ module }}" class=" swiper-container">
+     <center><h2 class="fontss"><b>{{module_testimonials_heading}}</b></h2></center>
+    <div  no-repeat;' class="swiper-wrapper"> 
+
+        {% for testimonial in testimonials %}
+        <div class="swiper-slide text-center fontss">
+          <center>
+            <div class="col-sm-12">
+                <center>
+                <h3 class="fontss" style="text-align:center;"> <i class="fa fa-quote-left"></i>   {{testimonial.description}}  <i class="fa fa-quote-right"></i></h3> <br>
+                  <h4 class="fontss"><i>{{testimonial.author}} '{{ testimonial.designation}}`</i></h4>
+             </center>
+             </div>
+           </center>
+          {# <div class="col-sm-12">
+                <center> <img class="img-circle" src="{{ testimonial.thumb }}" alt="{{ testimonial.thumb }}" class="img-responsive" />
+              </center><br>
+        </div> #}
+       </div>
+        {% endfor %} 
+    </div>
+  </div>
+  <div class="swiper-pagination slideshow{{ module }}"></div>
+  <div class="swiper-pager">
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+ </div>
+
+</div>
+				{% endif %}
+
+<script type="text/javascript"><!--
+$('#testimonial{{ module }}').swiper({
+    mode: 'horizontal',
+    slidesPerView: 1,
+    pagination: '.slideshow{{ module }}',
+    paginationClickable: true,
+    nextButton: '.swiper-button-next',
+    prevButton: '.swiper-button-prev',
+    spaceBetween: 30,
+    autoplay: 2000,
+    autoplayDisableOnInteraction: true,
+    loop: true,
+    speed: 5000
+    });
+--></script>
+{# =========== Show Footer==============#}
+
+{% if soconfig.get_settings('typefooter') =='1'%}
+	{% include theme_directory~'/template/footer/footer1.twig' with {typefooter: soconfig.get_settings('typefooter')} %}
+
+{% elseif soconfig.get_settings('typefooter') =='2'%}
+	{% include theme_directory~'/template/footer/footer2.twig' with {typefooter: soconfig.get_settings('typefooter')} %}
+	
+{% elseif soconfig.get_settings('typefooter') =='3'%}
+	{% include theme_directory~'/template/footer/footer3.twig' with {typefooter: soconfig.get_settings('typefooter')} %}
+
+{% endif %}
+</div>
+{# =========== Show BackToTop==============#}
+{% if soconfig.get_settings('backtop') %}
+   <div class="back-to-top"><i class="fa fa-angle-up"></i></div>
+{% endif %}
+{% if soconfig.get_settings('social_fb_status') or soconfig.get_settings('social_twitter_status')  or soconfig.get_settings('social_custom_status') %}
+	<section class="social-widgets visible-lg">
+		<ul class="items">
+			{% if soconfig.get_settings('social_fb_status') %} 
+			<li class="item item-01 facebook">
+				<a href="catalog/view/theme/{{ theme_directory }}/template/social/facebook.php?account_fb={{soconfig.get_settings('facebook')}} " class="tab-icon"><span class="fa fa-facebook"></span></a>
+				<div class="tab-content">
+					<div class="title"><h5>FACEBOOK</h5></div>
+					<div class="loading">
+						<img src="catalog/view/theme/{{ theme_directory }}/images/ajax-loader.gif" class="ajaxloader" alt="loader">
+					</div>
+				</div>
+			</li>
+			{% endif %} 
+
+			{% if soconfig.get_settings('social_twitter_status') %} 
+			<li class="item item-02 twitter">
+				<a href="catalog/view/theme/{{ theme_directory }}/template/social/twitter.php?account_twitter={{ soconfig.get_settings('twitter')}} " class="tab-icon"><span class="fa fa-twitter"></span></a>
+				<div class="tab-content">
+					<div class="title"><h5>TWITTER FEEDS</h5></div>
+					<div class="loading">
+						<img src="catalog/view/theme/{{ theme_directory }}/images/ajax-loader.gif" class="ajaxloader" alt="loader">
+					</div>
+				</div>
+			</li>
+			{% endif %} 
+
+			{% if soconfig.get_settings('social_custom_status') %} 
+			<li class="item item-03 youtube">
+				<div class="tab-icon"><span class="fa fa-youtube"></span></div>
+				<div class="tab-content">
+					<div class="loading">
+						{% if soconfig.get_settings('video_code') %}
+								{{ soconfig.decode_entities( soconfig.get_settings('video_code') ) }}
+						{% endif %} 
+					</div>
+				</div>
+			</li>
+			{% endif %} 
+		</ul>
+	</section>
+	
+{% endif %} 
+
+
+
+
+{% if store_id ==1 %} 
+{# kheti box #}
+<script type="text/javascript">
+     $(document).ready(function() {
+         $.ajax({
+             type :"POST",
+             url : "https://khetifood.com/index.php?route=api/getProducts&category_id=221&secret=U7sw3jr69r13",
+            //  crossDomain: true, 
+            dataType: "json",
+                    success: function (data) {
+                        var response = JSON.parse(JSON.stringify(data));
+                        if(response["products"] != null ){
+                        for (var i = 0; i < response["products"].length; i++) {
+                              var productHtml1 ='   <div class="ltabs-item"  ' +
+                      '      style="width: 285px;  opacity: 1;float:left">  ' +
+                      '      <div  ' +
+                      '         class="item-inner product-thumb transition product-layout">  ' +
+                      '         <div class="product-item-container">  ' +
+                      '            <div class="left-block">  ' +
+                      '               <div class="image product-image-container ">  ' +
+                      '                  <a class="lt-image" data-product="'+
+                                                 response["products"][i].product_id +'"  ' +
+                      '                     href="index.php?route=product/product&product_id=' +
+                                                 response["products"][i].product_id +
+                      '"                     target="_self" title="' + response["products"][i].name +'">  ' +
+                      '                  <img src=' + response["products"][i].thumb +
+                      '                     alt="' + response["products"][i].name +'">  ' +
+                      '                  </a>  ' +
+                      '                  <div class="text-location">  ' +
+                      '                     <span>' + response["products"][i].location + '</span>  ' +
+                      '                  </div>  ' +
+                      '                  <div  ' +
+                      '                     style="position: absolute;background: rgba(0, 0, 0, 0.6);color: #fff;padding: 0 15px;border-radius: 3px;bottom: -100px;right: 20px;margin-bottom: 120px;">  ' +
+                      '                     <span>Kheti Box</span>  ' +
+                      '                  </div>  ' +
+                      '               </div>  ' +
+                      '               <div class="box-label">  ' +
+                      '               </div>  ' +
+                      '            </div>  ' +
+                      '            <div class="right-block">  ' +
+                      '               <div class="caption">  ' +
+                      '                  <h4>  ' +
+                      '                     <a href="index.php?route=product/product&product_id='+response["products"][i].product_id +' title="' + response["products"][i].name +'"  ' +
+                      '                        target="_self">' + response["products"][i].name +
+                      '</a>  ' +
+                      '                  </h4>  ' +
+                      
+                      '                  </div>  ' +
+            					  		 '   <div class="button-group">  '  + 
+					 '   						<div class="button-inner so-quickview">  '  + 
+					 '   							<a class="lt-image hidden" data-product="' + response["products"][i].product_id + '" href="https://khetifood.com/index.php?route=product/product&amp;product_id=' + response["products"][i].product_id + '" target="_self" title="'+ response["products"][i].name +'">  '  + 
+					 '   								  '  + 
+					 '   							</a><a class="btn-button btn-quickview quickview quickview_handler" href="https://khetifood.com/index.php?route=extension/soconfig/quickview&amp;product_id=' + response["products"][i].product_id + '" title="Quick View" data-title="Quick View" data-fancybox-type="iframe"><i class="fa fa-search"></i></a>  '  + 
+					 '   							  '  + 
+					 '   																						<button class="addToCart btn-button" type="button" data-toggle="tooltip" title="Add to cart" onclick="cart.add(\'' + response["products"][i].product_id + '\');" data-original-title="Add to cart" aria-describedby="tooltip38804"> <span class="hidden">Add to cart</span></button>  '  + 
+					 '   								  '  + 
+					 '   						</div>  '  + 
+					 '  					</div>  ' 			 
+										+
+                      '               </div>  ' +
+                      '            </div>  ' +
+                      '         </div>  ' +
+                      '      </div>  ' +
+                      '      <div class="clr1"></div>  ' +
+                      '  </div>  ';  
+                            $('#products_container_khetibox').append(productHtml1);
+                        } 
+                        }
+                    }
+         })
+
+     });
+</script>
+{# slider featured web #}
+<script>
+$("#itemCarouselfeatured").owlCarousel({
+        loop: true,
+        margin: 10,
+        nav: true,
+        autoWidth:true,
+    items:3,
+    autoplay: true,
+dots: false,
+      navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
+      });
+
+      const xhr7 = new XMLHttpRequest();
+       xhr7.responseType = "json";
+      xhr7.open("POST", "https://khetifood.com/index.php?route=api/getProducts&category_id=217&secret=U7sw3jr69r13");
+    xhr7.onload = ()=>{
+    let datas = xhr7.response;
+    datas["products"].forEach((item)=>{
+         var stringfeaturedslider = 
+                     '   <div class="ltabs-item"  ' +
+                      '      style="width: 285px; height: 380px; opacity: 1;float:left">  ' +
+                      '      <div  ' +
+                      '         class="item-inner product-thumb transition product-layout">  ' +
+                      '         <div class="product-item-container">  ' +
+                      '            <div class="left-block">  ' +
+                      '               <div class="image product-image-container ">  ' +
+                      '                  <a class="lt-image" data-product="'+
+                                                 `${item.product_id}` +'"  ' +
+                      '                     href="index.php?route=product/product&product_id=' +
+                                                `${item.product_id}` +
+                      '"                     target="_self" title="' + `${item.name}` +'">  ' +
+                      '                  <img src=' + `${item.thumb}` +
+                      '                     alt="' + `${item.name}` +'">  ' +
+                      '                  </a>  ' +
+                      '                  <div class="text-location">  ' +
+                      '                     <span>' + `${item.location}` + '</span>  ' +
+                      '                  </div>  ' ;
+                      if((`${item.quantity}`) == 0 ){
+                            stringfeaturedslider= stringfeaturedslider + '                  <div  ' +
+                      '                     style="position: absolute;background: rgba(0, 0, 0, 0.6);color: #fff;padding: 0 15px;border-radius: 3px;bottom: -100px;right: 20px;margin-bottom: 120px;">  ' +
+                      '                     <span>Out of stock </span>  ' +
+                      '                  </div>  ' ;
+                        }else{
+                      stringfeaturedslider= stringfeaturedslider +'                  <div  ' +
+                      '                     style="position: absolute;background: rgba(0, 0, 0, 0.6);color: #fff;padding: 0 15px;border-radius: 3px;bottom: -100px;right: 20px;margin-bottom: 120px;">  ' +
+                      '                     <span>Featured</span>  ' +
+                      '                  </div>  ' ;}
+
+                      stringfeaturedslider= stringfeaturedslider +'               </div>  ' +
+                      '               <div class="box-label">  ' +
+                      '               </div>  ' +
+                      '            </div>  ' +
+                      '            <div class="right-block">  ' +
+                      '               <div class="caption">  ' +
+                      '                  <h4>  ' +
+                      '                     <a href="index.php?route=product/product&product_id='+`${item.product_id}` +' title="' + `${item.name}` +'"  ' +
+                      '                        target="_self">' + `${item.name}` +
+                      '</a>  ' +
+                      '                  </h4>  ' +
+                      '                  <div class="total-price clearfix">  ' +
+                       '                     <div class="price price-left">  ' + `${item.special}`+
+                      '                      per ' + `${item.sku}` ;
+if((`${item.discount}`)!= "false" ){
+                            stringfeaturedslider= stringfeaturedslider + '<span class="price-old">'+`${item.price}`+'</span>';
+                        }
+
+                     stringfeaturedslider= stringfeaturedslider + '                     </div>  ' +'                     <div class="price price-right">  ' ;
+
+                    
+                      if((`${item.discount}`)!= "false" ){
+                            stringfeaturedslider= stringfeaturedslider + '<span class="discount">'+`${item.discount}`+             
+                                        '   <strong>OFF</strong>'+
+                                    '   </span>';
+                        }
+
+                    stringfeaturedslider= stringfeaturedslider +
+                      '                     </div>  ' +
+					  '                     </div>  ' +
+                      '                  </div>  ' +
+            					  		 '   <div class="button-group">  '  + 
+					 '   						<div class="button-inner so-quickview">  '  + 
+					 '   							<a class="lt-image hidden" data-product="' + `${item.product_id}` + '" href="https://khetifood.com/index.php?route=product/product&amp;product_id=' + `${item.product_id}`+ '" target="_self" title="'+ `${item.name}` +'">  '  + 
+					 '   								  '  + 
+					 '   							</a><a class="btn-button btn-quickview quickview quickview_handler" href="https://khetifood.com/index.php?route=extension/soconfig/quickview&amp;product_id=' + `${item.product_id}` + '" title="Quick View" data-title="Quick View" data-fancybox-type="iframe"><i class="fa fa-search"></i></a>  '  + 
+					 '   							  ' ;
+
+                      if((`${item.quantity}`) != '0' ){
+
+					      stringfeaturedslider= stringfeaturedslider +'<button class="addToCart btn-button" type="button" data-toggle="tooltip" title="Add to cart" onclick="cart.add(\'' + `${item.product_id}` + '\');" data-original-title="Add to cart" aria-describedby="tooltip38804"> <span class="hidden">Add to cart</span></button>  '; }
+					 stringfeaturedslider= stringfeaturedslider +
+					 '   						</div>  '  + 
+					 '  					</div>  ' 			 
+										+
+
+                      '               </div>  ' +
+                      '            </div>  ' +
+                      '         </div>  ' +
+                      '      </div>  ' +
+                      '      <div class="clr1"></div>  ' +
+                      '  </div>  ';
+        
+            $("#itemCarouselfeatured").trigger('add.owl.carousel', [stringfeaturedslider]).trigger('refresh.owl.carousel');
+    })
+};
+
+xhr7.send();
+</script>
+
+<style>
+.vertical-menu {
+  width: 100%;
+  height: 445px;
+  overflow-y: auto;
+}
+
+.vertical-menu a {
+ 
+  color: black;
+  display: block;
+  padding: 0px;
+  text-decoration: none;
+}
+
+.vertical-menu a.active {
+  
+  color: white;
+}
+
+footer.typefooter-1 .footer--top .footer-social .socials a .fa {
+  font-size: 22px;
+  padding: 7px;
+}
+
+</style>
+
+{# slider local web #}
+ <script>
+
+$("#itemCarousellocal").owlCarousel({
+        loop: true,
+        margin: 10,
+        nav: true,
+        autoWidth:true,
+    items:4,
+    autoplay: true,
+dots: false,
+      navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
+      });
+
+      const xhr1 = new XMLHttpRequest();
+       xhr1.responseType = "json";
+      xhr1.open("POST", "https://khetifood.com/index.php?route=api/getProducts&category_id=139&secret=U7sw3jr69r13");
+    xhr1.onload = ()=>{
+    let datas = xhr1.response;
+
+ 
+    datas["products"].forEach((item)=>{
+        var stringlocalslider = 
+                     '   <div class="ltabs-item"  ' +
+                      '      style="width: 285px; height: 380px; opacity: 1;float:left">  ' +
+                      '      <div  ' +
+                      '         class="item-inner product-thumb transition product-layout">  ' +
+                      '         <div class="product-item-container">  ' +
+                      '            <div class="left-block">  ' +
+                      '               <div class="image product-image-container ">  ' +
+                      '                  <a class="lt-image" data-product="'+
+                                                 `${item.product_id}` +'"  ' +
+                      '                     href="index.php?route=product/product&product_id=' +
+                                                `${item.product_id}` +
+                      '"                     target="_self" title="' + `${item.name}` +'">  ' +
+                      '                  <img src=' + `${item.thumb}` +
+                      '                     alt="' + `${item.name}` +'">  ' +
+                      '                  </a>  ' +
+                      '                  <div class="text-location">  ' +
+                      '                     <span>' + `${item.location}` + '</span>  ' +
+                     '                  </div>  ' ;
+                      if((`${item.quantity}`) == 0 ){
+                            stringlocalslider= stringlocalslider + '                  <div  ' +
+                      '                     style="position: absolute;background: rgba(0, 0, 0, 0.6);color: #fff;padding: 0 15px;border-radius: 3px;bottom: -100px;right: 20px;margin-bottom: 120px;">  ' +
+                      '                     <span>Out of stock </span>  ' +
+                      '                  </div>  ' ;
+                        }else{
+                      stringlocalslider= stringlocalslider +'                  <div  ' +
+                      '                     style="position: absolute;background: rgba(0, 0, 0, 0.6);color: #fff;padding: 0 15px;border-radius: 3px;bottom: -100px;right: 20px;margin-bottom: 120px;">  ' +
+                      '                     <span>local</span>  ' +
+                      '                  </div>  ' ;}
+
+                      stringlocalslider= stringlocalslider +'               </div>  ' +
+                      '               <div class="box-label">  ' +
+                      '               </div>  ' +
+                      '            </div>  ' +
+                      '            <div class="right-block">  ' +
+                      '               <div class="caption">  ' +
+                      '                  <h4>  ' +
+                      '                     <a href="index.php?route=product/product&product_id='+`${item.product_id}` +' title="' + `${item.name}` +'"  ' +
+                      '                        target="_self">' + `${item.name}` +
+                      '</a>  ' +
+                      '                  </h4>  ' +
+                      '                  <div class="total-price clearfix">  ' +
+                       '                     <div class="price price-left">  ' + `${item.special}`+
+                      '                      per ' + `${item.sku}` ;
+if((`${item.discount}`)!= "false" ){
+                            stringlocalslider= stringlocalslider + '<span class="price-old">'+`${item.price}`+'</span>';
+                        }
+                        
+                   
+
+                     stringlocalslider= stringlocalslider + '                     </div>  ' +'                     <div class="price price-right">  ' ;
+
+                    
+                      if((`${item.discount}`)!= "false" ){
+                            stringlocalslider= stringlocalslider + '<span class="discount">'+`${item.discount}`+             
+                                        '   <strong>OFF</strong>'+
+                                    '   </span>';
+                        }
+
+                    stringlocalslider= stringlocalslider +
+                      '                     </div>  ' +
+					  '                     </div>  ' +
+                      '                  </div>  ' +
+            					  		 '   <div class="button-group">  '  + 
+					 '   						<div class="button-inner so-quickview">  '  + 
+					 '   							<a class="lt-image hidden" data-product="' + `${item.product_id}` + '" href="https://khetifood.com/index.php?route=product/product&amp;product_id=' + `${item.product_id}`+ '" target="_self" title="'+ `${item.name}` +'">  '  + 
+					 '   								  '  + 
+					 '   							</a><a class="btn-button btn-quickview quickview quickview_handler" href="https://khetifood.com/index.php?route=extension/soconfig/quickview&amp;product_id=' + `${item.product_id}` + '" title="Quick View" data-title="Quick View" data-fancybox-type="iframe"><i class="fa fa-search"></i></a>  '  + 
+					 '   							  '  + 
+					 '   																						<button class="addToCart btn-button" type="button" data-toggle="tooltip" title="Add to cart" onclick="cart.add(\'' + `${item.product_id}` + '\');" data-original-title="Add to cart" aria-describedby="tooltip38804"> <span class="hidden">Add to cart</span></button>  '  + 
+					 '   								  '  + 
+					 '   						</div>  '  + 
+					 '  					</div>  ' 			 
+										+
+
+                      '               </div>  ' +
+                      '            </div>  ' +
+                      '         </div>  ' +
+                      '      </div>  ' +
+                      '      <div class="clr1"></div>  ' +
+                      '  </div>  ';
+        
+            $("#itemCarousellocal").trigger('add.owl.carousel', [stringlocalslider]).trigger('refresh.owl.carousel');
+    })
+};
+
+xhr1.send();
+
+</script> 
+
+    <style>
+    .owl-prev, .owl-next {
+        width: 15px;
+        height: 100px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        display: block !important;
+        border:0px solid black;
+    }
+    .owl-prev { left: -10px; }
+    .owl-next { right: -17px; }
+    .owl-prev i, .owl-next i {transform : scale(2,5); color: #ccc;}
+    </style>
+
+ {% endif %}
+
+
+
+
+
+
+
+

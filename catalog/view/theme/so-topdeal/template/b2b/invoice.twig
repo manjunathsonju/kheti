@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+    .wrapper{
+        display: flex;
+        align-items: stretch;
+        width: 100%;
+    }
+    table,th,  td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 5px;
+}
+span {
+  font-weight: 400;
+}
+
+</style>
+</head>
+<body><div class="wrapper">        
+             <div class="content" style="width: 100%; margin-left: 40px;">
+              <h5 style="color: #666; margin-left: 10px;"><strong> Invoice #{{order.order_id}}<strong></h5>
+              <div class="row">
+                  <div class="col-6">
+                  <table class="table table-bordered " >
+            <thead>
+            <tr>
+          <td colspan="2">Order Details</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="width: 50%;font-size:13px;"><address>
+            <strong> Kheti.Food</strong><br />
+            <span>Kupondole, Lalitpur</span> </address>
+            <b> Telephone</b><span> +977-1-5524142</span><br />
+            <b>E-Mail</b><span> Kheti.Food@dvexcellus.com</span> <br/>
+            <b>Web Site:</b> <a href="https://khetifood.com"><span>khetifood.com</span>
+            </a></td><td style="width: 50%;font-size:13px;"><b>Date Added</b>
+            {% if order.date_delivery != NULL %} 
+            <span> {{order.date_delivery}}</span>
+ 
+            {% else %}
+
+            <span> {{order.date_added}}</span>
+            {% endif %}    
+
+            <br /><b>Order ID:</b><span> {{order.order_id}}</span><br />
+            <b>Payment Method</b> 
+            {% if order.payment_status =='0' %}  
+            <span>Not Paid</span>
+            {% else %}
+            <span> {{order.payment_method}}</span>
+            {% endif %}    
+            <br />
+            <b>Delivery Address</b><span> {{address}}</span> <br/>  </td>
+        </tr>
+      </tbody>
+    </table><table class="table table-bordered" >
+    <thead>
+      <tr>
+        <td colspan="2">Customer Details</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="width: 50%;font-size:13px;">
+    <address>
+      <strong>Name:</strong><span>  {{order.name}}</span> <br />
+      <strong>Email:</strong> <span> {{order.email}}</span> <br />
+      <strong>Mobile:</strong><span>  {{order.telephone}}</span> <br />
+
+      <strong>Address:</strong><span> {{address}}</span> <br/>
+
+          </address>
+    </td>
+      </tr>
+    </tbody>
+  </table></div>
+                     <div class="col-6">
+                      <div class="images" style="width: 100%; float: right;  padding:8px;">
+                          <img src="https://khetifood.com/image/fonepay_Qr_ktm.gif" alt="" style="width: 250px; height: 295px; ">
+                      </div>
+                  </div>
+                  </div>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <td><b>Product</b></td>
+        <td><b>Model</b></td>
+        <td class="text-right"><b>Quantity</b></td>
+        <td class="text-right"><b>SKU</b></td>
+        <td class="text-right"><b>Price</b></td>
+        <td class="text-right"><b>Total</b></td>
+      </tr>
+    </thead>
+    <tbody>
+    {% for product in products %}
+
+    <tr>
+        <td style="font-size:13px;"><span> {{product.name}}</span></td>
+        <td style="font-size:13px;"><span> {{product.model}}</td>
+        <td class="text-right" style="font-size:13px;"><span> {{product.quantity}}</span> </td>
+        <td class="text-right" style="font-size:13px;"><span> {{product.sku}}</span> </td>
+        <td class="text-right" style="font-size:13px;"><span> {{product.price}}</span> </td>
+        <td class="text-right" style="font-size:13px;"><span> {{product.total}}</span> </td>
+      </tr>
+    {% endfor %}
+
+      <tr>
+        <td class="text-right" colspan="5"><b>Sub-Total</b></td>
+        <td class="text-right"><span>Rs. {{order.total}}</span></td>
+      </tr>
+      <tr>
+      <td class="text-right" colspan="5"><b>Shipping Charges</b></td>
+      <td class="text-right"><span>Rs. 0.00</span></td>
+    </tr>
+                                  {% if coupon %}
+    <tr>
+      <td class="text-right" colspan="5">Coupon Discount</td>
+        <td class="text-right">Rs {{coupon_discount}}</td> 
+      </tr>
+
+
+       <tr><td class="text-right" colspan="5">Total</td>
+        <td class="text-right">Rs. {{totalafterdiscount}}</td>   
+      </tr>
+
+                                  {% else %}
+
+      <tr><td class="text-right" colspan="5">Total</td>
+        <td class="text-right">Rs. {{order.total}}</td>   
+      </tr>
+                                {% endif %} 
+
+    </tbody>
+  </table><table class="table table-bordered">
+      <thead>
+        <tr>
+          <td><b>Customer Comment</b></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span>{{order.comment}}</span></td>
+        </tr>
+      </tbody>
+    </table> </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+</body>
+</html>

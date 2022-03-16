@@ -1,0 +1,87 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-module" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ action.cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error.permission %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_permission }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% elseif error|length > 0 %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+      </div>
+      <div class="panel-body">
+		<form method="post" action="" enctype="multipart/form-data" id="form-order">
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <td class="text-right">ID</td>
+                    <td class="text-right">Customer</td>
+                    <td class="text-right">Phone</td>
+                    <td class="text-right">Email</td>
+                    <td class="text-right">Address</td>
+                    <td class="text-right">Products</td>
+                    <td class="text-right">Order Date</td>
+                    <td class="text-right">Action</td>
+                  </tr>
+                </thead>
+                <tbody>
+                
+                {% if quotations %}
+                {% for quotation in quotations %}
+                <tr>
+                  <td class="text-right">{{ quotation.id }}</td>
+                  <td class="text-left">{{ quotation.name }}</td>
+                  <td class="text-left">{{ quotation.phone }}</td>
+                  <td class="text-right">{{ quotation.email }}</td>
+                  <td class="text-left">{{ quotation.address }}</td>
+                  <td class="text-left">{{ quotation.order_details }}</td>
+                  <td class="text-left">{{ quotation.date_created }}</td>
+                  <td class="text-right"><div style="min-width: 120px;">
+                      <div class="btn-group"> <a href="{{ order.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                        <button type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                          <li><a href="{{ order.edit }}"><i class="fa fa-pencil"></i> {{ button_edit }}</a></li>
+                          <li><a href="{{ order.order_id }}"><i class="fa fa-trash-o"></i> {{ button_delete }}</a></li>
+                        </ul>
+                      </div>
+                    </div></td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                  <td class="text-center" colspan="8">{{ text_no_results }}</td>
+                </tr>
+                {% endif %}
+                  </tbody>
+                
+              </table>
+            </div>
+          </form>
+          <div class="row">
+            <div class="col-sm-6 text-left">{{ pagination }}</div>
+            <div class="col-sm-6 text-right">{{ results }}</div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

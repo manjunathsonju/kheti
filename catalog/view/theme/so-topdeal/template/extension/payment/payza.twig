@@ -1,0 +1,18 @@
+<form action="{{ action }}" method="post">
+  <input type="hidden" name="MERCHANTID" value="{{ MERCHANTID }}" />
+  <input type="hidden" name="APPID" value="{{ APPID }}" />
+  <input type="hidden" name="APPNAME" value="{{ APPNAME }}" />
+  <input type="hidden" name="TXNID" value="{{ TXNID }}" />
+  <input type="hidden" name="TXNDATE" value="{{ TXNDATE }}" />
+  <input type="hidden" name="TXNCRNCY" value="{{ TXNCRNCY }}" />
+  <input type="hidden" name="TXNAMT" value="{{ TXNAMT }}" />
+  <input type="hidden" name="REFERENCEID" value="{{ REFERENCEID }}" />
+  <input type="hidden" name="REMARKS" value="{{ REMARKS }}" />
+  <input type="hidden" name="PARTICULARS" value="{{ PARTICULARS }}" />
+  <input type="hidden" name="TOKEN" value="{{ TOKEN }}" />
+  <div class="buttons">
+    <div class="pull-right">
+      <input type="submit" value="{{ button_confirm }}" class="btn btn-success" />
+    </div>
+  </div>
+</form>

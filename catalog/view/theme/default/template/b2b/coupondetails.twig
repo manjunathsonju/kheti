@@ -1,0 +1,82 @@
+{{ header }}
+               {{ nav }}
+
+<br><a type="button" class="btn btn-danger" style="float: right;" id="deletebtncpn"><i class="fa fa-trash" aria-hidden="true"></i>Delete</a>
+      <label>Name</label>
+      <div class="input-group mb-3" style="padding: 0px 10px 0px 10px;">
+      <div class="input-group-prepend">
+  </div>
+  <input type="text" class="form-control" id="cpnname" aria-describedby="basic-addon3" value="{{name}}">
+</div> 
+
+<label>Code</label>
+<div class="input-group mb-3" style="padding: 0px 10px 0px 10px;">
+<div class="input-group-prepend">
+  </div>
+  <input type="text" class="form-control" id="cpncode" aria-describedby="basic-addon3" value="{{code}}">
+</div> 
+
+<div class="form-group" style="padding: 0px 10px 0px 10px;"> 
+<label for="exampleFormControlSelect1">Discount Types</label>
+<select class="form-control" id="discounttype">
+  <option value="p">Percentage</option>
+  <option value="f">Fixed Amount</option>
+  
+</select>
+</div>
+
+<label>Discount</label>
+<div class="input-group mb-3" style="padding: 0px 10px 0px 10px;">
+<div class="input-group-prepend">
+  </div>
+  <input type="text" class="form-control" id="discount" aria-describedby="basic-addon3" value="{{discount}}">
+</div> 
+
+<label>Total uses</label>
+<div class="input-group mb-3" style="padding: 0px 10px 0px 10px;">
+<div class="input-group-prepend">
+  </div>
+  <input type="text" class="form-control" id="uses_total" aria-describedby="basic-addon3" value="{{uses_total}}">
+</div> 
+
+<div class="form-group" style="padding: 0px 10px 0px 10px;">
+<label for="exampleFormControlSelect1">Status</label>
+<select class="form-control" id="status">
+  <option value="1">Active</option>
+  <option value="0">Inactive</option>
+  
+</select>
+</div>
+<button type="button" class="btn btn-primary" id="savecpnbtn" style="width:100%;">  
+              Save
+            </button>
+                            </div></div></div> 
+                </div>
+            </div>
+              </body>
+                </html><script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+                  integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+              </script>
+              <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+                  integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+              </script>
+          <script>              
+
+            $(document).ready(function () {
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar').toggleClass('active');
+                });
+            });
+          </script><script>$(document).ready(function() {
+        $('#example').DataTable();
+    } );</script><script type="text/javascript">
+    $('#savecpnbtn').on('click', function() {
+      window.location.href = "https://khetifood.com/index.php?route=api/b2bCoupons/updateCoupon1&key=upcopnxwq1189&name="+document.getElementById("cpnname").value+"&code="+document.getElementById("cpncode").value+"&type="+$("#discounttype").val()+"&discount="+document.getElementById("discount").value+"&uses_total="+document.getElementById("uses_total").value+"&status="+$("#status").val()+"&tkn={{tkn}}&coupon_id={{coupon_id}}&id={{id}}";
+      
+    });
+  </script><script type="text/javascript">
+  $('#deletebtncpn').on('click', function() {
+    window.location.href = "https://khetifood.com/index.php?route=api/b2bCoupons/deleteCoupon1&key=deltecopnxwq1189&tkn={{tkn}}&coupon_id={{coupon_id}}&id={{id}}";
+    
+  });
+</script>

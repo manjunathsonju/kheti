@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kheti App Dashboard</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link type="text/css" rel="stylesheet" href="http://example.com/image-uploader.min.css"/>
+    <script  type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script type="text/javascript" src="http://example.com/image-uploader.min.js"></script>
+    <!-- GOOGLE FONT -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet"/>
+    <!-- BOXICONS -->
+    <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet"/>
+    <!-- APP CSS -->
+    <link rel="stylesheet" href="./css/app.css" />
+  </head>
+
+  <body>
+    <!-- MAIN CONTENT -->
+    <div class="main">
+      <div class="main-content">
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs teal lighten-1" id="tabs">
+              <li class="tab col m2 s12">
+                <a class="white-text" href="#voted">banner</a>
+              </li>             
+              <li class="tab col m2 s12">
+                <a class="white-text" href="#followers">categories</a>
+              </li>
+               <li class="tab col m2 s12">
+                <a class="white-text" href="#following1">Brands</a>
+              </li>
+              <li class="tab col m2 s12">
+                <a class="white-text" href="#following">Popup</a>
+              </li>
+            </ul>
+          </div>
+          <div id="voted" class="col s12">
+
+                            {# location select #}
+                            <form class="col s12">
+                              <div class="container center">
+                                <div class="card-panel">
+                            <div class="row green-text">
+                              <label>choose location</label>
+                              <select class="browser-default" onchange="changelocation(value);">
+                                  <option>
+                                    Select location</option>
+                                  <option value="ktm">
+                                    Kathmandu</option>
+                                  <option value="pkr">
+                                    Pokhara</option>
+                                
+                              </select>
+                          </div>        
+                          <h6><i class="material-icons">location_on</i>{{location_text}}</h6>
+                        </div>
+                          </div>
+                        </form>
+                            {# location select #}
+
+      {% for component in components %}
+
+          <div class="container center">
+              <div class="card-panel">
+                <!-- Modal Trigger -->
+                <a class="waves-effect waves-light   btn green   darken-1 modal-trigger" href="#demo-modal-fixed-footer{{ component.component_id }}">
+                  Banner {{ component.component_id }}
+                </a>
+              </div>
+          </div>
+
+<!-- Modal Structure -->
+        <div  id="demo-modal-fixed-footer{{ component.component_id }}" class="modal modal-fixed-footer{{ component.component_id }}"   >
+            <div class="modal-content">
+              <form>
+                   <div class="two-div" style="display: flex; align-items: center;">
+                     <img src="{{ component.image }}" style="width:450px;">
+
+                      <!-- Switch -->
+                    <div class="switch">
+                      <label>
+                        Disable
+              {% if component.status=='1' %}
+                        <input type="checkbox" checked onchange="disable({{ component.component_id }},'{{location}}');">                        
+              {% else %}
+                        <input type="checkbox" onchange="enable({{ component.component_id }},'{{location}}');">                       
+              {% endif %}
+              <span class="lever"></span>
+                        Enable
+                      </label>
+                    </div>
+                   <!-- Switch -->
+
+                   </div>
+              </form>
+                  
+                  
+         <div class="card-panel" style="background-color: #D3E4CD;">
+        <h5>Add new:</h5>
+             <form>
+	              <label for="cname{{ component.component_id }}">Component Name</label>
+            	  <input type="text" id="cname{{ component.component_id }}" name="cname{{ component.component_id }}">
+
+                                {# link select #}
+                                      <div class="row green-text">
+                                        <label>Link type</label>
+                                        <select class="browser-default" id="linktype{{ component.component_id }}" name="linktype{{ component.component_id }}">                                            
+                                            <option>Select..</option>                                     
+                                    
+                                            <option value="category">
+                                              category</option>
+                                            <option value="product">
+                                              product</option>               
+                                        </select>
+                                    </div> 
+                                {# link select #}
+                              <hr><br>
+                                  <label for="id{{ component.component_id }}">product/category ID</label>
+                                  <input type="text" id="id{{ component.component_id }}" name="id{{ component.component_id }}">	  
+                                  <label for="inputFileToLoad{{ component.component_id }}">Select image:</label>
+                                  <input type="file" id="inputFileToLoad{{ component.component_id }}" name="inputFileToLoad{{ component.component_id }}" accept="image/*" />
+                                  <br><br>
+                                    <button type="button" class="btn btn-success"	onclick="upload2({{ component.component_id }},'{{location}}');">Submit!</button>
+              </form>
+        </div>
+
+            <div class="modal-footer">
+                <div class="item">                
+                      <a href="#!" class="modal-action modal-close btn red darken-1">close</a>
+                </div>                   
+            </div>                
+       </div>
+    </div>
+    {# model end #}          
+      {% endfor %}
+          </div>
+
+
+          <div id="followers" class="col s12">
+            <div class="con-section">
+              <form>
+                <fieldset>
+       {# category select #}
+                            <form class="col s12">
+                              <div class="container center">
+                                <div class="card-panel">
+                            <div class="row green-text">
+                              <label>Choose to add new category</label>
+                              <select class="browser-default" onchange="addcat(value,'{{location}}');">
+                                  <option>Select category</option>
+                            {% for allcat in allcats %}
+                             <option value="{{ allcat.category_id }}">{{ allcat.name }}</option>
+                            {% endfor %}
+                              </select>
+                          </div>        
+
+                        </div>
+                          </div>
+                        </form>
+                            {# category select #}
+                            
+                       </fieldset>
+              </form>
+            </div>
+
+            <table class="timecard" style="overflow-x: auto">
+              <input type="search" name="" id="" placeholder="search product" />
+              <thead>
+                <tr>
+                  <th>categories</th>
+                  <th>status</th>
+                  <th>action</th>
+                </tr>
+              </thead>
+              <tbody>
+
+             {% for cat in cats %}
+
+                <tr>
+                  <td>{{ cat.name }}</td>
+                  <td>
+
+                   <!-- Switch -->
+                    <div class="switch">
+                      <label>
+                        Disable
+                    {% if cat.status=='1' %}
+                  
+                        <input type="checkbox" checked onchange="disablecats({{ cat.category_id }},'{{location}}');">
+                        
+              {% else %}
+                        <input type="checkbox" onchange="enablecats({{ cat.category_id }},'{{location}}');">
+                       
+              {% endif %}    
+
+              <span class="lever"></span>
+                        Enable
+                      </label>
+                    </div>
+                                       <!-- Switch -->              
+                  </td>                  
+                  <td>
+                    <button
+                      style="
+                        background: crimson;
+                        color: #fff;
+                        border: 1px solid #fff;
+                        border-radius: 4px;
+                        padding: 4px 5px;
+                      " onclick="deletecat({{ cat.category_id }},'{{location}}');"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              {% endfor %}
+
+
+            
+
+              </tbody>
+            </table>
+          </div>
+          <div id="following" class="col s12">
+            <div class="con-section">
+
+              <form>
+                   <div class="two-div" style="display: flex; align-items: center;">
+                     <img src="{{ popup.image }}" style="width:300px;">
+              {% if popup.status=='1' %}
+
+                   <!-- Switch -->
+                    <div class="switch">
+                      <label>
+                        Disable
+                        <input type="checkbox" checked onchange="disablepopup();">
+                        <span class="lever"></span>
+                        Enable
+                      </label>
+                    </div>
+                                       <!-- Switch -->
+              {% else %}
+               <div class="switch">
+                      <label>
+                        Disable
+                        <input type="checkbox" onchange="enablepopup();">
+                        <span class="lever"></span>
+                        Enable
+                      </label>
+                    </div>
+              {% endif %}
+
+                   </div>
+              </form>
+               <div class="card-panel" style="background-color: #D3E4CD;">
+             <form>
+             <h5>Add new:</h5>
+	              <label for="cnamepopop">Component Name</label>
+            	  <input type="text" id="cnamepopop" name="cnamepopop">
+
+                                {# link select #}
+                                      <div class="row green-text">
+                                        <label>Link type</label>
+                                        <select class="browser-default" id="linktypepopop" name="linktypepopop">                                            
+                                             <option>Select..</option>                                     
+                                            <option value="category">
+                                              category</option>
+                                            <option value="product">
+                                              product</option>               
+                                        </select>
+                                    </div> 
+                                {# link select #}
+                              <hr><br>
+                                  <label for="idpopop"> product/category ID</label>
+                                  <input type="text" id="idpopop" name="idpopop">	  
+                                  <label for="inputFileToLoadpopop">Select image:</label>
+                                  <input type="file" id="inputFileToLoadpopop" name="inputFileToLoadpopop" accept="image/*" />
+                                  <br><br>
+                                    <button type="button" class="btn btn-success"	onclick="upload11();">Submit!</button>
+              </form>
+              </div>
+
+            </div>
+          </div>
+          <div id="following1" class="col s12">
+
+              {# category select #}
+                            <form class="col s12">
+                              <div class="container center">
+                                <div class="card-panel">
+                            <div class="row green-text">
+                              <label>Choose to add new category</label>
+                              <select class="browser-default" onchange="addbrand(value,'{{location}}');">
+                                  <option>Select category</option>
+                            {% for allcat in allcats %}
+                             <option value="{{ allcat.category_id }}">{{ allcat.name }}</option>
+                            {% endfor %}
+                              </select>
+                          </div>        
+
+                        </div>
+                          </div>
+                        </form>
+                            {# category select #}
+
+            <table class="timecard" style="overflow-x: auto">
+              <thead>
+                <tr>
+                  <th>Brand</th>
+                  <th>status</th>
+                                    <th>action</th>
+
+                </tr>
+              </thead>
+              <tbody>
+
+             {% for vendor in vendors %}
+                <tr>
+                  <td>{{ vendor.name }}</td>
+                  <td>
+                    {% if vendor.status=='1' %}
+
+                  <!-- Switch -->
+                    <div class="switch">
+                      <label>
+                        Disable
+                        <input type="checkbox" checked onchange="disablevendors({{ vendor.category_id }},'{{location}}');">
+                        <span class="lever"></span>
+                        Enable
+                      </label>
+                    </div>
+                  <!-- Switch -->
+              {% else %}
+               <div class="switch">
+                      <label>
+                        Disable
+                        <input type="checkbox" onchange="enablevendors({{ vendor.category_id }},'{{location}}');">
+                        <span class="lever"></span>
+                        Enable
+                      </label>
+                    </div>
+              {% endif %}                  
+                  </td>       
+
+                  <td>
+                    <button
+                      style="
+                        background: crimson;
+                        color: #fff;
+                        border: 1px solid #fff;
+                        border-radius: 4px;
+                        padding: 4px 5px;
+                      " onclick="deletebrand({{ vendor.category_id }},'{{location}}');"
+                    >
+                      Delete
+                    </button>
+                  </td>
+
+
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END MAIN CONTENT -->
+
+    <div class="overlay"></div>
+    <script>
+      $(document).ready(function () {
+        $(".modal").modal();
+        $("select").material_select();
+        $(".switch").find("input[type=checkbox]").on("change",function() {
+            var status = $(this).prop('checked');
+       });
+      });
+      function disable(id,location){
+              var formData = new FormData();
+                formData.append("key", "A@pC0mp0n3ntenB");
+                formData.append("component_id", id);
+                formData.append("location", location);
+
+                  $.ajax({
+                      url: 'https://khetifood.com/index.php?route=api/appdash/disable',
+                      type: 'POST',
+                      data: formData,
+                      async: false,
+                      dataType: "json",
+                      crossDomain: true,
+                      success: function(data) {
+                          console.log(data);
+                          window.location.reload();
+                      },
+                      error: function(data) {
+                          alert(data);
+                      },
+                      cache: false,
+                      contentType: false,
+                      processData: false
+                  });
+
+      }
+
+
+
+      function disablevendors(id,location){
+              var formData = new FormData();
+                formData.append("key", "A@pc@ts");
+                formData.append("category_id", id);
+                formData.append("location", location);
+
+                  $.ajax({
+                      url: 'https://khetifood.com/index.php?route=api/appdash/disablevendors',
+                      type: 'POST',
+                      data: formData,
+                      async: false,
+                      dataType: "json",
+                      crossDomain: true,
+                      success: function(data) {
+                          console.log(data);
+                          window.location.reload();
+                      },
+                      error: function(data) {
+                          alert(data);
+                      },
+                      cache: false,
+                      contentType: false,
+                      processData: false
+                  });
+
+      }
+
+      function enablevendors(id,location){
+              var formData = new FormData();
+                formData.append("key", "A@pcaTss");
+                formData.append("category_id", id);
+                formData.append("location", location);
+
+                  $.ajax({
+                      url: 'https://khetifood.com/index.php?route=api/appdash/enablevendors',
+                      type: 'POST',
+                      data: formData,
+                      async: false,
+                      dataType: "json",
+                      crossDomain: true,
+                      success: function(data) {
+                          window.location.reload();
+                      },
+                      error: function(data) {
+                          alert(data);
+                      },
+                      cache: false,
+                      contentType: false,
+                      processData: false
+                  });
+
+      }
+
+      function disablepopup(){
+              var formData = new FormData();
+                             formData.append("key", "P0pupp");
+
+                  $.ajax({
+                      url: 'https://khetifood.com/index.php?route=api/appdash/disablepopup',
+                      type: 'POST',
+                      data: formData,
+                      async: false,
+                      dataType: "json",
+                      crossDomain: true,
+                      success: function(data) {
+                          console.log(data);
+                          window.location.reload();
+                      },
+                      error: function(data) {
+                          alert(data);
+                      },
+                      cache: false,
+                      contentType: false,
+                      processData: false
+                  });
+
+      }
+
+      function enablepopup(){
+              var formData = new FormData();
+                             formData.append("key", "P0pupp");
+
+                  $.ajax({
+                      url: 'https://khetifood.com/index.php?route=api/appdash/enablepopup',
+                      type: 'POST',
+                      data: formData,
+                      async: false,
+                      dataType: "json",
+                      crossDomain: true,
+                      success: function(data) {
+                          console.log(data);
+                          window.location.reload();
+                      },
+                      error: function(data) {
+                          alert(data);
+                      },
+                      cache: false,
+                      contentType: false,
+                      processData: false
+                  });
+      }
+
+      function disablecats(id,location){
+              var formData = new FormData();
+                formData.append("key", "A@pc@ts");
+                formData.append("category_id", id);
+                formData.append("location", location);
+
+                  $.ajax({
+                      url: 'https://khetifood.com/index.php?route=api/appdash/disablecats',
+                      type: 'POST',
+                      data: formData,
+                      async: false,
+                      dataType: "json",
+                      crossDomain: true,
+                      success: function(data) {
+                          console.log(data);
+                          window.location.reload();
+                      },
+                      error: function(data) {
+                          alert(data);
+                      },
+                      cache: false,
+                      contentType: false,
+                      processData: false
+                  });
+
+      }
+
+      function enablecats(id,location){
+              var formData = new FormData();
+                formData.append("key", "A@pcaTss");
+                formData.append("category_id", id);
+                formData.append("location", location);
+
+                  $.ajax({
+                      url: 'https://khetifood.com/index.php?route=api/appdash/enablecats',
+                      type: 'POST',
+                      data: formData,
+                      async: false,
+                      dataType: "json",
+                      crossDomain: true,
+                      success: function(data) {
+                          console.log(data);
+                          window.location.reload();
+                      },
+                      error: function(data) {
+                          alert(data);
+                      },
+                      cache: false,
+                      contentType: false,
+                      processData: false
+                  });
+
+      }
+
+      function enable(id,location){
+                  var formData = new FormData();
+                  formData.append("key", "A@pC0mp0n3ntenB");
+                  formData.append("component_id", id);
+                  formData.append("location", location);
+
+                    $.ajax({
+                        url: 'https://khetifood.com/index.php?route=api/appdash/enable',
+                        type: 'POST',
+                        data: formData,
+                        async: false,
+                        dataType: "json",
+                        crossDomain: true,
+                        success: function(data) {
+                            console.log(data);
+                            window.location.reload();
+                        },
+                        error: function(data) {
+                            alert(data);
+                        },
+                        cache: false,
+                        contentType: false,
+                        processData: false
+                    });
+      }
+
+      function changelocation(location){
+        if(location=='ktm'){
+					window.location.href = "https://store.kheti.farm/admin/index.php?route=app/dash&location=ktm&user_token={{tkn}}";		
+        }else{
+          	window.location.href = "https://store.kheti.farm/admin/index.php?route=app/dash&location=pkr&user_token={{tkn}}";		
+        }
+      }
+
+      
+       function addbrand(category_id,location){
+           var formData = new FormData();
+          formData.append("key", "A@dcaTss");       
+          formData.append("category_id", category_id);
+          formData.append("location", location);
+
+           $.ajax({
+              url: 'https://khetifood.com/index.php?route=api/appdash/addbrand',
+              type: 'POST',
+              data: formData,
+              async: false,
+              dataType: "json",
+              crossDomain: true,
+              success: function(data) {
+                  console.log(data);
+                  window.location.reload();
+              },
+              error: function(data) {
+                  alert(data);
+              },
+              cache: false,
+              contentType: false,
+              processData: false
+          });
+          return false;
+       }
+
+
+        function addcat(category_id,location){
+
+         var formData = new FormData();
+          formData.append("key", "A@dcaTss");       
+          formData.append("category_id", category_id);
+          formData.append("location", location);
+
+           $.ajax({
+              url: 'https://khetifood.com/index.php?route=api/appdash/addcategory',
+              type: 'POST',
+              data: formData,
+              async: false,
+              dataType: "json",
+              crossDomain: true,
+              success: function(data) {
+                  console.log(data);
+                  window.location.reload();
+              },
+              error: function(data) {
+                  alert(data);
+              },
+              cache: false,
+              contentType: false,
+              processData: false
+          });
+          return false;
+        }
+
+        
+
+                function deletebrand(category_id,location){
+                   var formData = new FormData();
+          formData.append("key", "A@dcaTss");       
+          formData.append("category_id", category_id);
+          formData.append("location", location);
+
+           $.ajax({
+              url: 'https://khetifood.com/index.php?route=api/appdash/deletevendor',
+              type: 'POST',
+              data: formData,
+              async: false,
+              dataType: "json",
+              crossDomain: true,
+              success: function(data) {
+                  console.log(data);
+                  window.location.reload();
+              },
+              error: function(data) {
+                  alert(data);
+              },
+              cache: false,
+              contentType: false,
+              processData: false
+          });
+          return false;
+                }
+
+
+        function deletecat(category_id,location){
+
+         var formData = new FormData();
+          formData.append("key", "A@dcaTss");       
+          formData.append("category_id", category_id);
+          formData.append("location", location);
+
+           $.ajax({
+              url: 'https://khetifood.com/index.php?route=api/appdash/deletecategory',
+              type: 'POST',
+              data: formData,
+              async: false,
+              dataType: "json",
+              crossDomain: true,
+              success: function(data) {
+                  console.log(data);
+                  window.location.reload();
+              },
+              error: function(data) {
+                  alert(data);
+              },
+              cache: false,
+              contentType: false,
+              processData: false
+          });
+          return false;
+        }
+
+    </script>
+
+    <script type="text/javascript "> 
+      function upload2(component_id,location){
+          cstring= 'cname'+component_id;
+          filestring= '#inputFileToLoad'+component_id;
+          linkstring= '#linktype'+component_id;
+          idstring= 'id'+component_id;
+
+         var formData = new FormData();
+          formData.append('fileToUpload', $(filestring)[0].files[0]);
+          formData.append("key", "A@pC0mp0n3nt");
+          formData.append("component_name", document.getElementById(cstring).value);
+          formData.append("type", $(linkstring).find(":selected").val());
+          formData.append("href", document.getElementById(idstring).value);
+          formData.append("filter", '1');
+          formData.append("component_id", component_id);
+          formData.append("location", location);
+
+           $.ajax({
+              url: 'https://khetifood.com/index.php?route=api/appdash',
+              type: 'POST',
+              data: formData,
+              async: false,
+              dataType: "json",
+              crossDomain: true,
+              success: function(data) {
+                  console.log(data);
+                  window.location.reload();
+              },
+              error: function(data) {
+                  alert(data);
+              },
+              cache: false,
+              contentType: false,
+              processData: false
+          });
+          return false;
+      }
+
+
+ function upload11(){
+          cstring= 'cnamepopop';
+          filestring= '#inputFileToLoadpopop';
+          linkstring= '#linktypepopop';
+          idstring= 'idpopop';
+
+         var formData = new FormData();
+          formData.append('fileToUpload', $(filestring)[0].files[0]);
+          formData.append("key", "A@pC0mp0n3nt");
+          formData.append("component_name", document.getElementById(cstring).value);
+          formData.append("type", $(linkstring).find(":selected").val());
+          formData.append("href", document.getElementById(idstring).value);
+
+           $.ajax({
+              url: 'https://khetifood.com/index.php?route=api/appdash/popop',
+              type: 'POST',
+              data: formData,
+              async: false,
+              dataType: "json",
+              crossDomain: true,
+              success: function(data) {
+                  console.log(data);
+                  window.location.reload();
+              },
+              error: function(data) {
+                  alert(data);
+              },
+              cache: false,
+              contentType: false,
+              processData: false
+          });
+          return false;
+      }
+      </script>
+
+    <!-- APEX CHART -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <!-- APP JS -->
+    <script src="./js/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,390 @@
+{{ header }}
+<div class="container">
+
+	<style>
+		.loader_3098 {
+			display:    none;
+			position:   fixed;
+			z-index:    1000;
+			top:        0;
+			left:       0;
+			height:     100%;
+			width:      100%;
+			background: rgba( 255, 255, 255, .8 ) 
+						url('https://khetifood.com/image/tomato-loading.gif') 
+						50% 50% 
+						no-repeat;
+		}
+
+		body.loading {
+			overflow: hidden;   
+		}
+
+
+		body.loading .loader_3098 {
+			display: block;
+		}
+	</style>
+	<div class="loader_3098"></div>
+
+  	<ul class="breadcrumb">
+    	{% for breadcrumb in breadcrumbs %}
+    		<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    	{% endfor %}
+  	</ul>
+
+     
+      {# <div class="alert alert-secondary" role="alert">
+  </div> #}
+
+
+  	{% if error_warning %}
+  		<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+    		<button type="button" class="close" data-dismiss="alert">&times;</button>
+  		</div>
+  	{% endif %}
+	  
+  	<div class="row">
+	   {% if user_location =='pkr'%} 
+      <div class="alert alert-info"><i class="fa fa-info-circle"></i> Dear Valued Customers, 
+
+Please be informed that the orders taken till 9 pm today will only be delivered after 2 working days due to delivery constrains by the Government. 
+Kindly place your order accordingly. We are sorry for the inconvenience caused. due to it.
+
+Team Kheti.
+       <button type="button" class="close" data-dismiss="alert">&times;</button>
+     </div>
+      	{% else %}
+<div class="alert alert-info"><i class="fa fa-info-circle"></i> Due to operational difficulties imposed by Covid-19,we will be taking orders from 8 AM to 9 PM  and the deliveries will be made a day after until further notice.
+       <button type="button" class="close" data-dismiss="alert">&times;</button>
+     </div>
+     {% endif %}
+  		{{ column_left }}
+    	{% if column_left and column_right %}
+    		{% set class = 'col-sm-6' %}
+    	{% elseif column_left or column_right %}
+    		{% set class = 'col-sm-9' %}
+    	{% else %}
+    		{% set class = 'col-sm-12' %}
+    	{% endif %}
+    	<div id="content" class="{{ class }}">
+    		{{ content_top }}
+    		<h1></h1>
+    		<div class="so-onepagecheckout layout1 {% if is_logged_in %} is_customer {% endif %}">
+    			<div class="col-left col-lg-6 col-md-6 col-sm-6 col-xs-12">
+    				{% if not is_logged_in %}
+	    				<div class="checkout-content login-box">
+	    					<h2 class="secondary-title"><i class="fa fa-user"></i>{{ text_checkout_create_account_login }}</h2>
+                            <div class="box-inner">
+                                {% if setting_so_onepagecheckout_layout_setting.so_onepagecheckout_register_checkout == 1 %}
+        	    					<div class="radio">
+        								<label><input type="radio" name="account" value="register" {% if default_auth == 'register' %} checked="checked" {% endif %}>{{ text_register }}</label>
+        							</div>
+                                {% endif %}
+
+    							{% if allow_guest_checkout and setting_so_onepagecheckout_layout_setting.so_onepagecheckout_guest_checkout == 1 %}
+        	                        <div class="radio">
+        	                            <label><input type="radio" name="account" value="guest" {% if default_auth == 'guest' %} checked="checked" {% endif %} />{{ text_guest }}</label>
+        	                        </div>
+    	                        {% endif %}
+
+                                {% if setting_so_onepagecheckout_layout_setting.so_onepagecheckout_enable_login == 1 %}
+        							<div class="radio">
+        								<label><input type="radio" name="account" value="login" {% if default_auth == 'login' %} checked="checked" {% endif %}>{{ text_returning_customer }}</label>
+                                    </div>
+                                {% endif %}
+                            </div>
+						</div>
+					{% endif %}
+
+					{% if not is_logged_in and setting_so_onepagecheckout_layout_setting.so_onepagecheckout_enable_login == 1 %}
+	                    <div class="checkout-content checkout-login">
+	                        <fieldset>
+	                            <h2 class="secondary-title"><i class="fa fa-unlock"></i>{{ text_returning_customer }}</h2>
+                                <div class="box-inner">
+    	                            <div class="form-group">
+    	                                <input type="text" name="login_email" value="" placeholder="{{ entry_email }}" id="input-login_email" class="form-control" />
+    	                            </div>
+    	                            <div class="form-group">
+    	                                <input type="password" name="login_password" value="" placeholder="{{ entry_password }}" id="input-login_password" class="form-control" />
+    	                                <a href="{{ forgotten }}">{{ text_forgotten }}</a>
+    	                            </div>
+    	                            <div class="form-group">
+    	                                <input type="button" value="{{ button_login }}" id="button-login" data-loading-text="{{ text_loading }}" class="btn-primary button" />
+    	                            </div>
+                                </div>
+	                        </fieldset>
+	                    </div>	                    
+                    {% endif %}
+
+                    {{ register_form }}
+    			</div>
+                
+    			<div class="col-right col-lg-6 col-md-6 col-sm-6 col-xs-12">
+    				<section class="section-left">
+    					{% if is_logged_in %}
+                        	{{ payment_address }}
+                        	{% if is_shipping_required %}
+                        		{{ shipping_address }}
+                        	{% endif %}
+                        {% endif %}
+                        <div class="ship-payment">
+                            {% if is_shipping_required %}
+                            	{{ shipping_methods }}
+                            {% endif %}
+
+                            {{ payment_methods }}
+                        </div>
+    				</section>
+    				<section class="section-right">
+                        <div id="coupon_voucher_reward">
+    					   {{ coupon_voucher_reward }}
+                        </div>
+
+                        {{ cart }}
+                        
+    					<div class="checkout-content confirm-section">
+                            {% if setting_so_onepagecheckout_layout_setting.comment_status %}
+                                <div>
+                                    <h2 class="secondary-title"><i class="fa fa-comment"></i>{{ text_comments }}</h2>
+                                    <label>
+                                        <textarea name="comment" rows="8" class="form-control {% if setting_so_onepagecheckout_layout_setting.require_comment_status %} requried {% endif %}">{{ comment }}</textarea>
+                                    </label>
+                                </div>
+                            {% endif %}
+											  <!-- Modal  -->
+							  
+
+				<div id="myModal" class="modal" style="" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+						  <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+          
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closemodel();">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div style="margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 39%;
+    font-size: 11px;
+
+    transform: translate(-50%, -50%);">
+		
+
+<div class="input-group mb-4">
+  <div class="input-group-prepend">
+   
+   
+  </div>
+   <span class="input-group-text">Enter the amount you wish to donate</span>
+  
+   <span class="input-group-text" style="position: absolute;
+    top: 31px;
+    left: -21px;">Rs.</span>
+   <input type="number" class="form-control" id="donationamount">
+</div>
+
+
+        </div>
+    
+
+        <br><br><br>
+               <button type="button" class="btn btn-success" style="position: absolute;
+    bottom: 23px;
+    right: 8px;" onclick="donate();">Donate</button> 
+
+		</div></div>
+                                </div>
+                          {# // modal end #}
+
+                          {# read more #}
+                          <!-- Modal -->
+	<div class="modal fade" id="readmoremodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel"></h4>
+		  </div>
+		  <div class="modal-body" style="overflow-y: scroll; height: 200px;">
+			<h4 class="tiny" style="color: #25a9e0; font-family: 'Times New Roman', Times, serif; font-size: 13px;">
+				Solidarity farming
+			</h4>
+
+			<p class="tiky" style="font-family: 'Times New Roman', Times, serif; font-size: 12px;">
+				Solidarity farmer is a mission to beat covid food crisis and it has been initiated as a
+                collaborative mission by Kheti, Nepal Food, Food Networks and The Bazaar.
+			</p>
+
+			<h4 class="tiny" style="color: #25a9e0; font-family: 'Times New Roman', Times, serif; font-size: 13px;">
+				Feed the needy through solidarity farming
+			</h4>
+
+			<p class="tiky" style="font-family: 'Times New Roman', Times, serif; font-size: 12px;">
+				The second phase of COVID-19 in Nepal has presented challenges that the country was not prepared for. Thousands of people, especially daily wage earners have lost their jobs due to the lockdown. Where there is a crisis, there is always also an opportunity for goodness to arise. Many individuals and organizations have risked their lives and come out on the ground to serve those in need, in whatever capacity they can. As pillars and champions of food security in Nepal, it is hence our duty to work towards a solution that creates an environment for farmers to grow more food without any constraints, multiply productivity in these farms by creating jobs for the jobless, and distribute the grown food among community kitchens that are serving free food. With the right amount of funds and support we can create an ecosystem of food security and a sustainable chain of locally produced food to serve the locals in need.
+			</p>
+
+			<h4 class="tiny" style="color: #25a9e0; font-family: 'Times New Roman', Times, serif; font-size: 13px;">
+				The Mission
+			</h4>
+
+			<p class="tiky" style="font-family: 'Times New Roman', Times, serif; font-size: 12px;">
+				The plan of this mission is to engage following three legs of the societies to solve the current food-crisis
+<p class="bold" style="font-weight: bold; font-size: 12px;">Solidarity Farmers:</p> 
+<p class="tiky" style="font-family: 'Times New Roman', Times, serif; font-size: 12px;">People who have lost their jobs due to COVID-19 crisis, daily wage earners, and migrant returnees are provided opportunities to work in the local farms to earn their daily wages by helping out in growing more food.</p>
+<p class="bold" style="font-weight: bold; font-size: 12px;">Solidarity Farms: </p> <p class="tiky" style="font-family: 'Times New Roman', Times, serif; font-size: 12px;">Local farms will be identified and engaged in creating jobs for solidarity farmers with a mission of increasing the productivity of the farm by folds so that they can produce food for community kitchens.</p>
+<p class="bold" style="font-weight: bold; font-size: 12px;">Community Kitchens:</p> <Volunteer class="tiky" style="font-family: 'Times New Roman', Times, serif; font-size: 12px;">Volunteer groups that are sourcing, cooking, and distributing meals to those in need will be identified and provided fresh produce from solidarity farms in an attempt to serve good food for all.</p>
+			</p>
+
+			<h4 class="tiny" style="color: #25a9e0; font-family: 'Times New Roman', Times, serif; font-size: 13px;">
+				How does it work?
+			</h4>
+
+			<p class="tiky" style="font-family: 'Times New Roman', Times, serif; font-size: 12px;">
+			Kheti food will enable feed the needy mission on its platform, this mission can be accessed by everyone across Nepal. People who wish to be a part of this mission can directly log in to kheti platform select “I would like to donate food to the needy who have been badly affected due to Covid”, enter the amount they would like to donate or purchase food for the needy at the time of  checkout. For customers who are directly purchasing from Kheti food can hand over the cash to the delivery personnel or pay using digital platforms. Others can pay using fonepay, eSewa or bank transfer. 
+		</p>
+
+		<p class="tiky" style="font-family: 'Times New Roman', Times, serif; font-size: 12px;">
+			Kheti will allocate fresh fruits and vegetable worth an equal amount and distribute the same to Nepal Food. Nepal food ensures food preparation and distribution to the needy. We follow WHO standards and guidelines for food preparation and distribution.
+		</p>
+
+		<h4 class="tiny" style="color: #25a9e0; font-family: 'Times New Roman', Times, serif; font-size: 13px;">
+			FAQs
+		</h4>
+		<p class="tiky" style="font-family: 'Times New Roman', Times, serif; font-size: 12px;">
+			1.     I stay outside Nepal, Can I contribute  to this mission?<br>
+Yes, you can. If anyone who stays outside Nepal and would like to be a part of this mission, please write to us at <a href="#" style="color: #25a9e0;"> solidarityfarmer@dvexcellus.com,</a>  we will help you with our international handle for transferring funds/to contribute. 
+		</p>
+		<p class="tiky" style="font-family: 'Times New Roman', Times, serif; font-size: 12px;">
+			2.     Can I give you cash as a contribution?<br>
+			Yes, you can. You can hand over the cash to our delivery person at the time of delivery. 
+		</p>
+		<p class="tiky" style="font-family: 'Times New Roman', Times, serif; font-size: 12px;">
+			3.     Can I transfer money digitally?<br>
+			Yes, you can transfer the money along with your invoice amount.
+			</p>
+			<p class="tiky" style="font-family: 'Times New Roman', Times, serif; font-size: 12px;">
+				4.     Can I deposit money in your bank account?<br>
+				Yes, you can deposit the money in our bank account. Please confirm the transfer details to our customer care team on +977-9802393170 or write to us at  <a href="#" style="color: #25a9e0;"> solidarityfarmer@dvexcellus.com,</a></p>
+			<p class="tiky" style="font-family: 'Times New Roman', Times, serif; font-size: 12px;">
+				5.     How will I come to know that the money is being really used for preparing food for the needy?<br>
+Kheti will publish the data of total amount received as a contribution and total amount of vegetables supplied for food preparation on our website, monthly. 
+
+			</p>
+			<p class="tiky" style="font-family: 'Times New Roman', Times, serif; font-size: 12px;">
+				6.     Can I contribute without purchasing anything from Kheti?<br>
+				Yes, you can. Please connect with our customer care team on +977-9802393170 or write to us at   <a href="#" style="color: #25a9e0;"> solidarityfarmer@dvexcellus.com,</a>  We will help you with digital transaction details or QR code for money transfer. </p>
+		
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			
+		  </div>
+		</div>
+	  </div>
+	</div>
+                          {# read more #}
+
+                          {# box #}
+                          <br>
+                          <div class="checkout-content">
+	                        <fieldset>
+	                            <h2 class="secondary-title"><i class="fa fa-handshake-o"></i>Help the needy?</h2>
+                                <div class="box-inner">
+
+    	                            <div class="form-check" id="checkboxbox">
+  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" onclick="calc();">
+  I would like to donate food to the needy who have been badly affected due to Covid <a style="color: #25a9e0;" data-toggle="modal" data-target="#readmoremodal">Read more</a>
+</div>
+                                </div>
+	                        </fieldset>
+	                    </div>	    
+                          {# box #}
+							
+
+                            {% if entry_newsletter and setting_so_onepagecheckout_layout_setting.show_newsletter %}
+                                <div class="checkbox check-newsletter">
+                                    <label for="newsletter">
+                                        <input type="checkbox" name="newsletter" value="1" id="newsletter" />
+                                        {{ entry_newsletter }}
+                                    </label>
+                                </div>
+                            {% endif %}
+
+                            {% if text_privacy and setting_so_onepagecheckout_layout_setting.show_privacy %}
+                                <div class="checkbox check-privacy">
+                                    <label>
+                                        <input type="checkbox" name="privacy" value="1" />
+                                        {{ text_privacy }}
+                                    </label>
+                                </div>
+                            {% endif %}
+
+                            {% if text_agree and setting_so_onepagecheckout_layout_setting.show_term %}
+                                <div class="checkbox check-terms">
+                                    <label>
+                                        <input type="checkbox" name="agree" value="1" />
+                                        {{ text_agree }}
+                                    </label>
+                                </div>
+                            {% endif %}
+                            <div class="confirm-order">
+                                <button id="so-checkout-confirm-button" data-loading-text="{{ text_loading }}" class="btn btn-primary button confirm-button">{{ text_confirm_order }}</button>
+                            </div>                            
+                        </div>
+    				</section>
+    			</div>
+    		</div>
+    		{{ content_bottom }}
+    	</div>
+    </div>
+</div>
+{{ footer }}
+
+
+
+<script type="text/javascript">
+var modal = document.getElementById("myModal");
+var customer_id1 = document.getElementById("checkboxbox");
+
+
+ function calc(){
+     
+  modal.style.display = "block";
+
+
+ }
+function closemodel(){
+	modal.style.display = "none";
+
+}
+function donate(order_id,customer_id){
+    var amount=document.getElementById("donationamount").value;
+       
+     modal.style.display = "none";
+       var formData = new FormData();
+       formData.append("key","opnxwq1189");
+       formData.append("customer_id", {{ customer_id }});
+	      formData.append("amount", amount);
+
+$.ajax({
+               url: 'https://khetifood.com/index.php?route=api/apiCovidDonation',
+               type: 'POST',
+               data: formData,
+               async: false,
+               dataType: "json",
+               crossDomain: true,
+ 
+               success: function (data) {
+console.log(data);                },
+               cache: false,
+               contentType: false,
+               processData: false
+           });
+}
+
+
+</script>
+

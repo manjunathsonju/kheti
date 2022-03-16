@@ -1,0 +1,178 @@
+{{ header }}{{ column_left }}
+<div id="content">
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="pull-right">
+			<button type="submit" form="form-popup-maker" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+			<a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+			<h1>{{ heading_title }}</h1>      <ul class="breadcrumb">
+					{% for breadcrumb in breadcrumbs %}
+					<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+					{% endfor %}
+				</ul>
+		</div>
+	</div>
+	<div class="container-fluid">
+		{% if error_warning %}
+		<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+		{% endif %}
+	</div>
+	<input type="hidden" name="oc-user-token" value="{{ user_token }}">
+	<form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-popup-maker" class="form-horizontal"></form>
+	<div class="panel-body">
+		<div class="row popups-container">
+			<script>
+				OC_LAYOUTS_LIST = {{ layouts_list }};
+				OC_CATEGORIES_LIST = {{ categories_list }};
+				OC_PRODUCTS_LIST = {{ products_list }};
+			</script>
+			<div class="col-md-3 left-side-panel">
+				<ul class="nav-menu">
+					{% if input_user_api_key %}
+						<li class="col-md-12 sgpm-nav-menu-element sgpm-popups-menu action-active"><span>{{ menu_sgpm_popups_label }}</span></li>
+					{% endif %}
+					<li class="col-md-12 sgpm-nav-menu-element sgpm-api-credentials-menu
+					{% if not input_user_api_key %}
+						{{ 'action-active' }}
+					{% endif %}
+					"><span>{{ menu_sgpm_api_credentials_label }}</span></li>
+					<li class="col-md-12 sgpm-nav-menu-element sgpm-support-menu"><span>{{ menu_sgpm_support_label }}</span></li>
+				</ul>
+			</div>
+			<div class="col-md-8 right-side-panel">
+				<div class="sgpm-popups-panel">
+					{% if input_user_api_key %}
+						<input type="hidden" class="user-api-status" value="true">
+						<div class="popup-container">
+							{% if sgpm_popups_list is empty %}
+								<div class="sgpm-msg-container">
+									<h3 class="sgpm-info-about-not-popups">
+										Dear <span class="sgpm-black">{{ data_user_name }}</span> you have no popups created yet!
+									</h3>
+									<h4>
+										Click <a href="{{ url_sgpm_dashboard }}" title="Click here to create a new popup" target="_blank">here</a>
+											to create a new popup, after that, reload this page to see new popups.
+									</h4>
+								</div>
+							{% else %}
+								<div class="sgpm-popups">
+									{% set count = 0 %}
+									{% for popup_data in sgpm_popups_list %}
+										{% set count = count + 1 %}
+										<div class="row popup-container">
+											<div class="col-md-12 status-container">
+												<div class="col-md-8 popup-name">{{ popup_data.title }}</div>
+												<div id="popup-status-{{ count }}" class="col-md-4 popup-status
+												{% if popup_data.status == 'enabled' %}
+													{{ 'status-enabled' }}
+												{% elseif popup_data.status == 'disabled' or popup_data.status == '' %}
+													{{ 'status-disabled' }}
+												{% endif %}
+												">
+												{{ popup_data.status | capitalize }}
+												{% if popup_data.status == '' %}
+													{{ 'Disabled' }}
+												{% endif %}
+												</div>
+											</div>
+											<div class="col-md-12 options-contaner">
+												<div class="col-md-6 popup-options">
+													<button type="button" id="edit-content-{{ count }}" class="btn btn-primary edit-content" onclick="sgpm_loader.getPopupOptionsByName('{{ popup_data.hashId }}')">{{ button_sgpm_edit_settings }} <i class="fa fa-edit padding-left-5"></i></button>
+												</div>
+												<div class="col-md-6 popup-options align-right">
+													<label id="toggle-switch-{{ count }}" class="toggle-switch">
+														<input id="enable-popup-{{ count }}" type="checkbox" onchange="sgpm_loader.changeStatus('{{ popup_data.hashId }}', '{{ count }}')"
+														{% if popup_data.status == 'enabled' %}
+															{{ 'checked' }}
+														{% endif %}>
+														<span class="slider round"></span>
+													</label>
+												</div>
+											</div>
+										</div>
+										<hr>
+									{% endfor %}
+								</div>
+							{% endif %}
+						</div>
+					{% endif %}
+				</div>
+				<div class="popup-options-container">
+					<div class="row">
+						<div class="col-md-12">
+							<button type="button" id="go-back" class="btn btn-light" onclick="sgpm_loader.returnToMainPanel()"><i class="fa fa-angle-double-left" aria-hidden="true"></i> Back</button>
+							<button type="button" id="save-popup-targets" class="btn btn-primary save-popup-targets" onclick="sgpm_loader.generateDataObject()">Save <i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group">
+							<div class="col-md-12">
+								<h2 class="popup-description-header"><span class="popup-title" id="popup-title"></span> Settings</h2>
+								<hr>
+								<div class="row options-header-container">
+									<div class="col-md-3">Select Target</div>
+									<div class="col-md-2">Operator</div>
+									<div class="col-md-5 page-type display-none">Page type</div>
+								</div>
+								<div class="dynamic-popup-options">
+									{# Dynamicly load options template here via javascript #}
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group">
+							<div class="col-md-12">
+								<button type="button" id="go-back" class="btn btn-light" onclick="sgpm_loader.returnToMainPanel()"><i class="fa fa-angle-double-left" aria-hidden="true"></i> Back</button>
+								<button type="button" id="save-popup-targets" class="btn btn-primary save-popup-targets" onclick="sgpm_loader.generateDataObject()">Save <i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="api-credentials-contaner">
+					<div class="form-api-credentials">
+						<h3>API Credentials</h3>
+						<h4 class="sgpm-red">
+							<strong>Please, connect to your Popup Maker account via API key to start using the plugin.</strong>
+						</h4>
+						<p>
+							<em>Don’t have an account?
+								<a href="{{ url_sgpm_create_accaunt }}" title="Click here to view Popup Maker" target="_blank">Click here to create Popup Maker account</a>&nbsp;
+								this will take only 30 seconds!
+							</em>
+						</p>
+						<div class="sgpm-connect">
+							<p class="sgpm-field-wrap">
+								<label for="sgpm-field-key">API Key:</label>
+								<input type="password" id="sgpm-field-key" name="sgpm-api-key" tabindex="431" class="sgpm-api-field form-control" value="{{ input_user_api_key }}" placeholder="Enter your API Key here..."><br>
+								<span class="sgpm-red">*</span>
+								<span class="sgpm-field-desc">
+									You can find your API key in the <a href="{{ url_sgpm_get_api_key }}" title="Settings section" target="_blank">Settings section</a> of your Popup Maker account.
+								</span>
+							</p>
+						</div>
+						<p class="submit">
+							<button type="button" class="btn btn-primary sgpm-submit" onclick="sgpm_loader.connectToPopupMaker()" tabindex="749">Connect to Popup Maker</button>
+						</p>
+					</div>
+				</div>
+				<div class="col-md-12 support-container">
+					<div class="sgpm-tabs-content">
+						<div class="sgpm-support-block-box-container">
+							<iframe width="100%" height="350" src="https://www.youtube.com/watch?list=UUhtxsnAzUmv02GZhiL66Nwg&time_continue=118&v=6IzmpsT9kbM" frameborder="0" gesture="media" allowfullscreen></iframe>
+						</div>
+						<div class="sgpm-support-block-box-container display-none">
+							<a href="https://help.popupmaker.com/en/article/how-to-add-a-popup-in-wordpress-website-2s86ck/" class="sgpm-support-block-box" target="_blank">
+								<i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+								<p class="sgpm-support-block-box-title">Knowledgebase</p>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{{ footer }}

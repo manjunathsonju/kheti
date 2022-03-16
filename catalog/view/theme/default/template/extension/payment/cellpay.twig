@@ -1,0 +1,23 @@
+<!--
+<form action="https://khetifood.com/payment_gateway/cellpay_3098/process.php" method="post">  
+  <input type="hidden" name="ap_amount" value="{{ ap_amount }}" />
+  <input type="hidden" name="ap_orderId" value="{{ ap_orderId }}" />
+  <div class="buttons">
+    <div class="pull-right">
+      <input type="submit" value="{{ button_confirm }}" class="btn btn-primary" />
+    </div>
+  </div>
+</form>
+-->
+
+<!-- <form action="https://app.cellpay.com.np/test_merchant_api/" method="POST"> -->
+<form action="https://app.cellpay.com.np/mpay/" method="POST">
+  <input value="9841362180" name="merchant_id" type="hidden">
+  <input value="{{ ap_amount }}" name="amount" type="hidden">
+  <input value="{{ ap_orderId }}" name="invoice_number" type="hidden">
+  <input value="CellPay_payment" name="description" type="hidden">
+  <input value="https://khetifood.com/payment_gateway/cellpay_3098/cellpaySuccess.php" type="hidden" name="success_callback">
+  <input value="https://khetifood.com/payment_gateway/cellpay_3098/cellpayFailure.php" type="hidden" name="failure_callback">
+  <input value="https://khetifood.com/index.php?route=checkout/failure" type="hidden" name="cancel_callback">
+  <input value="Submit" type="submit">
+</form>

@@ -1,0 +1,119 @@
+<link href="catalog/view/theme/default/stylesheet/optin_popup.css" type="text/css" rel="stylesheet" media="screen" />
+
+<div id="optin-popup" class="modal optin-popup-layout-variation-modal-component" role="dialog" tabindex="-1" aria-modal="true">
+  <div class="modal-dialog optin-popup-layout-variation-modal-content-container optin-popup-layout-variation-modal-content-container-transition-entered" role="document">
+    
+	<div class="optin-popup-content-component">
+      
+        
+      {# <div class="optin-popup-control-close-component transition-exited" tabindex="0" role="button">
+      	<svg viewBox="0 0 10 10" class="optin-popup-control-close-icon">
+      	  <path fill-rule="nonzero" d="M6.414 5l3.293 3.293a1 1 0 0 1-1.414 1.414L5 6.414 1.707 9.707A1 1 0 1 1 .293 8.293L3.586 5 .293 1.707A1 1 0 0 1 1.707.293L5 3.586 8.293.293a1 1 0 0 1 1.414 1.414L6.414 5z"></path>
+      	</svg>
+      </div> #}
+
+      <div class="optin-popup-content-main">
+        <div class="optin-popup-content-outer">
+          <div class="optin-popup-content-inner">
+            <div class="optin-popup-content-blocks-container-component optin-popup-content-blocks-container-paddings-medium">
+              <div class="optin-popup-content-blocks-container-item">
+                <div class="optin-popup-block-variation-title-component"></div> 
+              </div>
+
+			  {% if image %}
+	              <div class="optin-popup-content-blocks-container-item">
+	                <div class="optin-popup-block-variation-image-component">
+	                  <img src="" alt="" class="optin-popup-block-variation-image-img" />
+	                </div>
+	              </div>
+              {% endif %}
+			
+
+            		
+<a href="https://qrco.de/bcNH0u"><img src="https://khetifood.com/image/test/abcd.jpg"></a>
+			  
+			  {% if button_label %}              
+	              <div class="optin-popup-content-blocks-container-item">
+	              	<div class="optin-popup-block-variation-button-component">
+	              	  <div class="optin-popup-button-component" tabindex="0" role="button">
+	              	  	<a href=""></a>
+	              	  </div>
+	              	</div>
+	              </div>
+              {% endif %}
+
+			  <div class="optin-popup-content-blocks-container-item" id="optin-popup-hide">
+		          <a href="javascript:;">close</a>
+        	  </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Optin popup custom styles -->
+<style type="text/css">
+	{% if styles.background_color %}
+		.optin-popup-content-outer { background-color:{{ styles.background_color }}; }
+	{% endif %}
+	{% if styles.title_color %}
+		.optin-popup-block-variation-title-component { color:{{ styles.title_color }}; }
+	{% endif %}
+	{% if styles.subtitle_color %}
+		.optin-popup-subtitle .optin-popup-block-variation-text-text { color:{{ styles.subtitle_color }}; }
+	{% endif %}
+	{% if styles.description_color %}
+		.optin-popup-description .optin-popup-block-variation-text-text, #optin-popup-hide { color:{{ styles.description_color }}; }
+	{% endif %}
+	{% if styles.button_background_color %}
+		.optin-popup-button-component { background-color:{{ styles.button_background_color }}; }
+	{% endif %}
+	{% if styles.button_text_color %}
+		.optin-popup-button-component { color:{{ styles.button_text_color }}; }
+	{% endif %}
+	{% if styles.rounded_corners %}
+		.optin-popup-content-component { border-radius:20px; }
+		.optin-popup-button-component { border-radius:10px; }
+	{% endif %}
+</style>
+
+<script type="text/javascript">
+	function setCookie(name, value, days) {
+	  var expires = "";
+	  if (days) {
+	    var date = new Date();
+	    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+	    expires = "; expires=" + date.toUTCString();
+	  }
+	  document.cookie = name + "=" + (value || "") + expires + "; path=/";
+	}
+
+	function getCookie(name) {
+	  var nameEQ = name + "=";
+	  var ca = document.cookie.split(';');
+	  for (var i = 0; i < ca.length; i++) {
+	    var c = ca[i];
+	    while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+	    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+	  }
+	  return null;
+	}
+
+    $(document).ready(function() {
+		if (getCookie("lokallyOptinPopup-{{ optin_popup_id }}") == undefined) $("#optin-popup").modal("show");
+		$("#optin-popup .optin-popup-control-close-component").click(function() {
+			$("#optin-popup").modal("hide");
+		});
+		$("#optin-popup-hide a").click(function() {
+            // Create expiring cookie, 1 day from now:
+            setCookie("lokallyOptinPopup-{{ optin_popup_id }}", "yes", 1);
+
+			$("#optin-popup").modal("hide");
+		});
+		
+		
+	});
+</script>

@@ -1,0 +1,185 @@
+{{ header }}{{ column_left }}
+
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-optin-popup" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+      </div>
+      <h1>{% if is_new %}{{ heading_title_add }}{% else %}{{ heading_title_edit }}{% endif %}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        	<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+	{% if error_warning %}
+		<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+		  <button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+	{% endif %}
+	{% if error_name %}
+		<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_name }}
+		  <button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+	{% endif %}
+    {% if success %}
+      <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <form method="post" id="form-optin-popup" class="form-horizontal" enctype="multipart/form-data">
+	      <div class="form-group required">
+		    <label class="col-sm-2 control-label" for="input-name">
+		    	<span data-toggle="tooltip" title="{{ help_add_name }}">{{ entry_add_name_label }}</span>
+		    </label>
+		    <div class="col-sm-10">
+	          <input type="text" value="{{ optin_popup.name|e }}" name="values[name]" id="input-name" class="form-control" />
+	          {% if form_errors.name %}
+              	<div class="text-danger">{{ form_errors.name }}</div>
+              {% endif %} 
+		    </div>
+		  </div>
+	      <div class="form-group required">
+		    <label class="col-sm-2 control-label" for="input-lokally-status">{{ entry_status }}</label>
+		    <div class="col-sm-10">
+	          <select name="values[status]" id="input-status" class="form-control">
+                {% if optin_popup.status %}
+                  <option value="1" selected="selected">{{ text_visible }}</option>
+                  <option value="0">{{ text_hidden }}</option>
+                {% else %}
+                  <option value="1">{{ text_visible }}</option>
+                  <option value="0" selected="selected">{{ text_hidden }}</option>
+                {% endif %}
+		      </select>
+		    </div>
+		  </div>
+	      <div class="form-group">
+		    <label class="col-sm-2 control-label" for="input-pages">
+		    	<span data-toggle="tooltip" title="{{ help_add_pages }}">{{ entry_pages }}</span>
+		    </label>
+		    <div class="col-sm-10">
+	          <textarea placeholder="{{ placeholder_add_pages }}" rows="8" name="values[pages]" id="input-pages" class="form-control">{{ optin_popup.pages_lines }}</textarea>
+		    </div>
+		  </div>
+	      <div class="form-group">
+		    <label class="col-sm-2 control-label">{{ entry_layout_settings }}</label>
+		    <div class="col-sm-10">
+			    <div class="col-sm-2 optin-popup-layout-setting">
+		          <label class="optin-popup-input-label">{{ entry_background_color }}</label>
+		          <input type="text" name="values[styles][background_color]" id="input-background-color" class="form-control colorbox" value="{{ optin_popup.styles.background_color }}" />
+			    </div>
+			    <div class="col-sm-2 optin-popup-layout-setting">
+		          <label class="optin-popup-input-label">{{ entry_title_color }}</label>
+		          <input type="text" name="values[styles][title_color]" id="input-title-color" class="form-control colorbox" value="{{ optin_popup.styles.title_color }}" />
+			    </div>
+			    <div class="col-sm-2 optin-popup-layout-setting">
+		          <label class="optin-popup-input-label">{{ entry_subtitle_color }}</label>
+		          <input type="text" name="values[styles][subtitle_color]" id="input-subtitle-color" class="form-control colorbox" value="{{ optin_popup.styles.subtitle_color }}" />
+			    </div>
+			    <div class="col-sm-2 optin-popup-layout-setting">
+		          <label class="optin-popup-input-label">{{ entry_description_color }}</label>
+		          <input type="text" name="values[styles][description_color]" id="input-description-color" class="form-control colorbox" value="{{ optin_popup.styles.description_color }}" />
+			    </div>
+			    <div class="col-sm-2 optin-popup-layout-setting">
+		          <label class="optin-popup-input-label">{{ entry_button_background_color }}</label>
+		          <input type="text" name="values[styles][button_background_color]" id="input-button-background-color" class="form-control colorbox" value="{{ optin_popup.styles.button_background_color }}" />
+			    </div>
+			    <div class="col-sm-2 optin-popup-layout-setting">
+		          <label class="optin-popup-input-label">{{ entry_button_text_color }}</label>
+		          <input type="text" name="values[styles][button_text_color]" id="input-button-text-color" class="form-control colorbox" value="{{ optin_popup.styles.button_text_color }}" />
+			    </div>
+			    <div class="col-sm-2 optin-popup-layout-setting">
+		          <label class="optin-popup-input-label" for="input-rounded-corners">
+		          	<input type="hidden" name="values[styles][rounded_corners]" class="form-control" value="0" />
+		          	{{ entry_rounded_corners }}
+		          	<select  name="values[styles][rounded_corners]" id="input-rounded-corners" class="form-control">
+		          		<option value="0" {% if not optin_popup.styles.rounded_corners %}selected="selected"{% endif %}>{{ entry_no }}</option>
+		          		<option value="1" {% if optin_popup.styles.rounded_corners %}selected="selected"{% endif %}>{{ entry_yes }}</option>
+		          	</select>
+		          </label>
+			    </div>
+		    </div>
+		  </div>
+
+		  <ul class="nav nav-tabs">
+		  	{% set tab_active = 0 %}
+		  	{% for language in languages %}
+		    	<li class="{% if not tab_active %}active{% endif %}">
+		    		<a href="#tab-language-{{ language.language_id }}" data-toggle="tab">
+		    			<img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/> {{ language.name }}
+		    		</a>
+				</li>
+				{% set tab_active = 1 %}
+		    {% endfor %}
+		  </ul>
+		  <div class="tab-content">
+		  	{% set tab_active = 0 %}
+		  	{% for language in languages %}
+            	<div class="tab-pane {% if not tab_active %}active{% endif %}" id="tab-language-{{ language.language_id }}">
+				  <div class="tab-content">
+				      <div class="form-group">
+					    <label class="col-sm-2 control-label" for="input-{{ language.language_id }}-title">{{ entry_title }}</label>
+					    <div class="col-sm-10">
+				          <input type="text" value="{{ optin_popup.values[language.language_id].title }}" name="values[data][{{ language.language_id }}][title]" id="input-{{ language.language_id }}-title" class="form-control" />
+					    </div>
+					  </div>
+				      <div class="form-group">
+					    <label class="col-sm-2 control-label" for="input-{{ language.language_id }}-subtitle">{{ entry_subtitle }}</label>
+					    <div class="col-sm-10">
+				          <input type="text" value="{{ optin_popup.values[language.language_id].subtitle }}" name="values[data][{{ language.language_id }}][subtitle]" id="input-{{ language.language_id }}-subtitle" class="form-control" />
+					    </div>
+					  </div>
+				      <div class="form-group">
+					    <label class="col-sm-2 control-label" for="input-{{ language.language_id }}-title">{{ entry_description }}</label>
+					    <div class="col-sm-10">
+				          <textarea rows="8" name="values[data][{{ language.language_id }}][description]" id="input-{{ language.language_id }}-description" class="form-control">{{ optin_popup.values[language.language_id].description }}</textarea>
+					    </div>
+					  </div>
+					  <div class="form-group">
+      					<label class="col-sm-2 control-label" for="input-{{ language.language_id }}-image">{{ entry_image }}</label>
+      					<div class="col-sm-10">
+      						<a href="javascript:;" id="input-{{ language.language_id }}-thumb" data-toggle="image" class="img-thumbnail">
+      							<img src="{{ optin_popup.values[language.language_id].image_thumb ?? placeholder }}" alt="" title="" data-placeholder="{{ placeholder }}" />
+      						</a>
+        					<input type="hidden" name="values[data][{{ language.language_id }}][image]" value="{{ optin_popup.values[language.language_id].image }}" id="input-{{ language.language_id }}-image" />
+      					</div>
+    				  </div>
+				      <div class="form-group">
+					    <label class="col-sm-2 control-label" for="input-{{ language.language_id }}-button_label">{{ entry_button_label }}</label>
+					    <div class="col-sm-10">
+				          <input type="text" value="{{ optin_popup.values[language.language_id].button_label }}" name="values[data][{{ language.language_id }}][button_label]" id="input-{{ language.language_id }}-button_label" class="form-control" />
+					    </div>
+					  </div>
+				      <div class="form-group">
+					    <label class="col-sm-2 control-label" for="input-{{ language.language_id }}-button_url">{{ entry_button_url }}</label>
+					    <div class="col-sm-10">
+				          <input type="text" value="{{ optin_popup.values[language.language_id].button_url }}" name="values[data][{{ language.language_id }}][button_url]" id="input-{{ language.language_id }}-button_url" class="form-control" />
+					    </div>
+					  </div>
+				  </div>
+			  </div>
+			  {% set tab_active = 1 %}
+		  	{% endfor %}
+		  </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="view/javascript/colorbox/jquery.minicolors.css">
+
+<script tyle="text/javascript" src="view/javascript/colorbox/jquery.minicolors.js"></script>
+<script tyle="text/javascript">
+	$(document).ready(function() {
+		$(".colorbox").minicolors();
+	});
+</script>
+
+{{ footer }}

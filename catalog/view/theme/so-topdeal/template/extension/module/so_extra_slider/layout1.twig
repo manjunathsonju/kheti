@@ -1,0 +1,134 @@
+																																																																																																																									
+<div id="box-link2{{ category_id }}">
+	
+		<div class="head-title font-ct">
+			<h2 class="modtitle" style="background: #C40404;"><a href="index.php?route=product/category&amp;path={{ category_id }}" style="color: #ffffff">{{ module_name }}</a></h2>
+		</div>
+
+
+	<div class="modcontent">
+			<div id="so_extra_slider_17547578571592280526" class="so-extraslider buttom-type1 preset00-1 preset01-1 preset02-1 preset03-1 preset04-1 button-type1">
+				<!-- Begin extraslider-inner -->
+				<div class="vertical-menu" id="Extradiv{{ category_id }}" style="width: 100%;
+    height: 445px;
+    overflow-y: auto;">
+
+                 </div>
+				<!--End extraslider-inner -->
+                     <a href="index.php?route=product/category&amp;path={{ category_id }}">
+                     <button type="button" class="btn btn-outline-success" style="margin-left: 145px;margin-bottom: 20px;
+    margin-top: 20px;">View All</button></a>
+
+				
+			</div>
+		
+	</div> 
+	
+</div> 
+
+<script type="text/javascript">
+     $(document).ready(function() {
+         $.ajax({
+             type :"POST",
+             url : "index.php?route=api/getProducts&category_id="+{{ category_id }}+"&secret=U7sw3jr69r13",
+            //  crossDomain: true, 
+            dataType: "json",
+                    success: function (data) {
+                        var response = JSON.parse(JSON.stringify(data));
+                        
+                        if (response["products"] == null ) {
+                            document.getElementById("box-link2{{ category_id }}").style.display='none';
+                        }
+                        if(response["products"] != null ){
+                        for (var i = 0; i < response["products"].length; i++) {
+                              var productHtml2{{ category_id }} ='<div class="item products-list grid" style="position: relative;display: block;box-sizing: border-box;">'+
+							'<div class="item-wrap product-layout style1 " style="overflow:hidden;position:relative;display:block;height:163px;">'+
+								'<div class="item-wrap-inner product-item-container" style="margin-bottom: 20px;padding-bottom: 7px;border-bottom: 1px solid #ebebeb;overflow: hidden;position: relative;margin: 0 0 30px;background: #fff;border-radius: 3px;z-index: 1;height:133px;">'+
+									'<div class="left-block" style="display: inline-block;width: auto; float: left;border-radius: 3px;overflow: hidden;position: relative;text-align:center;">'+
+										'<div class="item-image" style="position: relative;overflow: hidden;width:120px;">'+
+											'<div class="item-img-info product-image-container" style="overflow: hidden;position: relative;">'+
+												'<a class="lt-image" '+
+												'data-product=' + response["products"][i].product_id +
+											   	'href="index.php?route=product/product&product_id=' + response["products"][i].product_id +'" target=""'+
+											   	'title="' + response["products"][i].name +'">'+
+												'<img src="' + response["products"][i].thumb +
+                      '" alt="' + response["products"][i].name +'" style="width:120px;">'+
+													
+												'</a>'+
+
+											'</div>'+
+										'</div>'+
+										
+								'	</div>'+
+								'	<div class="right-block" style="width: auto;'+
+    'padding: 0;'+
+    'clear: none;'+
+    'margin-left: 140px;">									'+
+											'<div class="caption">'+
+												
+													'<h4 class="item-title">'+
+													'	<a href="index.php?route=product/product&product_id=' + response["products"][i].product_id +'" target="" title="' + response["products"][i].name +'"  >'
+                                                     + response["products"][i].name +				
+													'	</a>'+
+													'</h4>'+
+													
+													'<!-- Begin item-content -->'+
+													'<div class="item-content" style="text-align: left;">'+
+												'<div class="total-price">'+
+												'			<div  class="price price-left">'+
+																
+												'					<span class="price product-price" style="color: #0db04b;'+
+    'font-size: 16px;'+
+    'font-weight: 600;margin: 0 0 10px 0;'+
+    'line-height: normal;">'+ response["products"][
+                          i
+                      ].special +
+	'																</span>'+
+																
+																
+	'														</div>'+
+															
+	'													</div>'+
+														
+													
+	'														<div class="button-group">'+
+	'													<button class="addToCart btn-button" type="button" data-toggle="tooltip" title="Add to cart" onclick="cart.add(\'' + response["products"][i].product_id + '\');"> <span class="hidden">add to cart</span></button>'+
+																
+	'														</div>'+
+														
+
+	'												</div>'+
+	'												<!-- End item-content -->'+
+										
+	'										</div>'+
+	'										<!-- End item-info -->'+
+										
+	'								</div>'+
+	'							</div>'+
+	'							<!-- End item-wrap-inner -->'+
+	'						</div>'+
+	'						<!-- End item-wrap -->'+
+
+	'					</div>';
+                     
+
+                       
+                            $('#Extradiv{{ category_id }}').append(productHtml2{{ category_id }});
+                        } }
+
+                    }
+         })
+
+     });
+</script>
+											 
+											 
+											 
+											 
+											 
+											 
+											 
+											 
+											 
+											 
+											

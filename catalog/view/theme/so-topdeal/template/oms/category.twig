@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/ok.css">
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(".hamburger").click(function() {
+                $(".wrapper").toggleClass("active")
+            })
+        });
+    </script>
+
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            padding: 6px;
+            text-align: center;
+        }
+        
+        table {
+            width: 100%;
+            margin-bottom: 20 px;
+            border-collapse: collapse;
+        }
+
+    table.timecard {
+	/* margin: 10px auto; */
+	width: 600px;
+	border-collapse: collapse;
+	border: 1px solid #fff; /*for older IE*/
+	/* border-style: hidden; */
+}
+
+table.timecard caption {
+	background:linear-gradient(to right, #f25c54 1%,#f4e285 47%,#f27059 100%);
+	color: #fff;
+	font-size: 16px;
+	font-weight: bold;
+	letter-spacing: .3em;
+    text-align: center;
+    caption-side: top;
+}
+
+table.timecard thead th {
+	padding: 8px;
+	background-color: #fde9d9;
+	font-size: large;
+}
+
+/* table.timecard thead th#thDay {
+	width: 40%;	
+} */
+
+table.timecard thead th#thRegular, table.timecard thead th#thOvertime, table.timecard thead th#thTotal {
+	width: 20%;
+}
+table.timecard th {
+	padding: 3px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #f79646 #ccc;
+}
+
+table.timecard td {
+	text-align: center;
+    background-color: #f6f6ff;
+    border-color: #f79646 #ccc;
+    border-width: 1px;
+	border-style: solid;
+}
+
+table.timecard tbody th {
+	text-align: left;
+	font-weight: normal;
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="top_navbar">
+            <div class="logo">
+                <a href="#">Welcome
+                </a>
+            </div>
+            <div class="top_menu">
+                <div class="home_link">
+                    <a href="#"><span class="icon"><i class="fas fa-home"></i></span>
+                        <span>Home</span> </a>
+                </div>
+            </div>
+        </div>
+        <div class="main_body">
+            {{sidebar}}
+            <div class="container">
+                <div class="item_wrap">
+                    <!-- Button trigger modal -->
+
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="background: linear-gradient(to right, #f25c54 1%,#f4e285 47%,#f27059 100%); border: #f25c54;">
+                        Add Categories
+                      </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">
+                                        Categories here!
+                                    </h5>
+
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form style="padding: 30px;background: rgba(247, 229, 215, 0.25);box-shadow: 0 8 px 32 px 0 rgba(31, 38, 135, 0.37);backdrop-filter: blur(4 px); border-radius: 10 px; border: 1 px solid rgba(255, 255, 255, 0.18);">
+                                        <!-- <label for="fname">First name:</label><br>< input type="text" id="fname" name="fname">< br>-->
+                                        <label for="lname" style="font-family: cursive;">
+                                            Categories name :
+                                        </label>
+                                        <input type="text" id="lname" name="lname">
+                                        <br>
+                                        <label for="myfile" style="font-family: cursive;">
+                                            Select a file :
+                                        </label>
+                                        <input type="file" id="inputFileToLoad" name="inputFileToLoad">
+                                        <br>
+                                        <button type="button" id="submitbtn" style="background: linear-gradient(to right, #f25c54 1%,#f4e285 47%,#f27059 100%);color: #fff;margin-top: 4px; border: 1px solid #fff; padding: 4px 3px; border-radius: 4px;width: 100px;">
+                                            Submit!
+                                        </button>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item_wrap ">
+                    <div class="item " >
+                        <table class="timecard">
+                            <caption>Categories details here</caption>
+                            <thead>
+                                <tr>
+                                    <th id="thDay"> Id </th>
+                                    <th id="thRegular">Cname </th>
+                                    <th id="thOvertime">image</th>
+                                    <th id="thTotal">customerid</th>
+                                    <th id="thDay">Action </th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-rows">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js ">
+    </script>
+    <script src="https:/ / cdn.jsdelivr.net / npm / popper.js @1 .16 .0 / dist / umd / popper.min.js " integrity="sha384 - Q6E9RHvbIyZFJoft + 2 mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo " crossorigin="anonymous ">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js " integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6 " crossorigin="anonymous ">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js">
+    </script>
+    <!---API to ADD cateogry of the b2b user:-->
+    <script type="text/javascript ">
+        $('#submitbtn').on('click', function() {
+            // alert('hello');
+            //
+            // $("#myform").trigger("reset ");
+            console.log(document.getElementById("lname").value);
+            varformData = new FormData();
+            formData.append('fileToUpload', $("#inputFileToLoad")[0].files[0]);
+            formData.append("key", "cr3@t3c@t3g0r60ws");
+            formData.append("customer_id", {{customer_id}});
+            formData.append("category_name", document.getElementById("lname").value);
+            $.ajax({
+                url: 'https://khetifood.com/index.php?route=api/b2bOmsCategory/createCategory',
+                type: 'POST',
+                data: formData,
+                async: false,
+                dataType: "json",
+                crossDomain: true,
+                success: function(data) {
+                    console.log(data);
+                    window.location.reload();
+                },
+                error: function(
+                    data
+                ) {
+                    alert
+                        (
+                            data);
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+            return false;
+        });
+    </script>
+    <!--API to get cateogry of the b2b user:-->
+    <script type="text/javascript">
+        console.log('ok');
+        const formData = new FormData();
+        formData.append('key', 'G3tc@t3g0r60ws');
+            formData.append("customer_id", {{customer_id}});
+
+        $.ajax({
+            url: 'https://khetifood.com/index.php?route=api/b2bOmsCategory',
+            type: 'POST',
+            data: formData,
+            async: false,
+            dataType: "json",
+            crossDomain: true,
+            success: function(data) {
+                console.log(data);
+                let string1 = '';
+                var response = JSON.parse(JSON.stringify(data));
+                for (let i = 0; i < response['Categoryarray'].length; i++) {
+                    string1 = '<tr> <td> ' + (response['Categoryarray'][i].category_id) + ' </td><td>' +
+                        (response['Categoryarray'][i].category_name) +
+                        '</td><td>' + '<img src="' + response['Categoryarray'][i].image +
+                        '" style="height:50px;width:64px">' + '</td><td>' + (response['Categoryarray'][i].customer_id) +
+                        '</td><td>' +'<button id="delete" class="btn btn-danger"  value="'+response['Categoryarray'][i].category_id +'" style="font-size:10px;width:35px">' +'<i class="fa fa-trash" aria-hidden="true" ></i></button>' +
+                        '</td></tr>' ;
+                    // console.log(string1);
+                    $('#table-rows').append(string1);
+
+
+                    // console.log(response['Categoryarray'][i].category_name);
+                }
+            },
+            error: function(data) {
+                alert(data);
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+    </script>
+</body>
+
+<script>
+    $(document).ready(function() {
+        $(".arrow").click(function() {
+            $("#table1-rows").toggle();
+        })
+    });
+</script>
+
+<script>
+    var table = document.getElementById('table-rows');
+    table.addEventListener('click', function(event) {
+        var target = event.target;
+
+        if (target.tagName = 'BUTTON' && target.value) {
+            // remove and place your ajax request here
+        console.log(target.value);
+        const formData = new FormData();
+        formData.append('key', '0m$d3ltek@t');
+        formData.append('category_id', target.value);
+        $.ajax({
+            url: 'https://khetifood.com/index.php?route=api/b2bOmsCategory/deleteCategory',
+            type: 'POST',
+            data: formData,
+            async: false,
+            dataType: "json",
+            crossDomain: true,
+            success: function(data) {
+            console.log(data);
+            window.location.reload();
+
+        },
+    
+            
+            error: function(data) {
+                alert(data);
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+    };
+});
+    
+</script>
+</html

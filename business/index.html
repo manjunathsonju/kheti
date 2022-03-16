@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css" />
+    <script
+      src="https://kit.fontawesome.com/64d58efce2.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="container">
+      <span class="big-circle"></span>
+      <img src="img/shape.png" class="square" alt="" />
+      <div class="form">
+        <div class="dropdown" style="margin: 20px auto;">
+          <img
+            src="https://khetifood.com/image/catalog/kheti_opencart_logo.png"
+            alt=""
+            style=" height: 100px"
+          />
+          <p class="b2b_food">KhetiFood B2B</p>
+        </div>
+        <div class="contact-form">
+          <span class="circle one"></span>
+          <span class="circle two"></span>
+
+          <form action="index.html" autocomplete="off">
+            <h3 class="title">Login</h3>
+
+            <div class="input-container">
+              <input id="fname" type="username" name="username" class="input" />
+              <label for="">Username</label>
+              <span>Username</span>
+            </div>
+            <div class="input-container">
+              <input id="pass" type="password" name="password" class="input" />
+              <label for="">Password</label>
+              <span>Password</span>
+            </div>
+            <button id="submitbutton" type="button" name="button" class="btn login_btn">Login</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </body>
+</html>
+
+<script type="text/javascript">
+		$('#submitbutton').on('click', function() {
+			window.location.href = "https://khetifood.com/index.php?route=api/b2bDashlogin&firstname="+document.getElementById("fname").value+"&password="+document.getElementById("pass").value;
+		});
+	</script>

@@ -1,0 +1,121 @@
+{{ header }}
+               {{ nav }}
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong1">
+              Add new coupon
+            </button><hr> <div class="modal fade" id="exampleModalLong1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+          
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+ 
+
+      <label>Name</label>
+      <div class="input-group mb-3" style="padding: 0px 10px 0px 10px;">
+      <div class="input-group-prepend">
+  </div>
+  <input type="text" class="form-control" id="cpnname" aria-describedby="basic-addon3">
+</div> 
+
+<label>Code</label>
+<div class="input-group mb-3" style="padding: 0px 10px 0px 10px;">
+<div class="input-group-prepend">
+  </div>
+  <input type="text" class="form-control" id="cpncode" aria-describedby="basic-addon3">
+</div> 
+
+<div class="form-group" style="padding: 0px 10px 0px 10px;"> 
+<label for="exampleFormControlSelect1">Discount Types</label>
+<select class="form-control" id="discounttype">
+  <option value="p">Percentage</option>
+  <option value="f">Fixed Amount</option>
+  
+</select>
+</div>
+
+<label>Discount</label>
+<div class="input-group mb-3" style="padding: 0px 10px 0px 10px;">
+<div class="input-group-prepend">
+  </div>
+  <input type="text" class="form-control" id="discount" aria-describedby="basic-addon3">
+</div> 
+
+               
+
+</body>
+</html>
+
+<label>Total uses</label>
+<div class="input-group mb-3" style="padding: 0px 10px 0px 10px;">
+<div class="input-group-prepend">
+  </div>
+  <input type="text" class="form-control" id="uses_total" aria-describedby="basic-addon3">
+</div> 
+
+<div class="form-group" style="padding: 0px 10px 0px 10px;">
+<label for="exampleFormControlSelect1">Status</label>
+<select class="form-control" id="status">
+  <option value="1">Active</option>
+  <option value="0">Inactive</option>
+  
+</select>
+</div>
+<button type="button" class="btn btn-primary" id="createnewcpnbtn"> 
+              Submit
+            </button>
+                            </div></div></div> 
+                <table id="example" style="width: 90%;">
+                <thead>
+                    <tr>
+                      <th scope="col">Coupon id</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Code</th>
+                      <th scope="col">Type</th>
+                      <th scope="col">Discount</th>
+                      <th scope="col">Total uses</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                {% for coupon in coupons %}
+                   <tr>
+                    <td>{{coupon.coupon_id}}</td>
+                    <td>{{coupon.name}}</td>
+                    <td>{{coupon.code}}</td>
+                    <td>{{coupon.type}}</td>                    
+                    <td>{{coupon.discount}}</td>
+                    <td>{{coupon.uses_total}}</td>
+                    <td>Active</td>
+                    <td><a href="https://khetifood.com/index.php?route=b2b/coupondetails&id={{id}}&tkn={{tkn}}&coupon_id={{coupon.coupon_id}}"><button type="button" class="btn btn-primary">Edit</button></a></td>
+                    
+                    </tr> 
+                 {% endfor %}
+
+                   </tbody>
+                  </table></div>
+                </div>
+                  </body>
+                    </html><script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+                  integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+              </script>
+              <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+                  integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+              </script>
+          <script>
+            $(document).ready(function () {
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar').toggleClass('active');
+                });
+            });
+          </script><script>$(document).ready(function() {
+            $('#example').DataTable();
+        } );</script><script type="text/javascript">
+        $('#createnewcpnbtn').on('click', function() {
+          window.location.href = "https://khetifood.com/index.php?route=api/b2bCoupons/addCoupon1&key=addcopnxwq1189&name="+document.getElementById("cpnname").value+"&code="+document.getElementById("cpncode").value+"&type="+$("#discounttype").val()+"&discount="+document.getElementById("discount").value+"&uses_total="+document.getElementById("uses_total").value+"&status="+$("#status").val()+"&tkn={{tkn}}&id={{id}}";
+
+        });
+      </script>
