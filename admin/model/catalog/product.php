@@ -1380,7 +1380,7 @@ class ModelCatalogProduct extends Model
     public function getProductsByCategoryIdP($product_id)
     {
         $query = $this->db->query(
-            'SELECT p.product_id,cat.name FROM ' .
+            'SELECT p.product_id,cat.name,pd.language_id FROM ' .
                 DB_PREFIX .
                 'product p LEFT JOIN ' .
                 DB_PREFIX .
