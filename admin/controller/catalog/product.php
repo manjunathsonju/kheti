@@ -529,8 +529,7 @@ class ControllerCatalogProduct extends Controller
             $product_category = $this->model_catalog_product->getProductsByCategoryIdP(
                 $result['product_id']
             );
-            print_r($product_category);
-            die();
+
             foreach ($product_specials as $product_special) {
                 if (
                     ($product_special['date_start'] == '0000-00-00' ||
