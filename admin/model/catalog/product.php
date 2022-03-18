@@ -1379,16 +1379,23 @@ class ModelCatalogProduct extends Model
 
     public function getProductsByCategoryIdP($product_id)
     {
+        // $query = $this->db->query(
+        //     'SELECT p.product_id,cat.name FROM ' .
+        //         DB_PREFIX .
+        //         'product p LEFT JOIN ' .
+        //         DB_PREFIX .
+        //         'product_description pd ON (p.product_id = pd.product_id) LEFT JOIN ' .
+        //         DB_PREFIX .
+        //         "product_to_category p2c ON (p.product_id = p2c.product_id) LEFT JOIN oc_category_description cat on (p2c.category_id = cat.category_id) WHERE pd.language_id = '" .
+        //         (int) $this->config->get('config_language_id') .
+        //         "' AND p2c.product_id = '" .
+        //         (int) $product_id .
+        //         "' ORDER BY pd.name ASC"
+        // );
         $query = $this->db->query(
-            'SELECT p.product_id,cat.name,pd.language_id FROM ' .
-                DB_PREFIX .
-                'product p LEFT JOIN ' .
-                DB_PREFIX .
-                'product_description pd ON (p.product_id = pd.product_id) LEFT JOIN ' .
-                DB_PREFIX .
-                "product_to_category p2c ON (p.product_id = p2c.product_id) LEFT JOIN oc_category_description cat on (p2c.category_id = cat.category_id) WHERE cat.language_id = '1' AND p2c.product_id = '" .
+            'select Distinct t1.*,cat.name from (SELECT p.product_id,pd.language_id FROM oc_product p LEFT JOIN oc_product_description pd ON (p.product_id = pd.product_id) where pd.language_id =1) t1 LEFT JOIN oc_product_to_category p2c ON (t1.product_id = p2c.product_id) LEFT JOIN oc_category_description cat on (p2c.category_id = cat.category_id) where p2c.product_id = ' .
                 (int) $product_id .
-                "' ORDER BY pd.name ASC"
+                ' ORDER BY cat.name ASC'
         );
 
         return $query->rows;
