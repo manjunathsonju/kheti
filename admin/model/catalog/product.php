@@ -26,6 +26,8 @@ class ModelCatalogProduct extends Model
                 (int) $data['quantity'] .
                 "', minimum = '" .
                 (int) $data['minimum'] .
+                "', maximum = '" .
+                (int) $data['maximum'] .
                 "', subtract = '" .
                 (int) $data['subtract'] .
                 "', stock_status_id = '" .
@@ -497,6 +499,8 @@ class ModelCatalogProduct extends Model
                 (int) $data['quantity'] .
                 "', minimum = '" .
                 (int) $data['minimum'] .
+                "', maximum = '" .
+                (int) $data['maximum'] .
                 "', subtract = '" .
                 (int) $data['subtract'] .
                 "', stock_status_id = '" .
