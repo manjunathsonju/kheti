@@ -264,6 +264,12 @@
                   <input type="text" name="minimum" value="{{ minimum }}" placeholder="{{ entry_minimum }}" id="input-minimum" class="form-control" />
                 </div>
               </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-maximum"><span data-toggle="tooltip" title="{{ help_maximum }}">Maximum Quantity</span></label>
+                <div class="col-sm-10">
+                  <input type="text" name="maximum" value="{{ maximum }}" placeholder="Maximum Quantity" id="input-maximum" class="form-control" />
+                </div>
+              </div>
 {% if module_maximum_status ==1  %}
             <div class="form-group">
             <label class="col-sm-2 control-label" for="input-maximum"><span data-toggle="tooltip" title="{{ help_maximum }}">{{ entry_maximum }}</span></label> <div class="col-sm-10"><input type="text" name="maximum" value="{{ maximum }}" placeholder="{{ entry_maximum }}" id="input-maximum" class="form-control" /> </div></div>
