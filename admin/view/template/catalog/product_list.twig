@@ -187,7 +187,7 @@
 <td class="text-right">{% for category in product.categories %} {%if category.name %}{{ category.name}}{% endif %}{% endfor %}</td>
                     {# <td class="text-right">{% if product.quantity <= 0 %} <span class="label label-warning">{{ product.quantity }}</span> {% elseif product.quantity <= 5 %} <span class="label label-danger">{{ product.quantity }}</span> {% else %} <span class="label label-success">{{ product.quantity }}</span> {% endif %}</td> #}
                     <td class="text-left">{{ product.status }}</td>
-                    <td class="text-left"><a href="{{ product.getProductImage }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                    <td class="text-left"><a href="{{ product.getProductImage }}" data-toggle="tooltip" title="Images" class="btn btn-primary"><i class="fa fa-image"></i></a></td>
                     <td class="text-right"><a href="{{ product.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                   </tr>
                   {% endfor %}
