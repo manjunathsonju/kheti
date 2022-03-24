@@ -33,17 +33,15 @@
             <h3 class="panel-title"><i class="fa fa-filter"></i> {{ text_filter }}</h3>
           </div>
           <div class="panel-body">
-
             <div class="form-group">
                 <label class="control-label" for="input-category">{{ entry_category }}</label>
                 <select name="filter_category" id="input-category" class="form-control" >
                     <option value="*">{{entry_category}}</option>
-                    {% for category in categories %}
-                        {% if category.category_id == filter_category %}
-                            <option value="{{ category.category_id }}" selected="selected">{{ category.name }}</option>
-                        {% else %}
+                    {% for category in categoriesp %}
+                            {% if filter_category == category.category_id %}
+                            <option value="{{ category.category_id }}" selected> {{ category.name }}</option>
+                            {% endif %}
                             <option value="{{ category.category_id }}"> {{ category.name }}</option>
-                        {% endif %}
                     {% endfor %}
                 </select>
             </div>
@@ -155,6 +153,7 @@
 <td class="text-right"><a href="{{ sort_category }}" class="{{ order|lower }}">Category</a></td>
                       {# <td class="text-right">{% if sort == 'p.quantity' %} <a href="{{ sort_quantity }}" class="{{ order|lower }}">{{ column_quantity }}</a> {% else %} <a href="{{ sort_quantity }}">{{ column_quantity }}</a> {% endif %}</td> #}
                       <td class="text-left">{% if sort == 'p.status' %} <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a> {% else %} <a href="{{ sort_status }}">{{ column_status }}</a> {% endif %}</td>
+                      <td class="text-right">Product image</td>
                       <td class="text-right">{{ column_action }}</td>
                     </tr>
                   </thead>
@@ -188,6 +187,7 @@
 <td class="text-right">{% for category in product.categories %} {%if category.name %}{{ category.name}}{% endif %}{% endfor %}</td>
                     {# <td class="text-right">{% if product.quantity <= 0 %} <span class="label label-warning">{{ product.quantity }}</span> {% elseif product.quantity <= 5 %} <span class="label label-danger">{{ product.quantity }}</span> {% else %} <span class="label label-success">{{ product.quantity }}</span> {% endif %}</td> #}
                     <td class="text-left">{{ product.status }}</td>
+                    <td class="text-left"><a href="{{ product.getProductImage }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                     <td class="text-right"><a href="{{ product.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                   </tr>
                   {% endfor %}

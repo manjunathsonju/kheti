@@ -1,77 +1,120 @@
 <?php
-class ControllerB2bInvoice extends Controller {
-	public function index() {
-        if($this->load->controller('b2b/home/checklogin',array($this->request->get['id'],$this->request->get['tkn']))){
-            $data['order']= $this->orderinfo($this->request->get['order_id']);
-            $orderarrpro=$this->db->query("SELECT * FROM order_products_b2b WHERE order_id=".$this->request->get['order_id']);
-            foreach ($orderarrpro->rows as $result){
-                $productname = $this->db->query("SELECT p.sku,p.model,pd.name FROM oc_product p JOIN oc_product_description pd ON (p.product_id=pd.product_id) WHERE p.product_id='".$result['product_id']."'");
-                $orderproductarray[]=array(
-                'product_id'=>$result['product_id'],
-                'quantity'=>$result['quantity'],
-                'price'=>$result['price'],
-                'total'=>$result['total'],
-                'sku'=>$productname->row['sku'],
-                'model'=>$productname->row['model'],
-                'name'=>$productname->row['name']
-              );
-          }
-          $data['products']=$orderproductarray;
-          $cpnexits=$this->db->query("SELECT * FROM b2b_coupon_history WHERE order_id=".$this->request->get['order_id']);
-          $data['address']= $this->getLocation((int)$data['order']['customer_id']);
+class ControllerB2bInvoice extends Controller
+{
+    public function index()
+    {
+        if (
+            $this->load->controller('b2b/home/checklogin', [
+                $this->request->get['id'],
+                $this->request->get['tkn'],
+            ])
+        ) {
+            $data['order'] = $this->orderinfo($this->request->get['order_id']);
+            $orderarrpro = $this->db->query(
+                'SELECT * FROM order_products_b2b WHERE order_id=' .
+                    $this->request->get['order_id']
+            );
+            foreach ($orderarrpro->rows as $result) {
+                $productname = $this->db->query(
+                    "SELECT p.sku,p.model,pd.name FROM oc_product p JOIN oc_product_description pd ON (p.product_id=pd.product_id) WHERE p.product_id='" .
+                        $result['product_id'] .
+                        "'"
+                );
+                $orderproductarray[] = [
+                    'product_id' => $result['product_id'],
+                    'quantity' => $result['quantity'],
+                    'price' => $result['price'],
+                    'total' => $result['total'],
+                    'sku' => $productname->row['sku'],
+                    'model' => $productname->row['model'],
+                    'name' => $productname->row['name'],
+                ];
+            }
+            $data['products'] = $orderproductarray;
+            $cpnexits = $this->db->query(
+                'SELECT * FROM b2b_coupon_history WHERE order_id=' .
+                    $this->request->get['order_id']
+            );
+            $data['address'] = $this->getLocation(
+                (int) $data['order']['customer_id']
+            );
 
-          $cpnexits=$this->db->query("SELECT * FROM b2b_coupon_history WHERE order_id=".$this->request->get['order_id']);
-          if($cpnexits->num_rows!='0'){
-            $data['coupon']=1;
-            $data['coupon_discount']=$cpnexits->row['discount_amount'];
-            $data['totalafterdiscount']=$data['order']['total']-$data['coupon_discount'];
+            $cpnexits = $this->db->query(
+                'SELECT * FROM b2b_coupon_history WHERE order_id=' .
+                    $this->request->get['order_id']
+            );
+            if ($cpnexits->num_rows != '0') {
+                $data['coupon'] = 1;
+                $data['coupon_discount'] = $cpnexits->row['discount_amount'];
+                $data['totalafterdiscount'] =
+                    $data['order']['total'] - $data['coupon_discount'];
+            }
 
-          }
-
-
-          $this->response->setOutput($this->load->view('b2b/invoice', $data));
-
+            $this->response->setOutput($this->load->view('b2b/invoice', $data));
         }
     }
 
-    public function orderinfo($order_id) {
-        $orderarr=$this->db->query("SELECT * FROM order_b2b WHERE order_id='".$order_id."'");
-        foreach ($orderarr->rows as $result){
-          $customername = $this->db->query("SELECT CONCAT(firstname, ' ', lastname) As name,email,telephone from oc_customer where customer_id='".$result['customer_id']."'");
-          $panno = $this->load->controller('api/b2bCustomerDetails/getpanno',$result['customer_id']);
-          $orderarray=array(
-            'order_id'=>$result['order_id'],
-            'customer_id'=>$result['customer_id'],
-            'name'=>$customername->row['name'],
-            'comment'=>$result['comment'],
-            'total'=>$result['total'],
-            'order_status_id'=>$result['order_status_id'],
-            'payment_status'=>$result['payment_status'],
-            'payment_method'=>$result['payment_method'],
-            'receipt_no'=>$result['receipt_no'],
-            'actual_pay'=>$result['actual_pay'],
-            'pay_description'=>$result['pay_description'],
-            'pay_date'=>$result['pay_date'],
-            'date_added'=>$result['date_added'],
-            'date_delivery'=>$result['date_delivery'],
-            'email'=>$customername->row['email'],
-            'telephone'=>$customername->row['telephone'],
-            'delivery_address'=>$result['delivery_address'],
-            'pan_no'=> $panno
-  
-          );
-      }
-      return($orderarray);
-     }
+    public function orderinfo($order_id)
+    {
+        $orderarr = $this->db->query(
+            "SELECT * FROM order_b2b WHERE order_id='" . $order_id . "'"
+        );
+        foreach ($orderarr->rows as $result) {
+            $customername = $this->db->query(
+                "SELECT CONCAT(firstname, ' ', lastname) As name,email,telephone from oc_customer where customer_id='" .
+                    $result['customer_id'] .
+                    "'"
+            );
+            $panno = $this->load->controller(
+                'api/b2bCustomerDetails/getpanno',
+                $result['customer_id']
+            );
+            $orderarray = [
+                'order_id' => $result['order_id'],
+                'customer_id' => $result['customer_id'],
+                'name' => $customername->row['name'],
+                'comment' => $result['comment'],
+                'total' => $result['total'],
+                'order_status_id' => $result['order_status_id'],
+                'payment_status' => $result['payment_status'],
+                'payment_method' => $result['payment_method'],
+                'receipt_no' => $result['receipt_no'],
+                'actual_pay' => $result['actual_pay'],
+                'pay_description' => $result['pay_description'],
+                'pay_date' => $result['pay_date'],
+                'date_added' => $result['date_added'],
+                'date_delivery' => $result['date_delivery'],
+                'email' => $customername->row['email'],
+                'telephone' => $customername->row['telephone'],
+                'delivery_address' => $result['delivery_address'],
+                'pan_no' => $panno,
+            ];
+        }
+        return $orderarray;
+    }
 
-     public function getLocation($customer_id){
-          $userlocation=$this->db->query("SELECT * FROM `oc_address` WHERE customer_id=".$customer_id." LIMIT 1");
-        if($userlocation==NULL){
-          $userlocation=$this->db->query("SELECT * FROM `b2b_address` WHERE customer_id=".$customer_id." LIMIT 1");
-          $useraddress= $userlocation->row['address'];
-        }else{
-          $useraddress= $userlocation->row['address_1'].','.$userlocation->row['address_2'].','.$userlocation->row['city'];
+    public function getLocation($customer_id)
+    {
+        $userlocation = $this->db->query(
+            'SELECT * FROM `oc_address` WHERE customer_id=' .
+                $customer_id .
+                ' LIMIT 1'
+        );
+        if ($userlocation == null) {
+            $userlocation = $this->db->query(
+                'SELECT * FROM `b2b_address` WHERE customer_id=' .
+                    $customer_id .
+                    ' LIMIT 1'
+            );
+            $useraddress = $userlocation->row['address'];
+        } else {
+            $useraddress =
+                $userlocation->row['address_1'] .
+                ',' .
+                $userlocation->row['address_2'] .
+                ',' .
+                $userlocation->row['city'];
         }
         return $useraddress;
-      }
+    }
 }

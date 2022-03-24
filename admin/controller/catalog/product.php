@@ -183,6 +183,61 @@ class ControllerCatalogProduct extends Controller
         $this->getForm();
     }
 
+    public function ImageList()
+    {
+        $this->load->language('catalog/product');
+
+        $this->document->setTitle($this->language->get('heading_title'));
+
+        $this->load->model('catalog/product');
+        $data['header'] = $this->load->controller('common/header');
+        $data['column_left'] = $this->load->controller('common/column_left');
+        $data['footer'] = $this->load->controller('common/footer');
+
+        $this->getProductImage();
+    }
+
+    public function getProductImage()
+    {
+        $data['breadcrumbs'] = [];
+
+        $data['breadcrumbs'][] = [
+            'text' => 'home',
+            'href' => $this->url->link(
+                'common/dashboard',
+                'user_token=' . $this->session->data['user_token'],
+                true
+            ),
+        ];
+
+        $data['breadcrumbs'][] = [
+            'text' => 'Product',
+            'href' => $this->url->link(
+                'catalog/product',
+                'user_token=' . $this->session->data['user_token'] . $url,
+                true
+            ),
+        ];
+
+        $this->load->model('design/layout');
+        $this->load->model('catalog/product');
+        $data['images'] = $this->model_catalog_product->getProductImages(
+            $this->request->get['product_id']
+        );
+        print_r($data['images']);
+        die();
+        $data['layouts'] = $this->model_design_layout->getLayouts();
+
+        $data['header'] = $this->load->controller('common/header');
+        $data['column_left'] = $this->load->controller('common/column_left');
+        $data['footer'] = $this->load->controller('common/footer');
+        $this->response->setOutput(
+            $this->load->view('catalog/product_imagelist', $data)
+        );
+        //print_r('hello I am here');
+        //die();
+    }
+
     public function delete()
     {
         $this->load->language('catalog/product');
@@ -358,6 +413,12 @@ class ControllerCatalogProduct extends Controller
             $filter_name = '';
         }
 
+        if (isset($this->request->get['filter_category'])) {
+            $filter_category = $this->request->get['filter_category'];
+        } else {
+            $filter_category = '';
+        }
+
         if (isset($this->request->get['filter_model'])) {
             $filter_model = $this->request->get['filter_model'];
         } else {
@@ -408,6 +469,18 @@ class ControllerCatalogProduct extends Controller
                 urlencode(
                     html_entity_decode(
                         $this->request->get['filter_name'],
+                        ENT_QUOTES,
+                        'UTF-8'
+                    )
+                );
+        }
+
+        if (isset($this->request->get['filter_category'])) {
+            $url .=
+                '&filter_category=' .
+                urlencode(
+                    html_entity_decode(
+                        $this->request->get['filter_category'],
                         ENT_QUOTES,
                         'UTF-8'
                     )
@@ -487,6 +560,7 @@ class ControllerCatalogProduct extends Controller
 
         $filter_data = [
             'filter_name' => $filter_name,
+            'filter_category' => $filter_category,
             'filter_model' => $filter_model,
             'filter_price' => $filter_price,
             'filter_quantity' => $filter_quantity,
@@ -530,6 +604,10 @@ class ControllerCatalogProduct extends Controller
                 $result['product_id']
             );
 
+            $data[
+                'categoriesp'
+            ] = $this->model_catalog_product->getProductsCategories();
+
             foreach ($product_specials as $product_special) {
                 if (
                     ($product_special['date_start'] == '0000-00-00' ||
@@ -552,6 +630,7 @@ class ControllerCatalogProduct extends Controller
                 'name' => $result['name'],
                 'model' => $result['model'],
                 'categories' => $product_category,
+
                 'price' => $this->currency->format(
                     $result['price'],
                     $this->config->get('config_currency')
@@ -570,10 +649,21 @@ class ControllerCatalogProduct extends Controller
                         $url,
                     true
                 ),
+                'getProductImage' => $this->url->link(
+                    'catalog/product/getProductImage',
+                    'user_token=' .
+                        $this->session->data['user_token'] .
+                        '&product_id=' .
+                        $result['product_id'] .
+                        $url,
+                    true
+                ),
             ];
         }
+
         // print_r($data);
         // die();
+
         $data['user_token'] = $this->session->data['user_token'];
 
         if (isset($this->error['warning'])) {
@@ -604,6 +694,18 @@ class ControllerCatalogProduct extends Controller
                 urlencode(
                     html_entity_decode(
                         $this->request->get['filter_name'],
+                        ENT_QUOTES,
+                        'UTF-8'
+                    )
+                );
+        }
+
+        if (isset($this->request->get['filter_category'])) {
+            $url .=
+                '&filter_category=' .
+                urlencode(
+                    html_entity_decode(
+                        $this->request->get['filter_category'],
                         ENT_QUOTES,
                         'UTF-8'
                     )
@@ -653,6 +755,16 @@ class ControllerCatalogProduct extends Controller
                 $url,
             true
         );
+
+        $data['sort_category'] = $this->url->link(
+            'catalog/product',
+            'user_token=' .
+                $this->session->data['user_token'] .
+                '&sort=pd.category_id' .
+                $url,
+            true
+        );
+
         $data['sort_model'] = $this->url->link(
             'catalog/product',
             'user_token=' .
@@ -702,6 +814,18 @@ class ControllerCatalogProduct extends Controller
                 urlencode(
                     html_entity_decode(
                         $this->request->get['filter_name'],
+                        ENT_QUOTES,
+                        'UTF-8'
+                    )
+                );
+        }
+
+        if (isset($this->request->get['filter_category'])) {
+            $url .=
+                '&filter_category=' .
+                urlencode(
+                    html_entity_decode(
+                        $this->request->get['filter_category'],
                         ENT_QUOTES,
                         'UTF-8'
                     )
@@ -771,6 +895,7 @@ class ControllerCatalogProduct extends Controller
         );
 
         $data['filter_name'] = $filter_name;
+        $data['filter_model'] = $filter_category;
         $data['filter_model'] = $filter_model;
         $data['filter_price'] = $filter_price;
         $data['filter_quantity'] = $filter_quantity;
