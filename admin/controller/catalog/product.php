@@ -224,8 +224,7 @@ class ControllerCatalogProduct extends Controller
         $data['images'] = $this->model_catalog_product->getProductImages(
             $this->request->get['product_id']
         );
-        print_r($data['images']);
-        die();
+
         $data['layouts'] = $this->model_design_layout->getLayouts();
 
         $data['header'] = $this->load->controller('common/header');
