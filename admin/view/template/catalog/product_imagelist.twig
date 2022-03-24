@@ -42,17 +42,29 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>
-                    1.
-                  </td>
-                  <td>
-                    image
-                  </td>
-                  <td>
-                    Delete
-                  </td>
-                </tr>
+                {% if images %}
+                  {% for image in images %}
+                    <tr>
+                      <td>
+                        1.
+                      </td>
+                      <td>
+                        <img src="{{ image.image }}"
+                          alt="images"
+                          class="img-thumbnail" />
+                      </td>
+                      <td>
+                        Delete
+                      </td>
+                    </tr>
+                  {% endfor %}
+                {% else %}
+                  <tr>
+                    <td class="text-center" colspan="8">
+                      {{ text_no_results }}
+                    </td>
+                  </tr>
+                {% endif %}
               </tbody>
             </table>
           </div>
