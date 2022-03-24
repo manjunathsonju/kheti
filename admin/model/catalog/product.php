@@ -1295,6 +1295,13 @@ class ModelCatalogProduct extends Model
                 "%'";
         }
 
+        if (!empty($data['filter_category'])) {
+            $sql .=
+                " AND pd.category_id = '" .
+                $this->db->escape($data['filter_category']) .
+                "'";
+        }
+
         if (!empty($data['filter_model'])) {
             $sql .=
                 " AND p.model LIKE '" .
@@ -1325,6 +1332,7 @@ class ModelCatalogProduct extends Model
 
         $sort_data = [
             'pd.name',
+            'pd.category_id',
             'p.model',
             'p.price',
             'p.quantity',
@@ -1484,6 +1492,19 @@ class ModelCatalogProduct extends Model
         }
 
         return $product_filter_data;
+    }
+
+    public function getProductsCategories()
+    {
+        $query = $this->db->query(
+            'SELECT t1.category_id,t2.name  FROM oc_category t1 left join oc_category_description t2 on t1.category_id = t2.category_id'
+        );
+
+        foreach ($query->rows as $result) {
+            $category_filter_data[] = $result;
+        }
+
+        return $category_filter_data;
     }
 
     public function getProductAttributes($product_id)
